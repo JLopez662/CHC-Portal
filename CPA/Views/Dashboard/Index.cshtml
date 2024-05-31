@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to your Dashboard</h1>
+    <p>This is the secure area of the application.</p>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+        @if (TempData["Success"] != null)
+        {
+            <text>
+                    toastr.success('@TempData["Success"]');
+            </text>
+        }
+                });
+    </script>
+}

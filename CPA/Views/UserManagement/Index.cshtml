@@ -1,0 +1,77 @@
+﻿@model IEnumerable<DAL.Models.User>
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
+        <div class="row">
+            <div class="text-center mt-5">
+                <h1 style="color: white">User Management</h1>
+                <h2 style="color: white">Manage the users of your application here.</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Email</td>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>
+                            <a href="/UserManagement/Edit/@user.Id" class="btn btn-primary">Edit</a>
+                            <a href="/UserManagement/Delete/@user.Id" class="btn btn-danger">Delete</a>
+                            @{
+                                var lockButtonClass = user.LockoutEnd > DateTime.Now ? "btn-danger" : "btn-success";
+                                var lockButtonText = user.LockoutEnd > DateTime.Now ? "Inactive" : "Active";
+                            }
+                            <a onclick="LockUnlock('@user.Id')" class="btn @lockButtonClass text-white" style="cursor:pointer; width:100px">
+                                <i class="bi bi-unlock-fill"></i> @lockButtonText
+                            </a>
+
+                            <a href="/UserManagement/Permission/@user.Id" class="btn btn-danger text-white" style="cursor:pointer; width:150px">
+                                <i class="btn bi-pencil-square"></i> Permission    
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a href="/UserManagement/Create" class="green-button">
+            <span>Create New User</span>
+        </a>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function LockUnlock(id) {
+            $.ajax({
+                type: "POST",
+                url: '/UserManagement/LockUnlock',
+                data: JSON.stringify(id),
+                contentType: "Application/json",
+                success: function(data){
+                    if (data.success) {
+                        toastr.success(data.message);
+                        location.reaload();
+                    } else {
+                        toastr.error(data.message);
+                    }
+                }
+            })
+        }
+    </script>
+}

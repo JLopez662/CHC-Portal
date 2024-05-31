@@ -1,0 +1,17 @@
+C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\BLL.csproj.AssemblyReference.cache
+C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\BLL.AssemblyInfoInputs.cache
+C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\BLL.AssemblyInfo.cs
+C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\BLL.csproj.CoreCompileInputs.cache
+C:\Users\execu\source\repos\CPA\BLL\bin\Debug\net8.0\BLL.deps.json
+C:\Users\execu\source\repos\CPA\BLL\bin\Debug\net8.0\BLL.dll
+C:\Users\execu\source\repos\CPA\BLL\bin\Debug\net8.0\BLL.pdb
+C:\Users\execu\source\repos\CPA\BLL\bin\Debug\net8.0\DAL.dll
+C:\Users\execu\source\repos\CPA\BLL\bin\Debug\net8.0\Shared.dll
+C:\Users\execu\source\repos\CPA\BLL\bin\Debug\net8.0\Shared.pdb
+C:\Users\execu\source\repos\CPA\BLL\bin\Debug\net8.0\DAL.pdb
+C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\BLL.csproj.Up2Date
+C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\BLL.dll
+C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\refint\BLL.dll
+C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\BLL.pdb
+C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\ref\BLL.dll
