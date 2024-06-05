@@ -14,12 +14,13 @@
     </div>
 
     <div class="card-body p-4">
-        <table class="table table-bordered">
+        <table id="customTable" class="table table-bordered">
             <thead>
                 <tr>
                     <th>Email</th>
                     <th>FirstName</th>
                     <th>LastName</th>
+                    <th>Active</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -27,51 +28,179 @@
                 @foreach (var user in Model)
                 {
                     <tr>
-                        <td>@user.Email</td>
-                        <td>@user.FirstName</td>
-                        <td>@user.LastName</td>
                         <td>
-                            <a href="/UserManagement/Edit/@user.Id" class="btn btn-primary">Edit</a>
-                            <a href="/UserManagement/Delete/@user.Id" class="btn btn-danger">Delete</a>
+                            <input type="hidden" name="Id" value="@user.Id" class="user-id" />
+                            <span class="text-field">@user.Email</span>
+                            <input type="text" name="Email" value="@user.Email" class="input-field" />
+                        </td>
+                        <td>
+                            <span class="text-field">@user.FirstName</span>
+                            <input type="text" name="FirstName" value="@user.FirstName" class="input-field" />
+                        </td>
+                        <td>
+                            <span class="text-field">@user.LastName</span>
+                            <input type="text" name="LastName" value="@user.LastName" class="input-field" />
+                        </td>
+                        <td>
                             @{
                                 var lockButtonClass = user.LockoutEnd > DateTime.Now ? "btn-danger" : "btn-success";
                                 var lockButtonText = user.LockoutEnd > DateTime.Now ? "Inactive" : "Active";
+                                var lockButtonIcon = user.LockoutEnd > DateTime.Now ? "fas fa-lock" : "fas fa-unlock";
                             }
-                            <a onclick="LockUnlock('@user.Id')" class="btn @lockButtonClass text-white" style="cursor:pointer; width:100px">
-                                <i class="bi bi-unlock-fill"></i> @lockButtonText
+                            <a onclick="LockUnlock('@user.Id')" class="btn @lockButtonClass" style="cursor:pointer;">
+                                <i class="@lockButtonIcon"></i> @lockButtonText
                             </a>
-
-                            <a href="/UserManagement/Permission/@user.Id" class="btn btn-danger text-white" style="cursor:pointer; width:150px">
-                                <i class="btn bi-pencil-square"></i> Permission    
-                            </a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary modify-button">Update</button>
+                            <button type="button" class="btn btn-success save-button d-none">Save</button>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-        <a href="/UserManagement/Create" class="green-button">
-            <span>Create New User</span>
-        </a>
+        <div class="text-right">
+            <a href="/UserManagement/Create" class="green-button">
+                <span>Create New User</span>
+            </a>
+        </div>
     </div>
 </div>
 
-@section Scripts{
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
+    <style>
+        .green-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+            .green-button:hover {
+                background-color: #218838;
+                color: white;
+            }
+
+        .text-field {
+            display: inline-block;
+        }
+
+        .input-field {
+            display: none;
+        }
+
+        .d-none {
+            display: none !important;
+        }
+
+        .d-inline {
+            display: inline !important;
+        }
+    </style>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
+        $(document).ready(function () {
+            var table = $('#customTable').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "lengthMenu": [10, 25, 50, 100],
+                "columnDefs": [
+                    { "orderable": false, "targets": [3, 4] }
+                ]
+            });
+
+            $('#customTable').on('click', '.modify-button', function () {
+                var row = $(this).closest('tr');
+                row.find('.text-field').hide();
+                row.find('.input-field').show();
+                row.find('.save-button').removeClass('d-none');
+                $(this).addClass('d-none');
+            });
+
+            $('#customTable').on('click', '.save-button', function () {
+                var row = $(this).closest('tr');
+                var id = row.find('.user-id').val();
+                var email = row.find('input[name="Email"]').val();
+                var firstName = row.find('input[name="FirstName"]').val();
+                var lastName = row.find('input[name="LastName"]').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: '/UserManagement/UpdateUser',
+                    data: {
+                        id: id,
+                        email: email,
+                        firstName: firstName,
+                        lastName: lastName
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.message);
+                            row.find('.text-field').each(function () {
+                                var inputField = $(this).next('.input-field');
+                                $(this).text(inputField.val()).show();
+                                inputField.hide();
+                            });
+                            row.find('.modify-button').removeClass('d-none');
+                            row.find('.save-button').addClass('d-none');
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function () {
+                        toastr.error('An error occurred while processing your request.');
+                    }
+                });
+            });
+        });
+
         function LockUnlock(id) {
             $.ajax({
                 type: "POST",
                 url: '/UserManagement/LockUnlock',
                 data: JSON.stringify(id),
-                contentType: "Application/json",
-                success: function(data){
+                contentType: "application/json",
+                success: function (data) {
                     if (data.success) {
                         toastr.success(data.message);
-                        location.reaload();
+                        updateLockButton(id, data.message.includes("Unlocked"));
                     } else {
                         toastr.error(data.message);
                     }
+                },
+                error: function () {
+                    toastr.error('An error occurred while processing your request.');
                 }
-            })
+            });
         }
+
+        function updateLockButton(id, isUnlocked) {
+            var button = $('a[onclick="LockUnlock(\'' + id + '\')"]');
+            if (isUnlocked) {
+                button.removeClass('btn-danger').addClass('btn-success');
+                button.html('<i class="fas fa-unlock"></i> Active');
+            } else {
+                button.removeClass('btn-success').addClass('btn-danger');
+                button.html('<i class="fas fa-lock"></i> Inactive');
+            }
+        }
+
     </script>
+}
+
 }

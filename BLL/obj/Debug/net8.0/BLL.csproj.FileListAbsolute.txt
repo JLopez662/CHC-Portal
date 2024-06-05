@@ -15,3 +15,4 @@ C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\BLL.dll
 C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\refint\BLL.dll
 C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\BLL.pdb
 C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\ref\BLL.dll
+C:\Users\execu\source\repos\CPA\BLL\obj\Debug\net8.0\BLL.sourcelink.json

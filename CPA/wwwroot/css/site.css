@@ -225,6 +225,92 @@ a.float-right {
     flex: 1;
 }
 
+/* Custom rounded button styling */
+.rounded-button {
+    font-size: 1em;
+    color: white; /* Text color */
+    font-weight: 500;
+    padding: 0.75em 2.5em; /* Increased padding for wider button */
+    border-radius: 2em;
+    border: none;
+    box-shadow: 0 -0.5em 0.5em transparent, 0 0.5em 0.5em transparent, 0 0.25em 0.3em -0.2em rgba(0, 0, 0, 0.2), 0 0.25em 0.75em rgba(0, 0, 0, 0.3);
+    position: relative;
+    transition: all 0.5s ease;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+    .rounded-button:hover {
+        color: black; /* Change text color on hover */
+    }
+
+/* Specific colors for lock/unlock buttons */
+.lock-button {
+    background-color: hsl(0, 100%, 50%); /* Red color */
+    background-image: linear-gradient(180deg, hsl(0, 80%, 60%) 30%, transparent 70%);
+}
+
+.unlock-button {
+    background-color: hsl(120, 100%, 40%); /* Green color */
+    background-image: linear-gradient(180deg, hsl(120, 80%, 60%) 30%, transparent 70%);
+}
+
+/* Custom button styles */
+
+.custom-button {
+    font-size: 1em;
+    color: white;
+    font-weight: 500;
+    padding: 0.75em 2.5em;
+    border-radius: 2em;
+    border: none;
+    box-shadow: 0 -0.5em 0.5em transparent, 0 0.5em 0.5em transparent, 0 0.25em 0.3em -0.2em hsla(0, 50%, 50%, 0.46), 0 0.25em 0.75em hsla(0, 40%, 40%, 0.3);
+    position: relative;
+    transition: all 0.5s ease;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+    .custom-button:hover {
+        color: black;
+    }
+
+.edit-button {
+    background-color: hsl(30, 100%, 50%);
+    background-image: linear-gradient(180deg, hsl(50, 80%, 60%) 30%, transparent 70%);
+}
+
+.delete-button {
+    background-color: hsl(0, 100%, 50%);
+    background-image: linear-gradient(180deg, hsl(0, 80%, 60%) 30%, transparent 70%);
+}
+
+.lock-button {
+    background-color: hsl(0, 100%, 50%);
+    background-image: linear-gradient(180deg, hsl(0, 80%, 60%) 30%, transparent 70%);
+}
+
+.unlock-button {
+    background-color: hsl(120, 100%, 40%);
+    background-image: linear-gradient(180deg, hsl(120, 80%, 60%) 30%, transparent 70%);
+}
+
+.text-field {
+    display: inline-block;
+}
+
+.input-field {
+    display: none;
+}
+
+
+
 footer {
     background-color: #f8f9fa;
     text-align: center;

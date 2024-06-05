@@ -25,6 +25,12 @@ namespace CPA.Controllers
             var user = _userRepository.GetUser(username, password);
             if (user != null)
             {
+                if (user.LockoutEnd != null && user.LockoutEnd > DateTime.Now)
+                {
+                    ViewBag.Error = "Your account has been locked.";
+                    return View("~/Views/Home/Index.cshtml");
+                }
+                // Logic for setting up session/cookie can go here
                 TempData["Success"] = "You have successfully logged in.";
                 return RedirectToAction("Index", "Dashboard");
             }
@@ -34,6 +40,7 @@ namespace CPA.Controllers
                 return View("~/Views/Home/Index.cshtml");
             }
         }
+
 
         [HttpGet]
         public IActionResult Register()

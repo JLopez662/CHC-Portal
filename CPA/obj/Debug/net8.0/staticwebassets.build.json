@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ck0Nk3B7Dl8v3g8d5M1sOUw0LkWohc5b+0a22DUdpME=",
+  "Hash": "75zyk/LPPyYgTzW6Y59baf56MJT0QBNXyfUPiaFfzhU=",
   "Source": "CPA",
   "BasePath": "_content/CPA",
   "Mode": "Default",
@@ -110,6 +110,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "C:\\Users\\execu\\source\\repos\\CPA\\CPA\\wwwroot\\js\\user.js",
+      "SourceId": "CPA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\execu\\source\\repos\\CPA\\CPA\\wwwroot\\",
+      "BasePath": "_content/CPA",
+      "RelativePath": "js/user.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\user.js"
     },
     {
       "Identity": "C:\\Users\\execu\\source\\repos\\CPA\\CPA\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",

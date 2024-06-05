@@ -1,6 +1,7 @@
 ﻿using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace CPA.Controllers
 {
@@ -25,7 +26,7 @@ namespace CPA.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(DAL.Models.User user)
+        public IActionResult Create(User user)
         {
             if (ModelState.IsValid)
             {
@@ -38,7 +39,7 @@ namespace CPA.Controllers
         public IActionResult Edit(int id)
         {
             var user = _userRepository.GetUserById(id);
-            if(user == null)
+            if (user == null)
             {
                 return NotFound();
             }
@@ -48,7 +49,7 @@ namespace CPA.Controllers
         [HttpPost]
         public IActionResult Edit(User user)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _userRepository.UpdateUser(user);
                 return RedirectToAction("Index");
@@ -56,10 +57,28 @@ namespace CPA.Controllers
             return View(user);
         }
 
+        [HttpPost]
+        public IActionResult UpdateUser(int id, string email, string firstName, string lastName)
+        {
+            var user = _userRepository.GetUserById(id);
+            if (user == null)
+            {
+                return Json(new { success = false, message = "User not found" });
+            }
+
+            user.Email = email;
+            user.FirstName = firstName;
+            user.LastName = lastName;
+
+            _userRepository.UpdateUser(user);
+
+            return Json(new { success = true, message = "User updated successfully" });
+        }
+
         public IActionResult Delete(int id)
         {
             var user = _userRepository.GetUserById(id);
-            if(user == null)
+            if (user == null)
             {
                 return NotFound();
             }
@@ -77,26 +96,30 @@ namespace CPA.Controllers
         public IActionResult LockUnlock([FromBody] int id)
         {
             var user = _userRepository.GetUserById(id);
-            if(user == null)
+            if (user == null)
             {
-                return Json(new { success = false, message = "Error while Activating/Deactivating" });
+                return Json(new { success = false, message = "Error while Locking/Unlocking" });
             }
 
-            if(user.LockoutEnd != null && user.LockoutEnd> DateTime.Now)
+            if (user.LockoutEnd != null && user.LockoutEnd > DateTime.Now)
             {
                 user.LockoutEnd = DateTime.Now;
+                _userRepository.UpdateUser(user);
+                return Json(new { success = true, message = "User Unlocked Successfully" });
             }
             else
             {
                 user.LockoutEnd = DateTime.Now.AddYears(1000);
+                _userRepository.UpdateUser(user);
+                return Json(new { success = true, message = "User Locked Successfully" });
             }
-            _userRepository.UpdateUser(user);
-            return Json(new { sucess = true, message = "Operation Successful" });
         }
 
-        public IActionResult Permission(int id)
+        [HttpGet]
+        public IActionResult GetAllUsers()
         {
-            return View();
+            var users = _userRepository.GetAllUsers();
+            return Json(new { data = users });
         }
     }
 }
