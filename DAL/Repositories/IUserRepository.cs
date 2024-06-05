@@ -8,6 +8,7 @@ namespace DAL.Repositories
         User GetUser(string username, string password);
         IEnumerable<User> GetAllUsers();
         User GetUserById(int id);
+        User GetUserByEmail(string email);
         void AddUser(User user);
         void UpdateUser(User user);
         void DeleteUser(int id);

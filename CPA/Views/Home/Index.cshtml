@@ -40,6 +40,11 @@
                         </div>
                     </form>
 
+                    <div class="text-center mt-2">
+                        <a href="/Account/PasswordRecovery" class="btn btn-link">
+                            Forgot Password?
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,18 +54,18 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            @if (ViewBag.Error != null)
-            {
-                <text>
+        @if (ViewBag.Error != null)
+        {
+            <text>
                     toastr.error('@ViewBag.Error');
-                </text>
-            }
-            @if (ViewBag.Success != null)
-            {
-                <text>
+            </text>
+        }
+        @if (ViewBag.Success != null)
+        {
+            <text>
                     toastr.success('@ViewBag.Success');
-                </text>
-            }   
-        });
+            </text>
+        }
+                });
     </script>
 }

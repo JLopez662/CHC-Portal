@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Models
 {
@@ -14,9 +10,15 @@ namespace DAL.Models
         public string Password { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        [Required]
+        [MaxLength(256)]
         public string Email { get; set; }
+
         public string Phone { get; set; }
         public DateTime? LockoutEnd { get; set; }
-
+        public string? PasswordResetToken { get; set; }
+        public DateTime? PasswordResetTokenExpiration { get; set; }
     }
+
 }

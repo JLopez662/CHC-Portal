@@ -5,6 +5,10 @@ using BLL.Services;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using CPA.Models;
+using Microsoft.Extensions.Logging;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace CPA.Controllers
 {
@@ -12,17 +16,24 @@ namespace CPA.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IEmailService _emailService;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(IUserRepository userRepository, IEmailService emailService)
+
+        public AccountController(IUserRepository userRepository, IEmailService emailService, ILogger<AccountController> logger)
         {
             _userRepository = userRepository;
             _emailService = emailService;
+            _logger = logger;
         }
 
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
-            var user = _userRepository.GetUser(username, password);
+            using var sha256 = SHA256.Create();
+            var hashedPasswordBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            var hashedPassword = BitConverter.ToString(hashedPasswordBytes).Replace("-", "").ToLower();
+
+            var user = _userRepository.GetUser(username, hashedPassword);
             if (user != null)
             {
                 if (user.LockoutEnd != null && user.LockoutEnd > DateTime.Now)
@@ -30,7 +41,6 @@ namespace CPA.Controllers
                     ViewBag.Error = "Your account has been locked.";
                     return View("~/Views/Home/Index.cshtml");
                 }
-                // Logic for setting up session/cookie can go here
                 TempData["Success"] = "You have successfully logged in.";
                 return RedirectToAction("Index", "Dashboard");
             }
@@ -48,7 +58,6 @@ namespace CPA.Controllers
             return View();
         }
 
-        [HttpPost]
         [HttpPost]
         public async Task<IActionResult> Register(string firstName, string lastName, string email, string phone, string username, string password)
         {
@@ -75,5 +84,130 @@ namespace CPA.Controllers
             ViewBag.Success = "Registration successful. Please log in.";
             return RedirectToAction("Index", "Home", new { success = ViewBag.Success });
         }
+
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            var user = _userRepository.GetUserByEmail(email);
+            if (user == null)
+            {
+                ViewBag.Error = "No user found with this email address.";
+                return View();
+            }
+
+            // Generate a password reset token
+            var resetToken = Guid.NewGuid().ToString();
+            user.PasswordResetToken = resetToken;
+            user.PasswordResetTokenExpiration = DateTime.Now.AddHours(1);
+            _userRepository.UpdateUser(user);
+
+            var resetLink = Url.Action("ResetPassword", "Account", new { token = resetToken }, Request.Scheme);
+            string subject = "Password Reset Request";
+            string message = $"Hello {user.FirstName},\n\nYou requested a password reset. Click the link below to reset your password:\n\n{resetLink}\n\nBest Regards,\nCPA Portal Team";
+            await _emailService.SendEmailAsync(email, subject, message);
+
+            ViewBag.Success = "Password reset link has been sent to your email.";
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string token)
+        {
+            var user = _userRepository.GetAllUsers().FirstOrDefault(u => u.PasswordResetToken == token && u.PasswordResetTokenExpiration > DateTime.Now);
+            if (user == null)
+            {
+                ViewBag.Error = "Invalid or expired password reset token.";
+                return View();
+            }
+
+            return View(new ResetPasswordViewModel { Token = token });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = _userRepository.GetAllUsers().FirstOrDefault(u => u.PasswordResetToken == model.Token && u.PasswordResetTokenExpiration > DateTime.Now);
+            if (user == null)
+            {
+                ViewBag.Error = "Invalid or expired password reset token.";
+                return View();
+            }
+
+            using var sha256 = SHA256.Create();
+            var hashedPasswordBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(model.NewPassword));
+            var hashedPassword = BitConverter.ToString(hashedPasswordBytes).Replace("-", "").ToLower();
+
+            user.Password = hashedPassword;
+            user.PasswordResetToken = null;
+            user.PasswordResetTokenExpiration = null;
+
+            try
+            {
+                _userRepository.UpdateUser(user);
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                _logger.LogError("Error updating user password: {Exception}", ex);
+                ViewBag.Error = "An error occurred while resetting the password. Please try again later.";
+                return View();
+            }
+
+            ViewBag.Success = "Password reset successful. You can now log in with your new password.";
+            return RedirectToAction("Index", "Home", new { success = ViewBag.Success });
+        }
+
+
+
+
+
+        public IActionResult PasswordRecovery()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PasswordRecovery(string email)
+        {
+            _logger.LogInformation("Password recovery requested for {Email}", email);
+            var user = _userRepository.GetUserByEmail(email);
+            if (user == null)
+            {
+                _logger.LogWarning("No user found with email {Email}", email);
+                ViewBag.Error = "No user found with this email address.";
+                return View();
+            }
+
+            // Generate a password reset token
+            var resetToken = Guid.NewGuid().ToString();
+            user.PasswordResetToken = resetToken;
+            user.PasswordResetTokenExpiration = DateTime.Now.AddHours(1);
+            _userRepository.UpdateUser(user);
+
+            var resetLink = Url.Action("ResetPassword", "Account", new { token = resetToken }, Request.Scheme);
+            string subject = "Password Reset Request";
+            string message = $"Hello {user.FirstName},\n\nYou requested a password reset. Click the link below to reset your password:\n\n{resetLink}\n\nBest Regards,\nCPA Portal Team";
+            _logger.LogInformation("Sending password reset email to {Email}", email);
+            await _emailService.SendEmailAsync(email, subject, message);
+
+            _logger.LogInformation("Password reset email sent to {Email}", email);
+            ViewBag.Success = "Password reset link has been sent to your email.";
+            return View();
+        }
+
+
     }
 }
