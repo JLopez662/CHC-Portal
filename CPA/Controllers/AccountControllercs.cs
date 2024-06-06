@@ -7,17 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 using CPA.Models;
 using Microsoft.Extensions.Logging;
-using System.Security.Cryptography;
-using System.Text;
+using System.Linq;
 
 namespace CPA.Controllers
 {
+    [Route("[controller]")]
     public class AccountController : Controller
     {
         private readonly IUserRepository _userRepository;
         private readonly IEmailService _emailService;
         private readonly ILogger<AccountController> _logger;
-
 
         public AccountController(IUserRepository userRepository, IEmailService emailService, ILogger<AccountController> logger)
         {
@@ -26,7 +25,13 @@ namespace CPA.Controllers
             _logger = logger;
         }
 
-        [HttpPost]
+        [HttpGet("Login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost("Login")]
         public IActionResult Login(string username, string password)
         {
             using var sha256 = SHA256.Create();
@@ -51,14 +56,13 @@ namespace CPA.Controllers
             }
         }
 
-
-        [HttpGet]
+        [HttpGet("Register")]
         public IActionResult Register()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(string firstName, string lastName, string email, string phone, string username, string password)
         {
             using var sha256 = SHA256.Create();
@@ -85,14 +89,13 @@ namespace CPA.Controllers
             return RedirectToAction("Index", "Home", new { success = ViewBag.Success });
         }
 
-
-        [HttpGet]
+        [HttpGet("ForgotPassword")]
         public IActionResult ForgotPassword()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("ForgotPassword")]
         public async Task<IActionResult> ForgotPassword(string email)
         {
             var user = _userRepository.GetUserByEmail(email);
@@ -102,22 +105,13 @@ namespace CPA.Controllers
                 return View();
             }
 
-            // Generate a password reset token
-            var resetToken = Guid.NewGuid().ToString();
-            user.PasswordResetToken = resetToken;
-            user.PasswordResetTokenExpiration = DateTime.Now.AddHours(1);
-            _userRepository.UpdateUser(user);
-
-            var resetLink = Url.Action("ResetPassword", "Account", new { token = resetToken }, Request.Scheme);
-            string subject = "Password Reset Request";
-            string message = $"Hello {user.FirstName},\n\nYou requested a password reset. Click the link below to reset your password:\n\n{resetLink}\n\nBest Regards,\nCPA Portal Team";
-            await _emailService.SendEmailAsync(email, subject, message);
+            await SendPasswordRecoveryEmailAsync(user);
 
             ViewBag.Success = "Password reset link has been sent to your email.";
             return View();
         }
 
-        [HttpGet]
+        [HttpGet("ResetPassword")]
         public IActionResult ResetPassword(string token)
         {
             var user = _userRepository.GetAllUsers().FirstOrDefault(u => u.PasswordResetToken == token && u.PasswordResetTokenExpiration > DateTime.Now);
@@ -130,8 +124,7 @@ namespace CPA.Controllers
             return View(new ResetPasswordViewModel { Token = token });
         }
 
-
-        [HttpPost]
+        [HttpPost("ResetPassword")]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -160,7 +153,6 @@ namespace CPA.Controllers
             }
             catch (Exception ex)
             {
-                // Log the error
                 _logger.LogError("Error updating user password: {Exception}", ex);
                 ViewBag.Error = "An error occurred while resetting the password. Please try again later.";
                 return View();
@@ -170,16 +162,13 @@ namespace CPA.Controllers
             return RedirectToAction("Index", "Home", new { success = ViewBag.Success });
         }
 
-
-
-
-
+        [HttpGet("PasswordRecovery")]
         public IActionResult PasswordRecovery()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("PasswordRecovery")]
         public async Task<IActionResult> PasswordRecovery(string email)
         {
             _logger.LogInformation("Password recovery requested for {Email}", email);
@@ -191,23 +180,24 @@ namespace CPA.Controllers
                 return View();
             }
 
-            // Generate a password reset token
-            var resetToken = Guid.NewGuid().ToString();
-            user.PasswordResetToken = resetToken;
-            user.PasswordResetTokenExpiration = DateTime.Now.AddHours(1);
-            _userRepository.UpdateUser(user);
-
-            var resetLink = Url.Action("ResetPassword", "Account", new { token = resetToken }, Request.Scheme);
-            string subject = "Password Reset Request";
-            string message = $"Hello {user.FirstName},\n\nYou requested a password reset. Click the link below to reset your password:\n\n{resetLink}\n\nBest Regards,\nCPA Portal Team";
-            _logger.LogInformation("Sending password reset email to {Email}", email);
-            await _emailService.SendEmailAsync(email, subject, message);
+            await SendPasswordRecoveryEmailAsync(user);
 
             _logger.LogInformation("Password reset email sent to {Email}", email);
             ViewBag.Success = "Password reset link has been sent to your email.";
             return View();
         }
 
+        private async Task SendPasswordRecoveryEmailAsync(User user)
+        {
+            user.PasswordResetToken = Guid.NewGuid().ToString();
+            user.PasswordResetTokenExpiration = DateTime.Now.AddHours(1);
+            _userRepository.UpdateUser(user);
 
+            var resetLink = Url.Action("ResetPassword", "Account", new { token = user.PasswordResetToken }, Request.Scheme);
+            var subject = "Password Reset Request";
+            var message = $"Hello {user.FirstName},<br><br>You requested a password reset. Click the link below to reset your password:<br><a href='{resetLink}'>Reset Password</a><br><br>Best Regards,<br>CPA Portal Team";
+
+            await _emailService.SendEmailAsync(user.Email, subject, message);
+        }
     }
 }

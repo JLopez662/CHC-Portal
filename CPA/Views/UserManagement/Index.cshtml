@@ -54,6 +54,7 @@
                         <td>
                             <button type="button" class="btn btn-primary modify-button">Update</button>
                             <button type="button" class="btn btn-success save-button d-none">Save</button>
+                            <button type="button" class="btn btn-warning password-recovery-button" onclick="passwordRecovery('@user.Email')">Password Recovery</button>
                         </td>
                     </tr>
                 }
@@ -66,47 +67,6 @@
         </div>
     </div>
 </div>
-
-@section Styles {
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
-    <style>
-        .green-button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            text-align: center;
-            transition: all 0.3s ease;
-            display: inline-block;
-            text-decoration: none;
-        }
-
-            .green-button:hover {
-                background-color: #218838;
-                color: white;
-            }
-
-        .text-field {
-            display: inline-block;
-        }
-
-        .input-field {
-            display: none;
-        }
-
-        .d-none {
-            display: none !important;
-        }
-
-        .d-inline {
-            display: inline !important;
-        }
-    </style>
-}
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -200,6 +160,43 @@
             }
         }
 
-    </script>
-}
+        function passwordRecovery(email) {
+            $.ajax({
+                type: "POST",
+                url: '/UserManagement/PasswordRecovery',
+                data: { email: email },
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function () {
+                    toastr.error('An error occurred while processing your request.');
+                }
+            });
+        }
 
+
+        function passwordRecovery(email) {
+            $.ajax({
+                type: "POST",
+                url: '/UserManagement/PasswordRecovery',
+                data: { email: email },
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function () {
+                    toastr.error('An error occurred while processing your request.');
+                }
+            });
+        }
+
+    </script>
+
+}

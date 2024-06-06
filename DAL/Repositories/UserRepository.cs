@@ -33,6 +33,7 @@ namespace DAL.Repositories
             return _context.Users.SingleOrDefault(u => u.Email == email);
         }
 
+
         public void AddUser(User user)
         {
             _context.Users.Add(user);

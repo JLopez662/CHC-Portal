@@ -1,17 +1,21 @@
 ﻿using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using BLL.Services;
 using System;
+using System.Threading.Tasks;
 
 namespace CPA.Controllers
 {
     public class UserManagementController : Controller
     {
         private readonly IUserRepository _userRepository;
+        private readonly IEmailService _emailService;
 
-        public UserManagementController(IUserRepository userRepository)
+        public UserManagementController(IUserRepository userRepository, IEmailService emailService)
         {
             _userRepository = userRepository;
+            _emailService = emailService;
         }
 
         public IActionResult Index()
@@ -120,6 +124,34 @@ namespace CPA.Controllers
         {
             var users = _userRepository.GetAllUsers();
             return Json(new { data = users });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PasswordRecovery(string email)
+        {
+            var user = _userRepository.GetUserByEmail(email);
+            if (user == null)
+            {
+                return Json(new { success = false, message = "User not found" });
+            }
+
+            await SendPasswordRecoveryEmailAsync(user);
+            return Json(new { success = true, message = "Password recovery email sent successfully" });
+        }
+
+        private async Task SendPasswordRecoveryEmailAsync(User user)
+        {
+            // Generate password reset token and expiration
+            user.PasswordResetToken = Guid.NewGuid().ToString();
+            user.PasswordResetTokenExpiration = DateTime.Now.AddHours(1);
+            _userRepository.UpdateUser(user);
+
+            // Send password reset email
+            var resetLink = Url.Action("ResetPassword", "Account", new { token = user.PasswordResetToken }, Request.Scheme);
+            var subject = "Password Reset Request";
+            var message = $"Hello {user.FirstName},<br><br>You requested a password reset. Click the link below to reset your password:<br><a href='{resetLink}'>Reset Password</a><br><br>Best Regards,<br>CPA Portal Team";
+
+            await _emailService.SendEmailAsync(user.Email, subject, message);
         }
     }
 }
