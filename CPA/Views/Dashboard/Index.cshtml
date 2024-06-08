@@ -2,9 +2,51 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to your Dashboard</h1>
-    <p>This is the secure area of the application.</p>
+<div class="container mt-1">
+    <h1 class="display-4 text-center">Welcome to your Dashboard</h1>
+@*     <p class="lead text-center">This is the secure area of the application.</p> *@
+
+    <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="demograficos-tab" data-toggle="tab" href="#demograficos" role="tab" aria-controls="demograficos" aria-selected="true">Demograficos</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="contributivos-tab" data-toggle="tab" href="#contributivos" role="tab" aria-controls="contributivos" aria-selected="false">Contributivos</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="identificacion-tab" data-toggle="tab" href="#identificacion" role="tab" aria-controls="identificacion" aria-selected="false">Identificacion</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="administrativos-tab" data-toggle="tab" href="#administrativos" role="tab" aria-controls="administrativos" aria-selected="false">Administrativos</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="metodo-de-pago-tab" data-toggle="tab" href="#metodo-de-pago" role="tab" aria-controls="metodo-de-pago" aria-selected="false">Metodo de Pago</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="confidencial-tab" data-toggle="tab" href="#confidencial" role="tab" aria-controls="confidencial" aria-selected="false">Confidencial</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="dashboardTabsContent">
+        <div class="tab-pane fade show active" id="demograficos" role="tabpanel" aria-labelledby="demograficos-tab">
+            <p>Content for Demograficos</p>
+        </div>
+        <div class="tab-pane fade" id="contributivos" role="tabpanel" aria-labelledby="contributivos-tab">
+            <p>Content for Contributivos</p>
+        </div>
+        <div class="tab-pane fade" id="identificacion" role="tabpanel" aria-labelledby="identificacion-tab">
+            <p>Content for Identificacion</p>
+        </div>
+        <div class="tab-pane fade" id="administrativos" role="tabpanel" aria-labelledby="administrativos-tab">
+            <p>Content for Administrativos</p>
+        </div>
+        <div class="tab-pane fade" id="metodo-de-pago" role="tabpanel" aria-labelledby="metodo-de-pago-tab">
+            <p>Content for Metodo de Pago</p>
+        </div>
+        <div class="tab-pane fade" id="confidencial" role="tabpanel" aria-labelledby="confidencial-tab">
+            <p>Content for Confidencial</p>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
@@ -18,4 +60,7 @@
         }
                 });
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    @* <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script> *@
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 }

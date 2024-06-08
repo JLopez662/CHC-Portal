@@ -71,6 +71,7 @@ namespace CPA.Controllers
             }
 
             user.Email = email;
+            user.Username = user.Email;
             user.FirstName = firstName;
             user.LastName = lastName;
 

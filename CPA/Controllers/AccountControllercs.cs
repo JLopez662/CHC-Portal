@@ -75,7 +75,7 @@ namespace CPA.Controllers
                 LastName = lastName,
                 Email = email,
                 Phone = phone,
-                Username = username,
+                Username = email,
                 Password = hashedPassword
             };
 

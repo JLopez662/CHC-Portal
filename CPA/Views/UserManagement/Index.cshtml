@@ -89,6 +89,8 @@
                 row.find('.text-field').hide();
                 row.find('.input-field').show();
                 row.find('.save-button').removeClass('d-none');
+                row.find('.password-recovery-button').addClass('d-none'); // Hide password recovery button
+
                 $(this).addClass('d-none');
             });
 
@@ -117,6 +119,7 @@
                                 inputField.hide();
                             });
                             row.find('.modify-button').removeClass('d-none');
+                            row.find('.password-recovery-button').removeClass('d-none'); // Show password recovery button
                             row.find('.save-button').addClass('d-none');
                         } else {
                             toastr.error(response.message);
