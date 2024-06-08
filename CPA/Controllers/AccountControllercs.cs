@@ -46,6 +46,7 @@ namespace CPA.Controllers
                     ViewBag.Error = "Your account has been locked.";
                     return View("~/Views/Home/Index.cshtml");
                 }
+                TempData["FirstName"] = user.FirstName;
                 TempData["Success"] = "You have successfully logged in.";
                 return RedirectToAction("Index", "Dashboard");
             }
@@ -55,6 +56,7 @@ namespace CPA.Controllers
                 return View("~/Views/Home/Index.cshtml");
             }
         }
+
 
         [HttpGet("Register")]
         public IActionResult Register()

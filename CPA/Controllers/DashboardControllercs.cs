@@ -6,7 +6,9 @@ namespace CPA.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.FirstName = TempData["FirstName"] as string;
             return View();
         }
+
     }
 }
