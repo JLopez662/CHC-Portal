@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CPA.Models.DemograficoViewModel>
+﻿@model CPA.Models.DashboardViewModel
 
 @{
     ViewData["Title"] = "Dashboard";
@@ -17,17 +17,30 @@
         <li class="nav-item" role="presentation">
             <a class="nav-link active" id="demograficos-tab" data-toggle="tab" href="#demograficos" role="tab" aria-controls="demograficos" aria-selected="true">Demograficos</a>
         </li>
-        <!-- Other tabs -->
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="contributivos-tab" data-toggle="tab" href="#contributivos" role="tab" aria-controls="contributivos" aria-selected="false">Contributivos</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="identificacion-tab" data-toggle="tab" href="#identificacion" role="tab" aria-controls="identificacion" aria-selected="false">Identificacion</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="administrativos-tab" data-toggle="tab" href="#administrativos" role="tab" aria-controls="administrativos" aria-selected="false">Administrativos</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="metodo-de-pago-tab" data-toggle="tab" href="#metodo-de-pago" role="tab" aria-controls="metodo-de-pago" aria-selected="false">Metodo de Pago</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="confidencial-tab" data-toggle="tab" href="#confidencial" role="tab" aria-controls="confidencial" aria-selected="false">Confidencial</a>
+        </li>
     </ul>
 
     <div class="tab-content" id="dashboardTabsContent">
         <div class="tab-pane fade show active" id="demograficos" role="tabpanel" aria-labelledby="demograficos-tab">
             <div id="tblDataWrapper" class="dataTableWrapper">
-                @foreach (var item in Model)
+                @foreach (var item in Model.Demograficos)
                 {
                     <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
                         <tbody>
-                            @*                             <tr><th>ID</th><td>@item.ID</td></tr> *@
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
                             <tr><th>Telefono</th><td>@item.Telefono</td></tr>
@@ -84,7 +97,6 @@
                         "searching": true,
                         "ordering": false,
                         "info": false, // Disable the table information display
-                        //"lengthMenu": [3, 25, 50, 100],
                         "lengthMenu": [[4, -1], ["Summary", "All"]],
                         "columnDefs": [
                             { "orderable": true, "targets": 1 }

@@ -1,4 +1,5 @@
-﻿using CPA.Models;
+﻿using BLL.Services;
+using CPA.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
@@ -6,17 +7,18 @@ namespace CPA.Controllers
 {
     public class DashboardController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICustomerService _customerService;
 
-        public DashboardController(ApplicationDbContext context)
+        public DashboardController(ICustomerService customerService)
         {
-            _context = context;
+            _customerService = customerService;
         }
 
         public IActionResult Index()
         {
             TempData["Success"] = "You have successfully logged in!";
-            var demograficos = _context.Demograficos
+
+            var demograficos = _customerService.GetDemograficos()
                 .Select(d => new DemograficoViewModel
                 {
                     ID = d.ID,
@@ -42,9 +44,13 @@ namespace CPA.Controllers
                     MID = d.MID
                 }).ToList();
 
-            ViewBag.FirstName = TempData["FirstName"] as string;
-            return View(demograficos);
-        }
+            var viewModel = new DashboardViewModel
+            {
+                Demograficos = demograficos
+            };
 
+            ViewBag.FirstName = TempData["FirstName"] as string;
+            return View(viewModel);
+        }
     }
 }
