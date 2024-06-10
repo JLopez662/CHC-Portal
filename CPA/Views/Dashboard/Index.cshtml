@@ -7,6 +7,12 @@
 <div class="container mt-1">
     <h1 class="display-4 text-center">Welcome, @ViewBag.FirstName, to your Dashboard</h1>
 
+    <!-- External search input -->
+    <div class="form-group">
+        <label for="externalSearch">Search by Nombre or Nombre Comercial:</label>
+        <input type="text" id="externalSearch" class="form-control" placeholder="Enter search term...">
+    </div>
+
     <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <a class="nav-link active" id="demograficos-tab" data-toggle="tab" href="#demograficos" role="tab" aria-controls="demograficos" aria-selected="true">Demograficos</a>
@@ -19,12 +25,14 @@
             <div id="tblDataWrapper" class="dataTableWrapper">
                 @foreach (var item in Model)
                 {
-                    <table class="table table-striped table-bordered tblData">
+                    <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
                         <tbody>
-                            <tr><th>ID</th><td>@item.ID</td></tr>
+                            @*                             <tr><th>ID</th><td>@item.ID</td></tr> *@
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
-                            <tr><th>Dir</th><td>@item.Dir</td></tr>
+                            <tr><th>Telefono</th><td>@item.Telefono</td></tr>
+                            <tr><th>Celular</th><td>@item.Celular</td></tr>
+                            <tr><th>Dirección</th><td>@item.Dir</td></tr>
                             <tr><th>Tipo</th><td>@item.Tipo</td></tr>
                             <tr><th>Patronal</th><td>@item.Patronal</td></tr>
                             <tr><th>SSN</th><td>@item.SSN</td></tr>
@@ -34,8 +42,6 @@
                             <tr><th>NAICS</th><td>@item.NAICS</td></tr>
                             <tr><th>Descripcion</th><td>@item.Descripcion</td></tr>
                             <tr><th>Contacto</th><td>@item.Contacto</td></tr>
-                            <tr><th>Telefono</th><td>@item.Telefono</td></tr>
-                            <tr><th>Celular</th><td>@item.Celular</td></tr>
                             <tr><th>DirFisica</th><td>@item.DirFisica</td></tr>
                             <tr><th>DirPostal</th><td>@item.DirPostal</td></tr>
                             <tr><th>Email</th><td>@item.Email</td></tr>
@@ -76,9 +82,10 @@
                     $(this).DataTable({
                         "paging": true,
                         "searching": true,
-                        "ordering": true,
+                        "ordering": false,
                         "info": false, // Disable the table information display
-                        "lengthMenu": [10, 25, 50, 100],
+                        //"lengthMenu": [3, 25, 50, 100],
+                        "lengthMenu": [[4, -1], ["Summary", "All"]],
                         "columnDefs": [
                             { "orderable": true, "targets": 1 }
                         ],
@@ -89,6 +96,20 @@
                         }
                     });
                 });
+
+            // External search functionality
+            $('#externalSearch').on('keyup', function () {
+                var searchTerm = $(this).val().toLowerCase();
+                $('.tblData').each(function () {
+                    var nombre = $(this).data('nombre').toLowerCase();
+                    var nombreComercial = $(this).data('nombrecomercial').toLowerCase();
+                    if (nombre.includes(searchTerm) || nombreComercial.includes(searchTerm)) {
+                        $(this).closest('.tblData').show();
+                    } else {
+                        $(this).closest('.tblData').hide();
+                    }
+                });
+            });
         });
     </script>
 
