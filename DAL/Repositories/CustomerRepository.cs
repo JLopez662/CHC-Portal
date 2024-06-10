@@ -18,6 +18,11 @@ namespace CPA.DAL.Repositories
         {
             return _context.Demograficos.ToList();
         }
-            
+
+        public IEnumerable<Contributivo> GetContributivos()
+        {
+            return _context.Contributivos.ToList();
+        }
+
     }
 }

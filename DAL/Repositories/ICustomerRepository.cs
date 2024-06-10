@@ -10,5 +10,6 @@ namespace DAL.Repositories
     public interface ICustomerRepository
     {
         IEnumerable<Demografico> GetDemograficos();
+        IEnumerable<Contributivo> GetContributivos();
     }
 }

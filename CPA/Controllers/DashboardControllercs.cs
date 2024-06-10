@@ -18,9 +18,12 @@ namespace CPA.Controllers
             TempData["Success"] = "You have successfully logged in!";
             var demograficos = _customerService.GetDemograficos();
 
+            var contributivos = _customerService.GetContributivos();
+
             var viewModel = new DashboardViewModel
             {
-                Demograficos = demograficos
+                Demograficos = demograficos,
+                Contributivos = contributivos
             };
 
             ViewBag.FirstName = TempData["FirstName"] as string;

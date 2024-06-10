@@ -18,5 +18,10 @@ namespace BLL
         {
             return _customerRepository.GetDemograficos();
         }
+
+        public IEnumerable<Contributivo> GetContributivos()
+        {
+            return _customerRepository.GetContributivos();
+        }
     }
 }

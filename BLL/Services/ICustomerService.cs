@@ -10,5 +10,6 @@ namespace BLL.Services
     public interface ICustomerService
     {
         IEnumerable<Demografico> GetDemograficos();
+        IEnumerable<Contributivo> GetContributivos();
     }
 }
