@@ -1,7 +1,9 @@
-﻿namespace CPA.Models
+﻿using DAL.Models;
+
+namespace CPA.Models
 {
     public class DashboardViewModel
     {
-        public IEnumerable<DemograficoViewModel> Demograficos { get; set; }
+        public IEnumerable<Demografico> Demograficos { get; set; }
     }
 }
