@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qzPB3y691o1FaMn12IIhTYI+3c2Q6Z7KTlEvQCzZWe3UV6QH1Lheo3QfcmiCUu/5VvM79Ht42vZwTrLDWI18CQ==",
+  "dgSpecHash": "1ptGLVSSOgab/pj8rcGKnPJkMKpRd7+D65uqARy3jCQh8R99EKZHFPlT6FZC4FsUNddDngxCmoWXeZezOPSUyQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\execu\\source\\repos\\CPA\\CPA\\CPA.csproj",
+  "projectFilePath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\CPA.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\execu\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\execu\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

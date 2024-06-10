@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\execu\\source\\repos\\CPA\\Shared\\Shared.csproj": {}
+    "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj": {}
   },
   "projects": {
-    "C:\\Users\\execu\\source\\repos\\CPA\\Shared\\Shared.csproj": {
+    "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\execu\\source\\repos\\CPA\\Shared\\Shared.csproj",
+        "projectUniqueName": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj",
         "projectName": "Shared",
-        "projectPath": "C:\\Users\\execu\\source\\repos\\CPA\\Shared\\Shared.csproj",
+        "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj",
         "packagesPath": "C:\\Users\\execu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\execu\\source\\repos\\CPA\\Shared\\obj\\",
+        "outputPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<CPA.Models.DemograficoViewModel>
+
+@{
     ViewData["Title"] = "Dashboard";
 }
 
@@ -9,56 +11,92 @@
         <li class="nav-item" role="presentation">
             <a class="nav-link active" id="demograficos-tab" data-toggle="tab" href="#demograficos" role="tab" aria-controls="demograficos" aria-selected="true">Demograficos</a>
         </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="contributivos-tab" data-toggle="tab" href="#contributivos" role="tab" aria-controls="contributivos" aria-selected="false">Contributivos</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="identificacion-tab" data-toggle="tab" href="#identificacion" role="tab" aria-controls="identificacion" aria-selected="false">Identificacion</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="administrativos-tab" data-toggle="tab" href="#administrativos" role="tab" aria-controls="administrativos" aria-selected="false">Administrativos</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="metodo-de-pago-tab" data-toggle="tab" href="#metodo-de-pago" role="tab" aria-controls="metodo-de-pago" aria-selected="false">Metodo de Pago</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="confidencial-tab" data-toggle="tab" href="#confidencial" role="tab" aria-controls="confidencial" aria-selected="false">Confidencial</a>
-        </li>
+        <!-- Other tabs -->
     </ul>
 
     <div class="tab-content" id="dashboardTabsContent">
         <div class="tab-pane fade show active" id="demograficos" role="tabpanel" aria-labelledby="demograficos-tab">
-            <p>Content for Demograficos</p>
+            <div id="tblDataWrapper" class="dataTableWrapper">
+                @foreach (var item in Model)
+                {
+                    <table class="table table-striped table-bordered tblData">
+                        <tbody>
+                            <tr><th>ID</th><td>@item.ID</td></tr>
+                            <tr><th>Nombre</th><td>@item.Nombre</td></tr>
+                            <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
+                            <tr><th>Dir</th><td>@item.Dir</td></tr>
+                            <tr><th>Tipo</th><td>@item.Tipo</td></tr>
+                            <tr><th>Patronal</th><td>@item.Patronal</td></tr>
+                            <tr><th>SSN</th><td>@item.SSN</td></tr>
+                            <tr><th>Incorporacion</th><td>@item.Incorporacion</td></tr>
+                            <tr><th>Operaciones</th><td>@item.Operaciones</td></tr>
+                            <tr><th>Industria</th><td>@item.Industria</td></tr>
+                            <tr><th>NAICS</th><td>@item.NAICS</td></tr>
+                            <tr><th>Descripcion</th><td>@item.Descripcion</td></tr>
+                            <tr><th>Contacto</th><td>@item.Contacto</td></tr>
+                            <tr><th>Telefono</th><td>@item.Telefono</td></tr>
+                            <tr><th>Celular</th><td>@item.Celular</td></tr>
+                            <tr><th>DirFisica</th><td>@item.DirFisica</td></tr>
+                            <tr><th>DirPostal</th><td>@item.DirPostal</td></tr>
+                            <tr><th>Email</th><td>@item.Email</td></tr>
+                            <tr><th>Email2</th><td>@item.Email2</td></tr>
+                            <tr><th>CID</th><td>@item.CID</td></tr>
+                            <tr><th>MID</th><td>@item.MID</td></tr>
+                        </tbody>
+                    </table>
+                }
+            </div>
         </div>
-        <div class="tab-pane fade" id="contributivos" role="tabpanel" aria-labelledby="contributivos-tab">
-            <p>Content for Contributivos</p>
-        </div>
-        <div class="tab-pane fade" id="identificacion" role="tabpanel" aria-labelledby="identificacion-tab">
-            <p>Content for Identificacion</p>
-        </div>
-        <div class="tab-pane fade" id="administrativos" role="tabpanel" aria-labelledby="administrativos-tab">
-            <p>Content for Administrativos</p>
-        </div>
-        <div class="tab-pane fade" id="metodo-de-pago" role="tabpanel" aria-labelledby="metodo-de-pago-tab">
-            <p>Content for Metodo de Pago</p>
-        </div>
-        <div class="tab-pane fade" id="confidencial" role="tabpanel" aria-labelledby="confidencial-tab">
-            <p>Content for Confidencial</p>
-        </div>
+        <!-- Other tab contents -->
     </div>
 </div>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
+            console.log("Document is ready");
+
+            $('#dashboardTabs a').on('click', function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+                console.log($(this).attr('id') + " tab clicked");
+            });
+
+            // Show Toastr success message if TempData contains Success
         @if (TempData["Success"] != null)
         {
             <text>
-                    toastr.success('@TempData["Success"]');
+                    console.log('Showing Toastr success message');
+                toastr.success('@TempData["Success"]');
             </text>
         }
+
+                // Initialize DataTables on each table within the wrapper
+                $('.tblData').each(function () {
+                    $(this).DataTable({
+                        "paging": true,
+                        "searching": true,
+                        "ordering": true,
+                        "info": false, // Disable the table information display
+                        "lengthMenu": [10, 25, 50, 100],
+                        "columnDefs": [
+                            { "orderable": true, "targets": 1 }
+                        ],
+                        "order": [[1, 'asc']],
+                        "autoWidth": false,
+                        "language": {
+                            "search": "Search in this record:"
+                        }
+                    });
                 });
+        });
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <!-- Include necessary libraries -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 }
