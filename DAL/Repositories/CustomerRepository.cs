@@ -23,6 +23,22 @@ namespace CPA.DAL.Repositories
         {
             return _context.Contributivos.ToList();
         }
+        public IEnumerable<Administrativo> GetAdministrativos()
+        {
+            return _context.Administrativos.ToList();
+        }
+        public IEnumerable<Identificacion> GetIdentificaciones()
+        {
+            return _context.Identificaciones.ToList();
+        }
+        public IEnumerable<Pago> GetPagos()
+        {
+            return _context.Pagos.ToList();
+        }
+        public IEnumerable<Confidencial> GetConfidenciales()
+        {
+            return _context.Confidenciales.ToList();
+        }
 
     }
 }

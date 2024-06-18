@@ -20,10 +20,22 @@ namespace CPA.Controllers
 
             var contributivos = _customerService.GetContributivos();
 
+            var administrativos = _customerService.GetAdministrativos();
+            
+            var identificaciones = _customerService.GetIdentificaciones();
+
+            var pagos = _customerService.GetPagos();
+
+            var confidenciales = _customerService.GetConfidenciales();
+
             var viewModel = new DashboardViewModel
             {
                 Demograficos = demograficos,
-                Contributivos = contributivos
+                Contributivos = contributivos,
+                Administrativos = administrativos,
+                Identificaciones = identificaciones,
+                Pagos = pagos,
+                Confidenciales = confidenciales
             };
 
             ViewBag.FirstName = TempData["FirstName"] as string;

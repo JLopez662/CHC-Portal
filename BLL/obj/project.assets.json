@@ -3021,7 +3021,7 @@
       "projectName": "BLL",
       "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj",
       "packagesPath": "C:\\Users\\execu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\obj\\",
+      "outputPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\BLL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

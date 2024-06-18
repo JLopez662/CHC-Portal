@@ -11,5 +11,9 @@ namespace BLL.Services
     {
         IEnumerable<Demografico> GetDemograficos();
         IEnumerable<Contributivo> GetContributivos();
+        IEnumerable<Administrativo> GetAdministrativos();
+        IEnumerable<Identificacion> GetIdentificaciones();
+        IEnumerable<Pago> GetPagos();
+        IEnumerable<Confidencial> GetConfidenciales();
     }
 }
