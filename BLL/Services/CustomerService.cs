@@ -48,5 +48,10 @@ namespace BLL
         {
             _customerRepository.UpdateDemografico(demografico);
         }
+
+        public void UpdateContributivo(Contributivo contributivo)
+        {
+            _customerRepository.UpdateContributivo(contributivo);
+        }
     }
 }

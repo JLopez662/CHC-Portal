@@ -49,5 +49,11 @@ namespace DAL.Repositories
             _context.Entry(demografico).State = EntityState.Modified;
             _context.SaveChanges();
         }
+
+        public void UpdateContributivo(Contributivo contributivo)
+        {
+            _context.Entry(contributivo).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
     }
 }

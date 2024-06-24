@@ -84,6 +84,8 @@
                         <tr><th>Departamento de Estado</th><td>@item.DeptEstado</td></tr>
                     </tbody>
                 </table>
+                <button type="button" class="btn btn-primary edit-button" onclick="editContributivo('@item.ID')">Update</button>
+
                 }
             </div>
         </div>
@@ -277,11 +279,64 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
-
             </div>
         </div>
+
+        <!-- Offcanvas for editing Contributivos details -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="editContributivoOffcanvas" aria-labelledby="editContributivoOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="editContributivoOffcanvasLabel">Edit Contributivo Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <form id="editContributivoForm">
+                    <input type="hidden" id="contributivoId" name="ID" />
+                    <input type="hidden" id="contributivoCID" name="CID" />
+                    <input type="hidden" id="contributivoMID" name="MID" />
+
+                    <div class="mb-3">
+                        <label for="contributivoNombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="contributivoNombre" name="Nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contributivoNombreComercial" class="form-label">Nombre Comercial</label>
+                        <input type="text" class="form-control" id="contributivoNombreComercial" name="NombreComercial" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contributivoEstatal" class="form-label">Registro Estatal</label>
+                        <input type="text" class="form-control" id="contributivoEstatal" name="Estatal" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contributivoPoliza" class="form-label">Número de Poliza</label>
+                        <input type="text" class="form-control" id="contributivoPoliza" name="Poliza" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contributivoRegComerciante" class="form-label">Registro de Comerciante</label>
+                        <input type="text" class="form-control" id="contributivoRegComerciante" name="RegComerciante" required>
+                    </div>
+                    <div class="mb-3">
+                        <div class="mb-3">
+                            <label for="contributivoVencimiento" class="form-label">Fecha de Vencimiento</label>
+                            <input type="date" class="form-control" id="contributivoVencimiento" name="Vencimiento" required>
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="contributivoChoferil" class="form-label">Registro Choferil</label>
+                        <input type="text" class="form-control" id="contributivoChoferil" name="Choferil" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contributivoDeptEstado" class="form-label">Departamento de Estado</label>
+                        <input type="text" class="form-control" id="contributivoDeptEstado" name="DeptEstado" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 </div>
+
 
 @section Scripts {
     <script>
@@ -295,7 +350,6 @@
                 prioritizeActiveTabTables($(this).attr('href'));
             });
 
-            // Show Toastr success message if TempData contains Success
             @if (TempData["Success"] != null)
             {
                 <text>
@@ -304,7 +358,6 @@
                 </text>
             }
 
-            // Initialize DataTables on each table within the wrapper
             function initializeDataTables() {
                 $('.tblData').each(function () {
                     if (!$.fn.dataTable.isDataTable($(this))) {
@@ -312,7 +365,7 @@
                             "paging": true,
                             "searching": true,
                             "ordering": false,
-                            "info": false, // Disable the table information display
+                            "info": false,
                             "lengthMenu": [[4, -1], ["Summary", "All"]],
                             "columnDefs": [
                                 { "orderable": true, "targets": 1 }
@@ -329,23 +382,19 @@
 
             initializeDataTables();
 
-            // External search functionality
             $('#externalSearch').on('keyup', function () {
                 var searchTerm = $(this).val().toLowerCase();
                 var tablesMatched = false;
 
-                // Hide all tables and tab panes initially
                 $('.tblData').closest('table').hide();
                 $('.tab-pane').hide();
 
-                // Destroy DataTables instances on all tables
                 $('.tblData').each(function () {
                     if ($.fn.dataTable.isDataTable($(this))) {
                         $(this).DataTable().destroy();
                     }
                 });
 
-                // Show only the matching tables and their parent tab panes
                 $('.tblData').each(function () {
                     var nombre = $(this).data('nombre').toLowerCase();
                     var nombreComercial = $(this).data('nombrecomercial').toLowerCase();
@@ -354,12 +403,11 @@
 
                     if (nombre.includes(searchTerm) || nombreComercial.includes(searchTerm)) {
                         parentTable.show();
-                        parentTabPane.show(); // Show the parent tab pane if a match is found
+                        parentTabPane.show();
                         tablesMatched = true;
                     }
                 });
 
-                // Reinitialize DataTables only on matching tables
                 if (tablesMatched) {
                     $('.tblData:visible').each(function () {
                         if (!$.fn.dataTable.isDataTable($(this))) {
@@ -367,7 +415,7 @@
                                 "paging": true,
                                 "searching": true,
                                 "ordering": false,
-                                "info": false, // Disable the table information display
+                                "info": false,
                                 "lengthMenu": [[4, -1], ["Summary", "All"]],
                                 "columnDefs": [
                                     { "orderable": true, "targets": 1 }
@@ -382,24 +430,20 @@
                     });
                 }
 
-                // Show all tab panes if no match
                 if (!tablesMatched) {
                     $('.tab-pane').show();
-                    initializeDataTables(); // Reinitialize DataTables for all tables
+                    initializeDataTables();
                 }
 
-                // Ensure only the first tab is active if no match
                 if (searchTerm === "") {
                     $('.tab-pane').removeClass('show active');
                     $('.tab-pane:first').addClass('show active');
                 }
             });
 
-            // Ensure correct tab content visibility on load
             $('#dashboardTabsContent .tab-pane').removeClass('show active');
             $('#dashboardTabsContent .tab-pane:first').addClass('show active');
 
-            // Function to prioritize the active tab's tables
             function prioritizeActiveTabTables(activeTabId) {
                 $('.tab-pane').each(function () {
                     var tabPane = $(this);
@@ -409,21 +453,17 @@
                 });
             }
 
-            // Prioritize the first tab's tables on load
             prioritizeActiveTabTables($('#dashboardTabs a.active').attr('href'));
         });
 
-        // Define the editDemografico function
         function editDemografico(id) {
-            console.log("Edit button clicked for ID:", id); // Debugging line
-            // Fetch data for the selected demografico
+            console.log("Edit button clicked for ID:", id);
             $.ajax({
-                url: '@Url.Action("GetDemograficoById", "Dashboard")', // Adjust URL as needed
+                url: '@Url.Action("GetDemograficoById", "Dashboard")',
                 type: 'GET',
                 data: { id: id },
                 success: function (data) {
-                    console.log("Data fetched:", data); // Debugging line
-                    // Populate the form fields with the fetched data
+                    console.log("Data fetched:", data);
                     $('#demograficoId').val(data.id);
                     $('#demograficoNombre').val(data.nombre);
                     $('#demograficoNombreComercial').val(data.nombreComercial);
@@ -446,7 +486,6 @@
                     $('#demograficoCID').val(data.cid);
                     $('#demograficoMID').val(data.mid);
 
-                    // Show the offcanvas
                     var offcanvasElement = document.getElementById('editDemograficoOffcanvas');
                     var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
                     offcanvas.show();
@@ -458,36 +497,96 @@
         }
 
         $('#editDemograficoForm').on('submit', function (e) {
-        e.preventDefault();
+            e.preventDefault();
 
-        var data = $(this).serialize();
+            var data = $(this).serialize();
 
-        $.ajax({
-            url: '@Url.Action("UpdateDemografico", "Dashboard")', // Adjust URL as needed
-            type: 'POST',
-            data: data,
-            success: function (response) {
-                if (response.success) {
-                    toastr.success('Demografico details updated successfully!');
-                    location.reload(); // Reload to show the updated details
-                } else {
-                    toastr.error(response.message || 'Failed to update demografico details.');
-                    console.log('Validation Errors:', response.errors);
-                    response.errors.forEach(function (error) {
-                        toastr.error(error);
-                    });
+            $.ajax({
+                url: '@Url.Action("UpdateDemografico", "Dashboard")',
+                type: 'POST',
+                data: data,
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success('Demografico details updated successfully!');
+                        location.reload();
+                    } else {
+                        toastr.error(response.message || 'Failed to update demografico details.');
+                        console.log('Validation Errors:', response.errors);
+                        response.errors.forEach(function (error) {
+                            toastr.error(error);
+                        });
+                    }
+
+                    var offcanvasElement = document.getElementById('editDemograficoOffcanvas');
+                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                    offcanvas.hide();
+                },
+                error: function () {
+                    toastr.error('Failed to update demografico details.');
                 }
-
-                var offcanvasElement = document.getElementById('editDemograficoOffcanvas');
-                var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
-                offcanvas.hide();
-            },
-            error: function () {
-                toastr.error('Failed to update demografico details.');
-            }
+            });
         });
-    });
 
+        function editContributivo(id) {
+            console.log("Edit button clicked for Contributivo ID:", id);
+            $.ajax({
+                url: '@Url.Action("GetContributivoById", "Dashboard")',
+                type: 'GET',
+                data: { id: id },
+                success: function (data) {
+                    console.log("Data fetched:", data);
+                    $('#contributivoId').val(data.id);
+                    $('#contributivoNombre').val(data.nombre);
+                    $('#contributivoNombreComercial').val(data.nombreComercial);
+                    $('#contributivoEstatal').val(data.estatal);
+                    $('#contributivoPoliza').val(data.poliza);
+                    $('#contributivoRegComerciante').val(data.regComerciante);
+                    $('#contributivoVencimiento').val(data.vencimiento);
+                    $('#contributivoChoferil').val(data.choferil);
+                    $('#contributivoDeptEstado').val(data.deptEstado);
+                    $('#contributivoCID').val(data.cid);
+                    $('#contributivoMID').val(data.mid);
+
+                    var offcanvasElement = document.getElementById('editContributivoOffcanvas');
+                    var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                    offcanvas.show();
+                },
+                error: function () {
+                    toastr.error('Failed to fetch contributivo details.');
+                }
+            });
+        }
+
+        $('#editContributivoForm').on('submit', function (e) {
+            e.preventDefault();
+
+            var data = $(this).serialize();
+
+            $.ajax({
+                url: '@Url.Action("UpdateContributivo", "Dashboard")',
+                type: 'POST',
+                data: data,
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success('Contributivo details updated successfully!');
+                        location.reload();
+                    } else {
+                        toastr.error(response.message || 'Failed to update contributivo details.');
+                        console.log('Validation Errors:', response.errors);
+                        response.errors.forEach(function (error) {
+                            toastr.error(error);
+                        });
+                    }
+
+                    var offcanvasElement = document.getElementById('editContributivoOffcanvas');
+                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                    offcanvas.hide();
+                },
+                error: function () {
+                    toastr.error('Failed to update contributivo details.');
+                }
+            });
+        });
     </script>
 
     <!-- Include necessary libraries -->

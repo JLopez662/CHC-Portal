@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
@@ -12,6 +8,7 @@ namespace DAL.Models
     {
         [Key]
         public string ID { get; set; }
+
         public string Nombre { get; set; }
         public string NombreComercial { get; set; }
         public string Estatal { get; set; }
@@ -23,8 +20,8 @@ namespace DAL.Models
         public string CID { get; set; }
         public string MID { get; set; }
 
+        // No [Required] attribute if Registro is optional
         [ForeignKey("ID")]
         public Registro Registro { get; set; }
     }
-
 }

@@ -39,7 +39,6 @@ namespace CPA.Controllers
             return View(viewModel);
         }
 
-
         [HttpGet]
         public IActionResult GetDemograficoById(string id)
         {
@@ -51,10 +50,10 @@ namespace CPA.Controllers
 
             return Json(demografico);
         }
+
         [HttpPost]
         public IActionResult UpdateDemografico(Demografico model)
         {
-            // Remove the Registro property from the model state validation
             ModelState.Remove(nameof(model.Registro));
 
             if (ModelState.IsValid)
@@ -62,7 +61,6 @@ namespace CPA.Controllers
                 var existingDemografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == model.ID);
                 if (existingDemografico != null)
                 {
-                    // Copy the values from the incoming model to the existing entity
                     existingDemografico.Nombre = model.Nombre;
                     existingDemografico.NombreComercial = model.NombreComercial;
                     existingDemografico.Dir = model.Dir;
@@ -84,8 +82,6 @@ namespace CPA.Controllers
                     existingDemografico.CID = model.CID;
                     existingDemografico.MID = model.MID;
 
-                    // Do not update the Registro property here as it's a navigation property
-
                     _customerService.UpdateDemografico(existingDemografico);
                     return Json(new { success = true });
                 }
@@ -93,21 +89,71 @@ namespace CPA.Controllers
                 return Json(new { success = false, message = "Demografico not found." });
             }
 
-            var errors = ModelState.Values.SelectMany(v => v.Errors)
-                                           .Select(e => e.ErrorMessage)
-                                           .ToList();
-
-            foreach (var error in errors)
-            {
-                Console.WriteLine($"Model validation error: {error}");
-            }
-
+            var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
             return Json(new { success = false, message = "Model validation failed.", errors });
         }
 
+        [HttpGet]
+        public IActionResult GetContributivoById(string id)
+        {
+            var contributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == id);
+            if (contributivo == null)
+            {
+                return NotFound();
+            }
+
+            // Convert the date to a string in the proper format (yyyy-MM-dd)
+            var contributivoViewModel = new
+            {
+                contributivo.ID,
+                contributivo.Nombre,
+                contributivo.NombreComercial,
+                contributivo.Estatal,
+                contributivo.Poliza,
+                contributivo.RegComerciante,
+                Vencimiento = contributivo.Vencimiento.ToString("yyyy-MM-dd"),
+                contributivo.Choferil,
+                contributivo.DeptEstado,
+                contributivo.CID,
+                contributivo.MID
+            };
+
+            return Json(contributivoViewModel);
+        }
 
 
+        [HttpPost]
+        public IActionResult UpdateContributivo(Contributivo model)
+        {
+            // Remove validation for the Registro field if it's optional
+            ModelState.Remove(nameof(model.Registro));
 
+            if (ModelState.IsValid)
+            {
+                var existingContributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == model.ID);
+                if (existingContributivo != null)
+                {
+                    existingContributivo.Nombre = model.Nombre;
+                    existingContributivo.NombreComercial = model.NombreComercial;
+                    existingContributivo.Estatal = model.Estatal;
+                    existingContributivo.Poliza = model.Poliza;
+                    existingContributivo.RegComerciante = model.RegComerciante;
+                    existingContributivo.Vencimiento = model.Vencimiento;
+                    existingContributivo.Choferil = model.Choferil;
+                    existingContributivo.DeptEstado = model.DeptEstado;
+                    existingContributivo.CID = model.CID;
+                    existingContributivo.MID = model.MID;
+
+                    _customerService.UpdateContributivo(existingContributivo);
+                    return Json(new { success = true });
+                }
+
+                return Json(new { success = false, message = "Contributivo not found." });
+            }
+
+            var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            return Json(new { success = false, message = "Model validation failed.", errors });
+        }
 
     }
 }

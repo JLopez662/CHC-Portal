@@ -12,5 +12,6 @@ namespace BLL.Services
         IEnumerable<Pago> GetPagos();
         IEnumerable<Confidencial> GetConfidenciales();
         void UpdateDemografico(Demografico demografico);
+        void UpdateContributivo(Contributivo contributivo);
     }
 }
