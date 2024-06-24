@@ -1,40 +1,72 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DAL.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DAL.Models
+public class Demografico
 {
-    public class Demografico
-    {
-        [Key]
-        public string ID { get; set; }
-        public string Nombre { get; set; }
-        public string NombreComercial { get; set; }
-        public string Dir { get; set; }
-        public string Tipo { get; set; }
-        public string Patronal { get; set; }
-        public string SSN { get; set; }
-        public DateTime Incorporacion { get; set; }
-        public DateTime Operaciones { get; set; }
-        public string Industria { get; set; }
-        public int NAICS { get; set; }
-        public string Descripcion { get; set; }
-        public string Contacto { get; set; }
-        public string Telefono { get; set; }
-        public string Celular { get; set; }
-        public string DirFisica { get; set; }
-        public string DirPostal { get; set; }
-        public string Email { get; set; }
-        public string Email2 { get; set; }
-        public string CID { get; set; }
-        public string MID { get; set; }
+    [Key]
+    [Required]
+    public string ID { get; set; }
 
-        [ForeignKey("ID")]
-        public Registro Registro { get; set; }
-    }
+    [Required]
+    [StringLength(100)]
+    public string Nombre { get; set; }
 
+    [Required]
+    [StringLength(100)]
+    public string NombreComercial { get; set; }
+
+    [StringLength(200)]
+    public string Dir { get; set; }
+
+    [StringLength(50)]
+    public string Tipo { get; set; }
+
+    [StringLength(50)]
+    public string Patronal { get; set; }
+
+    [StringLength(11)]
+    public string SSN { get; set; }
+
+    [DataType(DataType.Date)]
+    public DateTime Incorporacion { get; set; }
+
+    [DataType(DataType.Date)]
+    public DateTime Operaciones { get; set; }
+
+    [StringLength(100)]
+    public string Industria { get; set; }
+
+    [Range(0, int.MaxValue)]
+    public int NAICS { get; set; }
+
+    [StringLength(500)]
+    public string Descripcion { get; set; }
+
+    [StringLength(100)]
+    public string Contacto { get; set; }
+
+    [Phone]
+    public string Telefono { get; set; }
+
+    [Phone]
+    public string Celular { get; set; }
+
+    [StringLength(200)]
+    public string DirFisica { get; set; }
+
+    [StringLength(200)]
+    public string DirPostal { get; set; }
+
+    [EmailAddress]
+    public string Email { get; set; }
+
+    [EmailAddress]
+    public string Email2 { get; set; }
+
+    public string CID { get; set; }
+    public string MID { get; set; }
+
+    [ForeignKey("ID")]
+    public Registro Registro { get; set; } // Ensure this is not marked as [Required]
 }

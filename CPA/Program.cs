@@ -3,7 +3,6 @@ using Shared.Models;
 using BLL.Services;
 using DAL;
 using DAL.Repositories;
-using CPA.DAL.Repositories;
 using BLL;
 
 var builder = WebApplication.CreateBuilder(args);

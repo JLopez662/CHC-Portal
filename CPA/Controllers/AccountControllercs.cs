@@ -65,7 +65,7 @@ namespace CPA.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(string firstName, string lastName, string email, string phone, string username, string password)
+        public async Task<IActionResult> Register(string firstName, string lastName, string email, string phone, string password)
         {
             using var sha256 = SHA256.Create();
             var hashedPasswordBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
@@ -87,9 +87,9 @@ namespace CPA.Controllers
             string message = $"Hello {firstName},\n\nThank you for registering at CPA Portal.\n\nBest Regards,\nCPA Portal Team";
             await _emailService.SendEmailAsync(email, subject, message);
 
-            ViewBag.Success = "Registration successful. Please log in.";
-            return RedirectToAction("Index", "Home", new { success = ViewBag.Success });
+            return Json(new { success = true, data = user });
         }
+
 
         [HttpGet("ForgotPassword")]
         public IActionResult ForgotPassword()

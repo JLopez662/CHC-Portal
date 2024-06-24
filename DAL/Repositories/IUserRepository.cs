@@ -12,5 +12,9 @@ namespace DAL.Repositories
         void AddUser(User user);
         void UpdateUser(User user);
         void DeleteUser(int id);
+
+        // Add methods for Demográficos
+        Demografico GetDemograficoById(int id);
+        void UpdateDemografico(Demografico demografico);
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using DAL.Models;
 
 namespace DAL.Repositories
@@ -15,6 +11,6 @@ namespace DAL.Repositories
         IEnumerable<Identificacion> GetIdentificaciones();
         IEnumerable<Pago> GetPagos();
         IEnumerable<Confidencial> GetConfidenciales();
-
+        void UpdateDemografico(Demografico demografico);
     }
 }

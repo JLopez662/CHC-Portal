@@ -23,22 +23,30 @@ namespace BLL
         {
             return _customerRepository.GetContributivos();
         }
+
         public IEnumerable<Administrativo> GetAdministrativos()
         {
             return _customerRepository.GetAdministrativos();
         }
+
         public IEnumerable<Identificacion> GetIdentificaciones()
         {
             return _customerRepository.GetIdentificaciones();
         }
+
         public IEnumerable<Pago> GetPagos()
         {
             return _customerRepository.GetPagos();
         }
+
         public IEnumerable<Confidencial> GetConfidenciales()
         {
             return _customerRepository.GetConfidenciales();
         }
 
+        public void UpdateDemografico(Demografico demografico)
+        {
+            _customerRepository.UpdateDemografico(demografico);
+        }
     }
 }

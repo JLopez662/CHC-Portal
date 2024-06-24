@@ -20,6 +20,7 @@
                     <th>Email</th>
                     <th>FirstName</th>
                     <th>LastName</th>
+                    <th>Phone</th>
                     <th>Active</th>
                     <th>Actions</th>
                 </tr>
@@ -27,20 +28,11 @@
             <tbody>
                 @foreach (var user in Model)
                 {
-                    <tr>
-                        <td>
-                            <input type="hidden" name="Id" value="@user.Id" class="user-id" />
-                            <span class="text-field">@user.Email</span>
-                            <input type="text" name="Email" value="@user.Email" class="input-field" />
-                        </td>
-                        <td>
-                            <span class="text-field">@user.FirstName</span>
-                            <input type="text" name="FirstName" value="@user.FirstName" class="input-field" />
-                        </td>
-                        <td>
-                            <span class="text-field">@user.LastName</span>
-                            <input type="text" name="LastName" value="@user.LastName" class="input-field" />
-                        </td>
+                    <tr id="user-@user.Id">
+                        <td class="user-email">@user.Email</td>
+                        <td class="user-firstname">@user.FirstName</td>
+                        <td class="user-lastname">@user.LastName</td>
+                        <td class="user-phone">@user.Phone</td>
                         <td>
                             @{
                                 var lockButtonClass = user.LockoutEnd > DateTime.Now ? "btn-danger" : "btn-success";
@@ -52,8 +44,7 @@
                             </a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-primary modify-button">Update</button>
-                            <button type="button" class="btn btn-success save-button d-none">Save</button>
+                            <button type="button" class="btn btn-primary" onclick="editUser('@user.Id', '@user.Email', '@user.FirstName', '@user.LastName', '@user.Phone')">Update</button>
                             <button type="button" class="btn btn-warning password-recovery-button" onclick="passwordRecovery('@user.Email')">Password Recovery</button>
                         </td>
                     </tr>
@@ -61,10 +52,47 @@
             </tbody>
         </table>
         <div class="text-right">
-            <a href="/UserManagement/Create" class="green-button">
-                <span>Create New User</span>
-            </a>
+            <button type="button" class="btn btn-success" onclick="createUser()">Create New User</button>
         </div>
+
+    </div>
+</div>
+
+<!-- Off-canvas for editing/creating user details -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="userOffcanvasLabel">User Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form id="userForm">
+            <input type="hidden" id="userId" name="Id" />
+            <div class="mb-3">
+                <label for="userEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="userEmail" name="Email" required>
+            </div>
+            <div class="mb-3">
+                <label for="userFirstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="userFirstName" name="FirstName" required>
+            </div>
+            <div class="mb-3">
+                <label for="userLastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="userLastName" name="LastName" required>
+            </div>
+            <div class="mb-3">
+                <label for="userPhone" class="form-label">Phone</label>
+                <input type="text" class="form-control" id="userPhone" name="Phone" required>
+            </div>
+            <div class="mb-3 password-field">
+                <label for="userPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="userPassword" name="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+
+
+
+
     </div>
 </div>
 
@@ -72,5 +100,78 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="~/js/userManagement.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function editUser(id, email, firstName, lastName, phone) {
+            $('#userId').val(id);
+            $('#userEmail').val(email);
+            $('#userFirstName').val(firstName);
+            $('#userLastName').val(lastName);
+            $('#userPhone').val(phone);
+            $('.password-field').hide(); // Hide the password field for editing
+            $('#userPassword').val(''); // Clear the password field
+            $('#userOffcanvasLabel').text('Edit User');
+            var userOffcanvas = new bootstrap.Offcanvas(document.getElementById('userOffcanvas'));
+            userOffcanvas.show();
+        }
+
+        function createUser() {
+            $('#userId').val('');
+            $('#userEmail').val('');
+            $('#userFirstName').val('');
+            $('#userLastName').val('');
+            $('#userPhone').val('');
+            $('#userPassword').val(''); // Clear the password field
+            $('.password-field').show(); // Show the password field for creating
+            $('#userOffcanvasLabel').text('Create New User');
+            var userOffcanvas = new bootstrap.Offcanvas(document.getElementById('userOffcanvas'));
+            userOffcanvas.show();
+        }
+
+        $('#userForm').on('submit', function (e) {
+            e.preventDefault();
+            var data = $(this).serializeArray();
+
+            // Remove password field if it is empty (only for updates)
+            if ($('#userId').val()) {
+                data = data.filter(function (item) {
+                    return !(item.name === "Password" && item.value === "");
+                });
+            }
+
+            var url = $('#userId').val() ? '@Url.Action("UpdateUser", "UserManagement")' : '@Url.Action("CreateUser", "UserManagement")';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: $.param(data),
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        if ($('#userId').val()) {
+                            var row = $('#user-' + response.data.id);
+                            row.find('.user-email').text(response.data.email);
+                            row.find('.user-firstname').text(response.data.firstName);
+                            row.find('.user-lastname').text(response.data.lastName);
+                            row.find('.user-phone').text(response.data.phone);
+                        } else {
+                            location.reload(); // Reload to show the new user in the table
+                        }
+                    } else {
+                        toastr.error(response.message);
+                    }
+                    var userOffcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('userOffcanvas'));
+                    userOffcanvas.hide();
+                },
+                error: function () {
+                    toastr.error('An error occurred while saving user details.');
+                }
+            });
+        });
+
+
+        $(document).ready(function () {
+            $('#customTable').DataTable();
+        });
+
+    </script>
 }

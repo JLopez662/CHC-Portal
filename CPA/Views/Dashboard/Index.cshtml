@@ -40,28 +40,29 @@
             <div id="tblDataWrapper" class="dataTableWrapper">
                 @foreach (var item in Model.Demograficos)
                 {
-                    <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
-                        <tbody>
-                            <tr><th>Nombre</th><td>@item.Nombre</td></tr>
-                            <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
-                            <tr><th>Teléfono</th><td>@item.Telefono</td></tr>
-                            <tr><th>Celular</th><td>@item.Celular</td></tr>
-                            <tr><th>Dirección</th><td>@item.Dir</td></tr>
-                            <tr><th>Tipo</th><td>@item.Tipo</td></tr>
-                            <tr><th>Patronal</th><td>@item.Patronal</td></tr>
-                            <tr><th>SSN</th><td>@item.SSN</td></tr>
-                            <tr><th>Incorporacion</th><td>@item.Incorporacion</td></tr>
-                            <tr><th>Operaciones</th><td>@item.Operaciones</td></tr>
-                            <tr><th>Industria</th><td>@item.Industria</td></tr>
-                            <tr><th>NAICS</th><td>@item.NAICS</td></tr>
-                            <tr><th>Descripcion</th><td>@item.Descripcion</td></tr>
-                            <tr><th>Contacto</th><td>@item.Contacto</td></tr>
-                            <tr><th>DirFisica</th><td>@item.DirFisica</td></tr>
-                            <tr><th>DirPostal</th><td>@item.DirPostal</td></tr>
-                            <tr><th>Email</th><td>@item.Email</td></tr>
-                            <tr><th>Email2</th><td>@item.Email2</td></tr>
-                        </tbody>
-                    </table>
+                <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
+                    <tbody>
+                        <tr><th>Nombre</th><td>@item.Nombre</td></tr>
+                        <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
+                        <tr><th>Teléfono</th><td>@item.Telefono</td></tr>
+                        <tr><th>Celular</th><td>@item.Celular</td></tr>
+                        <tr><th>Dirección</th><td>@item.Dir</td></tr>
+                        <tr><th>Tipo</th><td>@item.Tipo</td></tr>
+                        <tr><th>Patronal</th><td>@item.Patronal</td></tr>
+                        <tr><th>SSN</th><td>@item.SSN</td></tr>
+                        <tr><th>Incorporacion</th><td>@item.Incorporacion</td></tr>
+                        <tr><th>Operaciones</th><td>@item.Operaciones</td></tr>
+                        <tr><th>Industria</th><td>@item.Industria</td></tr>
+                        <tr><th>NAICS</th><td>@item.NAICS</td></tr>
+                        <tr><th>Descripcion</th><td>@item.Descripcion</td></tr>
+                        <tr><th>Contacto</th><td>@item.Contacto</td></tr>
+                        <tr><th>DirFisica</th><td>@item.DirFisica</td></tr>
+                        <tr><th>DirPostal</th><td>@item.DirPostal</td></tr>
+                        <tr><th>Email</th><td>@item.Email</td></tr>
+                        <tr><th>Email2</th><td>@item.Email2</td></tr>
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-primary" onclick="editDemografico('@item.ID')">Edit</button>
                 }
             </div>
         </div>
@@ -70,18 +71,18 @@
             <div id="tblDataWrapper" class="dataTableWrapper">
                 @foreach (var item in Model.Contributivos)
                 {
-                    <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
-                        <tbody>
-                            <tr><th>Nombre</th><td>@item.Nombre</td></tr>
-                            <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
-                            <tr><th>Registro Estatal</th><td>@item.Estatal</td></tr>
-                            <tr><th>Número de Poliza</th><td>@item.Poliza</td></tr>
-                            <tr><th>Registro de Comerciante</th><td>@item.RegComerciante</td></tr>
-                            <tr><th>Fecha de Vencimiento</th><td>@item.Vencimiento</td></tr>
-                            <tr><th>Registro Choferil</th><td>@item.Choferil</td></tr>
-                            <tr><th>Departamento de Estado</th><td>@item.DeptEstado</td></tr>
-                        </tbody>
-                    </table>
+                <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
+                    <tbody>
+                        <tr><th>Nombre</th><td>@item.Nombre</td></tr>
+                        <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
+                        <tr><th>Registro Estatal</th><td>@item.Estatal</td></tr>
+                        <tr><th>Número de Poliza</th><td>@item.Poliza</td></tr>
+                        <tr><th>Registro de Comerciante</th><td>@item.RegComerciante</td></tr>
+                        <tr><th>Fecha de Vencimiento</th><td>@item.Vencimiento</td></tr>
+                        <tr><th>Registro Choferil</th><td>@item.Choferil</td></tr>
+                        <tr><th>Departamento de Estado</th><td>@item.DeptEstado</td></tr>
+                    </tbody>
+                </table>
                 }
             </div>
         </div>
@@ -90,102 +91,194 @@
             <div id="tblDataWrapper" class="dataTableWrapper">
                 @foreach (var item in Model.Administrativos)
                 {
-                    <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
-                        <tbody>
-                            <tr><th>Nombre</th><td>@item.Nombre</td></tr>
-                            <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
-                            <tr><th>Fecha de Contrato</th><td>@item.Facturacion</td></tr>
-                            <tr><th>Número de Facturación</th><td>@item.FacturacionBase</td></tr>
-                            <tr><th>IVU</th><td>@item.IVU</td></tr>
-                            <tr><th>Staff</th><td>@item.Staff</td></tr>
-                            <tr><th>Contratación de Staff</th><td>@item.StaffDate</td></tr>
-                        </tbody>
-                    </table>
+                <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
+                    <tbody>
+                        <tr><th>Nombre</th><td>@item.Nombre</td></tr>
+                        <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
+                        <tr><th>Fecha de Contrato</th><td>@item.Facturacion</td></tr>
+                        <tr><th>Número de Facturación</th><td>@item.FacturacionBase</td></tr>
+                        <tr><th>IVU</th><td>@item.IVU</td></tr>
+                        <tr><th>Staff</th><td>@item.Staff</td></tr>
+                        <tr><th>Contratación de Staff</th><td>@item.StaffDate</td></tr>
+                    </tbody>
+                </table>
                 }
             </div>
         </div>
-        <!-- Other tab contents -->
+        <!-- Identificacion tab contents -->
         <div class="tab-pane fade" id="identificacion" role="tabpanel" aria-labelledby="identificacion-tab">
             <div id="tblDataWrapper" class="dataTableWrapper">
                 @foreach (var item in Model.Identificaciones)
                 {
-                    <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
-                        <tbody>
-                            <tr><th>Nombre</th><td>@item.Nombre</td></tr>
-                            <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
-                            <tr><th>Accionista</th><td>@item.Accionista</td></tr>
-                            <tr><th>SSNA</th><td>@item.SSNA</td></tr>
-                            <tr><th>Cargo</th><td>@item.Cargo</td></tr>
-                            <tr><th>Licencia de Conducir</th><td>@item.LicConducir</td></tr>
-                            <tr><th>Fecha de Nacimiento</th><td>@item.Nacimiento</td></tr>
-                        </tbody>
-                    </table>
+                <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
+                    <tbody>
+                        <tr><th>Nombre</th><td>@item.Nombre</td></tr>
+                        <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
+                        <tr><th>Accionista</th><td>@item.Accionista</td></tr>
+                        <tr><th>SSNA</th><td>@item.SSNA</td></tr>
+                        <tr><th>Cargo</th><td>@item.Cargo</td></tr>
+                        <tr><th>Licencia de Conducir</th><td>@item.LicConducir</td></tr>
+                        <tr><th>Fecha de Nacimiento</th><td>@item.Nacimiento</td></tr>
+                    </tbody>
+                </table>
                 }
             </div>
         </div>
-        <!-- Other tab contents -->
+        <!-- Metodo de Pago tab contents -->
         <div class="tab-pane fade" id="metodo-de-pago" role="tabpanel" aria-labelledby="metodo-de-pago-tab">
             <div id="tblDataWrapper" class="dataTableWrapper">
                 @foreach (var item in Model.Pagos)
                 {
-                    <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
-                        <tbody>
-                            <tr><th>Nombre</th><td>@item.Nombre</td></tr>
-                            <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
-                            <tr><th>Cliente del Banco</th><td>@item.BankClient</td></tr>
-                            <tr><th>Banco</th><td>@item.Banco</td></tr>
-                            <tr><th>Numero de Ruta</th><td>@item.NumRuta</td></tr>
-                            <tr><th>Nombre del Banco</th><td>@item.NameBank</td></tr>
-                            <tr><th>Tipo de Cuenta</th><td>@item.TipoCuenta</td></tr>
-                            <tr><th>Cliente del Banco 2</th><td>@item.BankClientS</td></tr>
-                            <tr><th>Banco 2</th><td>@item.BancoS</td></tr>
-                            <tr><th>Numero de Ruta 2</th><td>@item.NumRutaS</td></tr>
-                            <tr><th>Nombre del Banco 2</th><td>@item.NameBankS</td></tr>
-                            <tr><th>Tipo de Cuenta 2</th><td>@item.TipoCuentaS</td></tr>
-                            <tr><th>Cliente en Tarjeta</th><td>@item.NameCard</td></tr>
-                            <tr><th>Tarjeta de Pago</th><td>@item.Tarjeta</td></tr>
-                            <tr><th>Tipo de Tarjeta</th><td>@item.TipoTarjeta</td></tr>
-                            <tr><th>CVV</th><td>@item.CVV</td></tr>
-                            <tr><th>Fecha Expiracion</th><td>@item.Expiracion</td></tr>
-                            <tr><th>Postal en Tarjeta</th><td>@item.PostalBank</td></tr>
-                            <tr><th>Cliente en Tarjeta 2</th><td>@item.NameCardS</td></tr>
-                            <tr><th>Tarjeta de Pago 2</th><td>@item.TarjetaS</td></tr>
-                            <tr><th>Tipo de Tarjeta 2</th><td>@item.TipoTarjetaS</td></tr>
-                            <tr><th>CVVS</th><td>@item.CVVS</td></tr>
-                            <tr><th>Fecha Expiracion 2</th><td>@item.ExpiracionS</td></tr>
-                            <tr><th>Postal en Tarjeta 2</th><td>@item.PostalBankS</td></tr>
-                        </tbody>
-                    </table>
-                }
-            </div>
-        </div>
-        <!-- Other tab contents -->
-        <div class="tab-pane fade" id="confidencial" role="tabpanel" aria-labelledby="confidencial-tab">
-            <div id="tblDataWrapper" class="dataTableWrapper">
-                @foreach (var item in Model.Confidenciales)
-                {
-                    <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
-                        <tbody>
-                            <tr><th>Nombre</th><td>@item.Nombre</td></tr>
-                            <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
-                            <tr><th>Usuario Suri</th><td>@item.UserSuri</td></tr>
-                            <tr><th>Contraseña Suri</th><td>@item.PassSuri</td></tr>
-                            <tr><th>Usuario Eftps</th><td>@item.UserEftps</td></tr>
-                            <tr><th>Contraseña Eftps</th><td>@item.PassEftps</td></tr>
-                            <tr><th>PIN</th><td>@item.PIN</td></tr>
-                            <tr><th>Usuario CFSE</th><td>@item.UserCFSE</td></tr>
-                            <tr><th>Contraseña CFSE</th><td>@item.PassCFSE</td></tr>
-                            <tr><th>Usuario Dept del Trabajo</th><td>@item.UserDept</td></tr>
-                            <tr><th>Contraseñ Dept del Trabajo</th><td>@item.PassDept</td></tr>
-                            <tr><th>Usuario Cofim</th><td>@item.UserCofim</td></tr>
-                            <tr><th>Contraseña Cofim</th><td>@item.PassCofim</td></tr>
-                            <tr><th>Usuario Municipio</th><td>@item.UserMunicipio</td></tr>
-                            <tr><th>Contraseña Municipio</th><td>@item.PassMunicipio</td></tr>
-                    </table>
+                <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
+                    <tbody>
+                        <tr><th>Nombre</th><td>@item.Nombre</td></tr>
+                        <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
+                        <tr><th>Cliente del Banco</th><td>@item.BankClient</td></tr>
+                        <tr><th>Banco</th><td>@item.Banco</td></tr>
+                        <tr><th>Numero de Ruta</th><td>@item.NumRuta</td></tr>
+                        <tr><th>Nombre del Banco</th><td>@item.NameBank</td></tr>
+                        <tr><th>Tipo de Cuenta</th><td>@item.TipoCuenta</td></tr>
+                        <tr><th>Cliente del Banco 2</th><td>@item.BankClientS</td></tr>
+                        <tr><th>Banco 2</th><td>@item.BancoS</td></tr>
+                        <tr><th>Numero de Ruta 2</th><td>@item.NumRutaS</td></tr>
+                        <tr><th>Nombre del Banco 2</th><td>@item.NameBankS</td></tr>
+                        <tr><th>Tipo de Cuenta 2</th><td>@item.TipoCuentaS</td></tr>
+                        <tr><th>Cliente en Tarjeta</th><td>@item.NameCard</td></tr>
+                        <tr><th>Tarjeta de Pago</th><td>@item.Tarjeta</td></tr>
+                        <tr><th>Tipo de Tarjeta</th><td>@item.TipoTarjeta</td></tr>
+                        <tr><th>CVV</th><td>@item.CVV</td></tr>
+                        <tr><th>Fecha Expiracion</th><td>@item.Expiracion</td></tr>
+                        <tr><th>Postal en Tarjeta</th><td>@item.PostalBank</td></tr>
+                        <tr><th>Cliente en Tarjeta 2</th><td>@item.NameCardS</td></tr>
+                        <tr><th>Tarjeta de Pago 2</th><td>@item.TarjetaS</td></tr>
+                        <tr><th>Tipo de Tarjeta 2</th><td>@item.TipoTarjetaS</td></tr>
+                        <tr><th>CVVS</th><td>@item.CVVS</td></tr>
+                        <tr><th>Fecha Expiracion 2</th><td>@item.ExpiracionS</td></tr>
+                        <tr><th>Postal en Tarjeta 2</th><td>@item.PostalBankS</td></tr>
+                    </tbody>
+                </table>
                 }
             </div>
         </div>
 
+        <!-- Confidencial tab contents -->
+        <div class="tab-pane fade" id="confidencial" role="tabpanel" aria-labelledby="confidencial-tab">
+            <div id="tblDataWrapper" class="dataTableWrapper">
+                @foreach (var item in Model.Confidenciales)
+        {
+                <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
+                    <tbody>
+                        <tr><th>Nombre</th><td>@item.Nombre</td></tr>
+                        <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
+                        <tr><th>Usuario Suri</th><td>@item.UserSuri</td></tr>
+                        <tr><th>Contraseña Suri</th><td>@item.PassSuri</td></tr>
+                        <tr><th>Usuario Eftps</th><td>@item.UserEftps</td></tr>
+                        <tr><th>Contraseña Eftps</th><td>@item.PassEftps</td></tr>
+                        <tr><th>PIN</th><td>@item.PIN</td></tr>
+                        <tr><th>Usuario CFSE</th><td>@item.UserCFSE</td></tr>
+                        <tr><th>Contraseña CFSE</th><td>@item.PassCFSE</td></tr>
+                        <tr><th>Usuario Dept del Trabajo</th><td>@item.UserDept</td></tr>
+                        <tr><th>Contraseña Dept del Trabajo</th><td>@item.PassDept</td></tr>
+                        <tr><th>Usuario Cofim</th><td>@item.UserCofim</td></tr>
+                        <tr><th>Contraseña Cofim</th><td>@item.PassCofim</td></tr>
+                        <tr><th>Usuario Municipio</th><td>@item.UserMunicipio</td></tr>
+                        <tr><th>Contraseña Municipio</th><td>@item.PassMunicipio</td></tr>
+                    </tbody>
+                </table>
+        }
+            </div>
+        </div>
+
+
+        <!-- Offcanvas for editing demográficos details -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="editDemograficoOffcanvas" aria-labelledby="editDemograficoOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="editDemograficoOffcanvasLabel">Edit Demografico Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <form id="editDemograficoForm">
+                    <input type="hidden" id="demograficoId" name="ID" />
+                    <input type="hidden" id="demograficoCID" name="CID" />
+                    <input type="hidden" id="demograficoMID" name="MID" />
+
+                    <div class="mb-3">
+                        <label for="demograficoNombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="demograficoNombre" name="Nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoNombreComercial" class="form-label">Nombre Comercial</label>
+                        <input type="text" class="form-control" id="demograficoNombreComercial" name="NombreComercial" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoTelefono" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="demograficoTelefono" name="Telefono" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoCelular" class="form-label">Celular</label>
+                        <input type="text" class="form-control" id="demograficoCelular" name="Celular">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoDir" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="demograficoDir" name="Dir">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoTipo" class="form-label">Tipo</label>
+                        <input type="text" class="form-control" id="demograficoTipo" name="Tipo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoPatronal" class="form-label">Patronal</label>
+                        <input type="text" class="form-control" id="demograficoPatronal" name="Patronal">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoSSN" class="form-label">SSN</label>
+                        <input type="text" class="form-control" id="demograficoSSN" name="SSN">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoIncorporacion" class="form-label">Incorporacion</label>
+                        <input type="datetime-local" class="form-control" id="demograficoIncorporacion" name="Incorporacion">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoOperaciones" class="form-label">Operaciones</label>
+                        <input type="datetime-local" class="form-control" id="demograficoOperaciones" name="Operaciones">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoIndustria" class="form-label">Industria</label>
+                        <input type="text" class="form-control" id="demograficoIndustria" name="Industria">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoNAICS" class="form-label">NAICS</label>
+                        <input type="text" class="form-control" id="demograficoNAICS" name="NAICS">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoDescripcion" class="form-label">Descripcion</label>
+                        <input type="text" class="form-control" id="demograficoDescripcion" name="Descripcion">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoContacto" class="form-label">Contacto</label>
+                        <input type="text" class="form-control" id="demograficoContacto" name="Contacto">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoDirFisica" class="form-label">DirFisica</label>
+                        <input type="text" class="form-control" id="demograficoDirFisica" name="DirFisica">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoDirPostal" class="form-label">DirPostal</label>
+                        <input type="text" class="form-control" id="demograficoDirPostal" name="DirPostal">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="demograficoEmail" name="Email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="demograficoEmail2" class="form-label">Email2</label>
+                        <input type="email" class="form-control" id="demograficoEmail2" name="Email2">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+
+            </div>
+        </div>
     </div>
 </div>
 
@@ -202,36 +295,36 @@
             });
 
             // Show Toastr success message if TempData contains Success
-        @if (TempData["Success"] != null)
-        {
-            <text>
+            @if (TempData["Success"] != null)
+            {
+                <text>
                     console.log('Showing Toastr success message');
-                toastr.success('@TempData["Success"]');
-            </text>
-        }
+                    toastr.success('@TempData["Success"]');
+                </text>
+            }
 
-                // Initialize DataTables on each table within the wrapper
-                function initializeDataTables() {
-                    $('.tblData').each(function () {
-                        if (!$.fn.dataTable.isDataTable($(this))) {
-                            $(this).DataTable({
-                                "paging": true,
-                                "searching": true,
-                                "ordering": false,
-                                "info": false, // Disable the table information display
-                                "lengthMenu": [[4, -1], ["Summary", "All"]],
-                                "columnDefs": [
-                                    { "orderable": true, "targets": 1 }
-                                ],
-                                "order": [[1, 'asc']],
-                                "autoWidth": false,
-                                "language": {
-                                    "search": "Search in this record:"
-                                }
-                            });
-                        }
-                    });
-                }
+            // Initialize DataTables on each table within the wrapper
+            function initializeDataTables() {
+                $('.tblData').each(function () {
+                    if (!$.fn.dataTable.isDataTable($(this))) {
+                        $(this).DataTable({
+                            "paging": true,
+                            "searching": true,
+                            "ordering": false,
+                            "info": false, // Disable the table information display
+                            "lengthMenu": [[4, -1], ["Summary", "All"]],
+                            "columnDefs": [
+                                { "orderable": true, "targets": 1 }
+                            ],
+                            "order": [[1, 'asc']],
+                            "autoWidth": false,
+                            "language": {
+                                "search": "Search in this record:"
+                            }
+                        });
+                    }
+                });
+            }
 
             initializeDataTables();
 
@@ -318,14 +411,89 @@
             // Prioritize the first tab's tables on load
             prioritizeActiveTabTables($('#dashboardTabs a.active').attr('href'));
         });
+
+        // Define the editDemografico function
+        function editDemografico(id) {
+            console.log("Edit button clicked for ID:", id); // Debugging line
+            // Fetch data for the selected demografico
+            $.ajax({
+                url: '@Url.Action("GetDemograficoById", "Dashboard")', // Adjust URL as needed
+                type: 'GET',
+                data: { id: id },
+                success: function (data) {
+                    console.log("Data fetched:", data); // Debugging line
+                    // Populate the form fields with the fetched data
+                    $('#demograficoId').val(data.id);
+                    $('#demograficoNombre').val(data.nombre);
+                    $('#demograficoNombreComercial').val(data.nombreComercial);
+                    $('#demograficoTelefono').val(data.telefono);
+                    $('#demograficoCelular').val(data.celular);
+                    $('#demograficoDir').val(data.dir);
+                    $('#demograficoTipo').val(data.tipo);
+                    $('#demograficoPatronal').val(data.patronal);
+                    $('#demograficoSSN').val(data.ssn);
+                    $('#demograficoIncorporacion').val(data.incorporacion);
+                    $('#demograficoOperaciones').val(data.operaciones);
+                    $('#demograficoIndustria').val(data.industria);
+                    $('#demograficoNAICS').val(data.naics);
+                    $('#demograficoDescripcion').val(data.descripcion);
+                    $('#demograficoContacto').val(data.contacto);
+                    $('#demograficoDirFisica').val(data.dirFisica);
+                    $('#demograficoDirPostal').val(data.dirPostal);
+                    $('#demograficoEmail').val(data.email);
+                    $('#demograficoEmail2').val(data.email2);
+                    $('#demograficoCID').val(data.cid);
+                    $('#demograficoMID').val(data.mid);
+
+                    // Show the offcanvas
+                    var offcanvasElement = document.getElementById('editDemograficoOffcanvas');
+                    var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                    offcanvas.show();
+                },
+                error: function () {
+                    toastr.error('Failed to fetch demografico details.');
+                }
+            });
+        }
+
+        $('#editDemograficoForm').on('submit', function (e) {
+        e.preventDefault();
+
+        var data = $(this).serialize();
+
+        $.ajax({
+            url: '@Url.Action("UpdateDemografico", "Dashboard")', // Adjust URL as needed
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    toastr.success('Demografico details updated successfully!');
+                    location.reload(); // Reload to show the updated details
+                } else {
+                    toastr.error(response.message || 'Failed to update demografico details.');
+                    console.log('Validation Errors:', response.errors);
+                    response.errors.forEach(function (error) {
+                        toastr.error(error);
+                    });
+                }
+
+                var offcanvasElement = document.getElementById('editDemograficoOffcanvas');
+                var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                offcanvas.hide();
+            },
+            error: function () {
+                toastr.error('Failed to update demografico details.');
+            }
+        });
+    });
+
     </script>
 
     <!-- Include necessary libraries -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 }
-

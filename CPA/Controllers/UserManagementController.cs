@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using BLL.Services;
 using System;
 using System.Threading.Tasks;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace CPA.Controllers
 {
@@ -40,6 +42,39 @@ namespace CPA.Controllers
             return View(user);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(string email, string firstName, string lastName, string password, string phone)
+        {
+            using var sha256 = SHA256.Create();
+            var hashedPasswordBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            var hashedPassword = BitConverter.ToString(hashedPasswordBytes).Replace("-", "").ToLower();
+
+            var user = new User
+            {
+                Email = email,
+                FirstName = firstName,
+                LastName = lastName,
+                Username = email, // Assuming username is same as email
+                Password = hashedPassword,
+                Phone = phone
+            };
+
+            if (ModelState.IsValid)
+            {
+                _userRepository.AddUser(user);
+
+                // Optionally send a welcome email here if needed
+                // string subject = "Welcome to CPA Portal";
+                // string message = $"Hello {firstName},\n\nThank you for registering at CPA Portal.\n\nBest Regards,\nCPA Portal Team";
+                // await _emailService.SendEmailAsync(email, subject, message);
+
+                return Json(new { success = true, message = "User created successfully", data = user });
+            }
+
+            return Json(new { success = false, message = "Failed to create user" });
+        }
+
+
         public IActionResult Edit(int id)
         {
             var user = _userRepository.GetUserById(id);
@@ -62,7 +97,7 @@ namespace CPA.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateUser(int id, string email, string firstName, string lastName)
+        public async Task<IActionResult> UpdateUser(int id, string email, string firstName, string lastName, string phone, string password)
         {
             var user = _userRepository.GetUserById(id);
             if (user == null)
@@ -71,14 +106,24 @@ namespace CPA.Controllers
             }
 
             user.Email = email;
-            user.Username = user.Email;
             user.FirstName = firstName;
             user.LastName = lastName;
+            user.Phone = phone;
+
+            if (!string.IsNullOrEmpty(password))
+            {
+                using var sha256 = SHA256.Create();
+                var hashedPasswordBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var hashedPassword = BitConverter.ToString(hashedPasswordBytes).Replace("-", "").ToLower();
+                user.Password = hashedPassword;
+            }
 
             _userRepository.UpdateUser(user);
-
-            return Json(new { success = true, message = "User updated successfully" });
+            return Json(new { success = true, message = "User updated successfully", data = user });
         }
+
+
+
 
         public IActionResult Delete(int id)
         {

@@ -1,9 +1,5 @@
-﻿using DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using DAL.Models;
 
 namespace BLL.Services
 {
@@ -15,5 +11,6 @@ namespace BLL.Services
         IEnumerable<Identificacion> GetIdentificaciones();
         IEnumerable<Pago> GetPagos();
         IEnumerable<Confidencial> GetConfidenciales();
+        void UpdateDemografico(Demografico demografico);
     }
 }
