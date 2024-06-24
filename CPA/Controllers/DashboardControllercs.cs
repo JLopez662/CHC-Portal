@@ -35,9 +35,10 @@ namespace CPA.Controllers
                 Confidenciales = confidenciales
             };
 
-            ViewBag.FirstName = TempData["FirstName"] as string;
+            ViewBag.FirstName = HttpContext.Session.GetString("FirstName");
             return View(viewModel);
         }
+
 
         [HttpGet]
         public IActionResult GetDemograficoById(string id)
@@ -50,7 +51,6 @@ namespace CPA.Controllers
 
             return Json(demografico);
         }
-
         [HttpPost]
         public IActionResult UpdateDemografico(Demografico model)
         {
@@ -104,6 +104,7 @@ namespace CPA.Controllers
 
             return Json(new { success = false, message = "Model validation failed.", errors });
         }
+
 
 
 

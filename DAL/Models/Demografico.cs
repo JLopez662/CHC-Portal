@@ -68,5 +68,5 @@ public class Demografico
     public string MID { get; set; }
 
     [ForeignKey("ID")]
-    public Registro Registro { get; set; } // Ensure this is not marked as [Required]
+    public Registro Registro { get; set; }
 }

@@ -63,18 +63,13 @@ namespace CPA.Controllers
             {
                 _userRepository.AddUser(user);
 
-                // Optionally send a welcome email here if needed
-                // string subject = "Welcome to CPA Portal";
-                // string message = $"Hello {firstName},\n\nThank you for registering at CPA Portal.\n\nBest Regards,\nCPA Portal Team";
-                // await _emailService.SendEmailAsync(email, subject, message);
-
                 return Json(new { success = true, message = "User created successfully", data = user });
             }
 
             return Json(new { success = false, message = "Failed to create user" });
         }
 
-
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             var user = _userRepository.GetUserById(id);
@@ -122,8 +117,16 @@ namespace CPA.Controllers
             return Json(new { success = true, message = "User updated successfully", data = user });
         }
 
-
-
+        [HttpGet]
+        public IActionResult GetUserById(int id)
+        {
+            var user = _userRepository.GetUserById(id);
+            if (user == null)
+            {
+                return Json(new { success = false, message = "User not found" });
+            }
+            return Json(new { success = true, data = user });
+        }
 
         public IActionResult Delete(int id)
         {
@@ -187,12 +190,10 @@ namespace CPA.Controllers
 
         private async Task SendPasswordRecoveryEmailAsync(User user)
         {
-            // Generate password reset token and expiration
             user.PasswordResetToken = Guid.NewGuid().ToString();
             user.PasswordResetTokenExpiration = DateTime.Now.AddHours(1);
             _userRepository.UpdateUser(user);
 
-            // Send password reset email
             var resetLink = Url.Action("ResetPassword", "Account", new { token = user.PasswordResetToken }, Request.Scheme);
             var subject = "Password Reset Request";
             var message = $"Hello {user.FirstName},<br><br>You requested a password reset. Click the link below to reset your password:<br><a href='{resetLink}'>Reset Password</a><br><br>Best Regards,<br>CPA Portal Team";

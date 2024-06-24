@@ -40,32 +40,33 @@
             <div id="tblDataWrapper" class="dataTableWrapper">
                 @foreach (var item in Model.Demograficos)
                 {
-                <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
-                    <tbody>
-                        <tr><th>Nombre</th><td>@item.Nombre</td></tr>
-                        <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
-                        <tr><th>Teléfono</th><td>@item.Telefono</td></tr>
-                        <tr><th>Celular</th><td>@item.Celular</td></tr>
-                        <tr><th>Dirección</th><td>@item.Dir</td></tr>
-                        <tr><th>Tipo</th><td>@item.Tipo</td></tr>
-                        <tr><th>Patronal</th><td>@item.Patronal</td></tr>
-                        <tr><th>SSN</th><td>@item.SSN</td></tr>
-                        <tr><th>Incorporacion</th><td>@item.Incorporacion</td></tr>
-                        <tr><th>Operaciones</th><td>@item.Operaciones</td></tr>
-                        <tr><th>Industria</th><td>@item.Industria</td></tr>
-                        <tr><th>NAICS</th><td>@item.NAICS</td></tr>
-                        <tr><th>Descripcion</th><td>@item.Descripcion</td></tr>
-                        <tr><th>Contacto</th><td>@item.Contacto</td></tr>
-                        <tr><th>DirFisica</th><td>@item.DirFisica</td></tr>
-                        <tr><th>DirPostal</th><td>@item.DirPostal</td></tr>
-                        <tr><th>Email</th><td>@item.Email</td></tr>
-                        <tr><th>Email2</th><td>@item.Email2</td></tr>
-                    </tbody>
-                </table>
-                <button type="button" class="btn btn-primary" onclick="editDemografico('@item.ID')">Edit</button>
+                    <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
+                        <tbody>
+                            <tr><th>Nombre</th><td>@item.Nombre</td></tr>
+                            <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
+                            <tr><th>Teléfono</th><td>@item.Telefono</td></tr>
+                            <tr><th>Celular</th><td>@item.Celular</td></tr>
+                            <tr><th>Dirección</th><td>@item.Dir</td></tr>
+                            <tr><th>Tipo</th><td>@item.Tipo</td></tr>
+                            <tr><th>Patronal</th><td>@item.Patronal</td></tr>
+                            <tr><th>SSN</th><td>@item.SSN</td></tr>
+                            <tr><th>Incorporacion</th><td>@item.Incorporacion</td></tr>
+                            <tr><th>Operaciones</th><td>@item.Operaciones</td></tr>
+                            <tr><th>Industria</th><td>@item.Industria</td></tr>
+                            <tr><th>NAICS</th><td>@item.NAICS</td></tr>
+                            <tr><th>Descripcion</th><td>@item.Descripcion</td></tr>
+                            <tr><th>Contacto</th><td>@item.Contacto</td></tr>
+                            <tr><th>DirFisica</th><td>@item.DirFisica</td></tr>
+                            <tr><th>DirPostal</th><td>@item.DirPostal</td></tr>
+                            <tr><th>Email</th><td>@item.Email</td></tr>
+                            <tr><th>Email2</th><td>@item.Email2</td></tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-primary edit-button" onclick="editDemografico('@item.ID')">Update</button>
                 }
             </div>
         </div>
+
         <!-- Contributivos tab contents -->
         <div class="tab-pane fade" id="contributivos" role="tabpanel" aria-labelledby="contributivos-tab">
             <div id="tblDataWrapper" class="dataTableWrapper">
