@@ -55,5 +55,17 @@ namespace DAL.Repositories
             _context.Entry(contributivo).State = EntityState.Modified;
             _context.SaveChanges();
         }
+
+        public void UpdateAdministrativo(Administrativo administrativo)
+        {
+            _context.Entry(administrativo).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void UpdateIdentificacion(Identificacion identificacion)
+        {
+            _context.Entry(identificacion).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
     }
 }

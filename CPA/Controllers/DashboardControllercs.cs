@@ -121,7 +121,6 @@ namespace CPA.Controllers
             return Json(contributivoViewModel);
         }
 
-
         [HttpPost]
         public IActionResult UpdateContributivo(Contributivo model)
         {
@@ -149,6 +148,109 @@ namespace CPA.Controllers
                 }
 
                 return Json(new { success = false, message = "Contributivo not found." });
+            }
+
+            var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            return Json(new { success = false, message = "Model validation failed.", errors });
+        }
+
+        [HttpGet]
+        public IActionResult GetAdministrativoById(string id)
+        {
+            var administrativo = _customerService.GetAdministrativos().FirstOrDefault(a => a.ID == id);
+            if (administrativo == null)
+            {
+                return NotFound();
+            }
+
+            // Convert the date fields to a string in the proper format (yyyy-MM-ddTHH:mm)
+            var administrativoViewModel = new
+            {
+                administrativo.ID,
+                administrativo.Nombre,
+                administrativo.NombreComercial,
+                administrativo.Contrato,
+                administrativo.Facturacion,
+                administrativo.FacturacionBase,
+                administrativo.IVU,
+                administrativo.Staff,
+                administrativo.StaffDate,
+                administrativo.CID,
+                administrativo.MID
+            };
+
+            return Json(administrativoViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateAdministrativo(Administrativo model)
+        {
+            ModelState.Remove(nameof(model.Registro));
+
+            if (ModelState.IsValid)
+            {
+                var existingAdministrativo = _customerService.GetAdministrativos().FirstOrDefault(a => a.ID == model.ID);
+                if (existingAdministrativo != null)
+                {
+                    existingAdministrativo.Nombre = model.Nombre;
+                    existingAdministrativo.NombreComercial = model.NombreComercial;
+                    existingAdministrativo.Contrato = model.Contrato;
+                    existingAdministrativo.Facturacion = model.Facturacion;
+                    existingAdministrativo.FacturacionBase = model.FacturacionBase;
+                    existingAdministrativo.IVU = model.IVU;
+                    existingAdministrativo.Staff = model.Staff;
+                    existingAdministrativo.StaffDate = model.StaffDate;
+                    existingAdministrativo.CID = model.CID;
+                    existingAdministrativo.MID = model.MID;
+
+                    _customerService.UpdateAdministrativo(existingAdministrativo);
+                    return Json(new { success = true });
+                }
+
+                return Json(new { success = false, message = "Administrativo not found." });
+            }
+
+            var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            return Json(new { success = false, message = "Model validation failed.", errors });
+        }
+
+        [HttpGet]
+        public IActionResult GetIdentificacionById(string id)
+        {
+            var identificacion = _customerService.GetIdentificaciones().FirstOrDefault(i => i.ID == id);
+            if (identificacion == null)
+            {
+                return NotFound();
+            }
+
+            return Json(identificacion);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateIdentificacion(Identificacion model)
+        {
+            ModelState.Remove(nameof(model.Registro));
+
+            if (ModelState.IsValid)
+            {
+                var existingIdentificacion = _customerService.GetIdentificaciones().FirstOrDefault(i => i.ID == model.ID);
+                if (existingIdentificacion != null)
+                {
+                    existingIdentificacion.Nombre = model.Nombre;
+                    existingIdentificacion.NombreComercial = model.NombreComercial;
+                    existingIdentificacion.Accionista = model.Accionista;
+                    existingIdentificacion.SSNA = model.SSNA;
+                    existingIdentificacion.Cargo = model.Cargo;
+                    existingIdentificacion.LicConducir = model.LicConducir;
+                    existingIdentificacion.Nacimiento = model.Nacimiento;
+                    existingIdentificacion.CID = model.CID;
+                    existingIdentificacion.MID = model.MID;
+
+                    _customerService.UpdateIdentificacion(existingIdentificacion);
+                    return Json(new { success = true });
+                }
+
+                return Json(new { success = false, message = "Identificacion not found." });
             }
 
             var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();

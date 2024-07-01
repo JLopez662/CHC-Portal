@@ -53,5 +53,13 @@ namespace BLL
         {
             _customerRepository.UpdateContributivo(contributivo);
         }
+        public void UpdateAdministrativo(Administrativo administrativo)
+        {
+            _customerRepository.UpdateAdministrativo(administrativo);
+        }
+        public void UpdateIdentificacion(Identificacion identificacion)
+        {
+            _customerRepository.UpdateIdentificacion(identificacion);
+        }
     }
 }

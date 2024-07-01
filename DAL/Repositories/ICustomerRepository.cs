@@ -13,5 +13,8 @@ namespace DAL.Repositories
         IEnumerable<Confidencial> GetConfidenciales();
         void UpdateDemografico(Demografico demografico);
         void UpdateContributivo(Contributivo contributivo);
+        void UpdateAdministrativo(Administrativo administrativo);
+        void UpdateIdentificacion(Identificacion identificacion);
+
     }
 }

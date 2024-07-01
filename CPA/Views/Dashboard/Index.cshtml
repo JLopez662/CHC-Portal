@@ -98,13 +98,15 @@
                     <tbody>
                         <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                         <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
-                        <tr><th>Fecha de Contrato</th><td>@item.Facturacion</td></tr>
+                        <tr><th>Fecha de Contrato</th><td>@item.Contrato</td></tr>
+                        <tr><th>Tipo de Facturación</th><td>@item.Facturacion</td></tr>
                         <tr><th>Número de Facturación</th><td>@item.FacturacionBase</td></tr>
                         <tr><th>IVU</th><td>@item.IVU</td></tr>
                         <tr><th>Staff</th><td>@item.Staff</td></tr>
                         <tr><th>Contratación de Staff</th><td>@item.StaffDate</td></tr>
                     </tbody>
                 </table>
+                <button type="button" class="btn btn-primary edit-button" onclick="editAdministrativo('@item.ID')">Update</button>
                 }
             </div>
         </div>
@@ -124,6 +126,7 @@
                         <tr><th>Fecha de Nacimiento</th><td>@item.Nacimiento</td></tr>
                     </tbody>
                 </table>
+                    <button type="button" class="btn btn-primary edit-button" onclick="editIdentificacion('@item.ID')">Update</button>
                 }
             </div>
         </div>
@@ -328,6 +331,98 @@
                     <div class="mb-3">
                         <label for="contributivoDeptEstado" class="form-label">Departamento de Estado</label>
                         <input type="text" class="form-control" id="contributivoDeptEstado" name="DeptEstado" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+        <!-- Offcanvas for editing Administrativos details -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="editAdministrativoOffcanvas" aria-labelledby="editAdministrativoOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="editAdministrativoOffcanvasLabel">Edit Administrativo Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <form id="editAdministrativoForm">
+                    <input type="hidden" id="administrativoId" name="ID" />
+                    <input type="hidden" id="administrativoCID" name="CID" />
+                    <input type="hidden" id="administrativoMID" name="MID" />
+
+                    <div class="mb-3">
+                        <label for="administrativoNombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="administrativoNombre" name="Nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="administrativoNombreComercial" class="form-label">Nombre Comercial</label>
+                        <input type="text" class="form-control" id="administrativoNombreComercial" name="NombreComercial" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="administrativoContrato" class="form-label">Fecha de Contrato</label>
+                        <input type="datetime-local" class="form-control" id="administrativoContrato" name="Contrato">
+                    </div>
+                    <div class="mb-3">
+                        <label for="administrativoFacturacion" class="form-label">Número de Facturación</label>
+                        <input type="text" class="form-control" id="administrativoFacturacion" name="Facturacion">
+                    </div>
+                    <div class="mb-3">
+                        <label for="administrativoFacturacionBase" class="form-label">Facturación Base</label>
+                        <input type="text" class="form-control" id="administrativoFacturacionBase" name="FacturacionBase">
+                    </div>
+                    <div class="mb-3">
+                        <label for="administrativoIVU" class="form-label">IVU</label>
+                        <input type="text" class="form-control" id="administrativoIVU" name="IVU">
+                    </div>
+                    <div class="mb-3">
+                        <label for="administrativoStaff" class="form-label">Staff</label>
+                        <input type="text" class="form-control" id="administrativoStaff" name="Staff">
+                    </div>
+                    <div class="mb-3">
+                        <label for="administrativoStaffDate" class="form-label">Contratación de Staff</label>
+                        <input type="datetime-local" class="form-control" id="administrativoStaffDate" name="StaffDate">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+        <!-- Offcanvas for editing Identificacion details -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="editIdentificacionOffcanvas" aria-labelledby="editIdentificacionOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="editIdentificacionOffcanvasLabel">Edit Identificación Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <form id="editIdentificacionForm">
+                    <input type="hidden" id="identificacionId" name="ID" />
+                    <input type="hidden" id="identificacionCID" name="CID" />
+                    <input type="hidden" id="identificacionMID" name="MID" />
+
+                    <div class="mb-3">
+                        <label for="identificacionNombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="identificacionNombre" name="Nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="identificacionNombreComercial" class="form-label">Nombre Comercial</label>
+                        <input type="text" class="form-control" id="identificacionNombreComercial" name="NombreComercial" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="identificacionAccionista" class="form-label">Accionista</label>
+                        <input type="text" class="form-control" id="identificacionAccionista" name="Accionista" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="identificacionSSNA" class="form-label">SSNA</label>
+                        <input type="text" class="form-control" id="identificacionSSNA" name="SSNA" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="identificacionCargo" class="form-label">Cargo</label>
+                        <input type="text" class="form-control" id="identificacionCargo" name="Cargo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="identificacionLicConducir" class="form-label">Licencia de Conducir</label>
+                        <input type="text" class="form-control" id="identificacionLicConducir" name="LicConducir" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="identificacionNacimiento" class="form-label">Fecha de Nacimiento</label>
+                        <input type="datetime-local" class="form-control" id="identificacionNacimiento" name="Nacimiento" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
@@ -584,6 +679,131 @@
                 },
                 error: function () {
                     toastr.error('Failed to update contributivo details.');
+                }
+            });
+        });
+        function editAdministrativo(id) {
+            console.log("Edit button clicked for Administrativo ID:", id);
+            $.ajax({
+                url: '@Url.Action("GetAdministrativoById", "Dashboard")',
+                type: 'GET',
+                data: { id: id },
+                success: function (data) {
+                    console.log("Data fetched:", data);
+                    $('#administrativoId').val(data.id);
+                    $('#administrativoNombre').val(data.nombre);
+                    $('#administrativoNombreComercial').val(data.nombreComercial);
+                    $('#administrativoContrato').val(data.contrato);
+                    $('#administrativoFacturacion').val(data.facturacion);
+                    $('#administrativoFacturacionBase').val(data.facturacionBase);
+                    $('#administrativoIVU').val(data.ivu);
+                    $('#administrativoStaff').val(data.staff);
+                    $('#administrativoStaffDate').val(data.staffDate);
+                    $('#administrativoCID').val(data.cid);
+                    $('#administrativoMID').val(data.mid);
+
+                    var offcanvasElement = document.getElementById('editAdministrativoOffcanvas');
+                    var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                    offcanvas.show();
+                },
+                error: function () {
+                    toastr.error('Failed to fetch administrativo details.');
+                }
+            });
+        }
+
+        $('#editAdministrativoForm').on('submit', function (e) {
+            e.preventDefault();
+
+            var data = $(this).serialize();
+
+            $.ajax({
+                url: '@Url.Action("UpdateAdministrativo", "Dashboard")',
+                type: 'POST',
+                data: data,
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success('Administrativo details updated successfully!');
+                        var activeTabId = localStorage.getItem('activeTabId');
+                        if (activeTabId) {
+                            $('#' + activeTabId).tab('show');
+                        } else {
+                            location.reload();
+                        }
+                    } else {
+                        toastr.error(response.message || 'Failed to update administrativo details.');
+                        console.log('Validation Errors:', response.errors);
+                        response.errors.forEach(function (error) {
+                            toastr.error(error);
+                        });
+                    }
+
+                    var offcanvasElement = document.getElementById('editAdministrativoOffcanvas');
+                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                    offcanvas.hide();
+                },
+                error: function () {
+                    toastr.error('Failed to update administrativo details.');
+                }
+            });
+        });
+
+               function editIdentificacion(id) {
+                console.log("Edit button clicked for Identificacion ID:", id);
+                $.ajax({
+                    url: '@Url.Action("GetIdentificacionById", "Dashboard")',
+                    type: 'GET',
+                    data: { id: id },
+                    success: function (data) {
+                        console.log("Data fetched:", data);
+                        $('#identificacionId').val(data.id);
+                        $('#identificacionNombre').val(data.nombre);
+                        $('#identificacionNombreComercial').val(data.nombreComercial);
+                        $('#identificacionAccionista').val(data.accionista);
+                        $('#identificacionSSNA').val(data.ssna);
+                        $('#identificacionCargo').val(data.cargo);
+                        $('#identificacionLicConducir').val(data.licConducir);
+                        $('#identificacionNacimiento').val(data.nacimiento);
+                        $('#identificacionCID').val(data.cid);
+                        $('#identificacionMID').val(data.mid);
+
+                        var offcanvasElement = document.getElementById('editIdentificacionOffcanvas');
+                        var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                        offcanvas.show();
+                    },
+                    error: function () {
+                        toastr.error('Failed to fetch identificacion details.');
+                    }
+                });
+            }
+
+        $('#editIdentificacionForm').on('submit', function (e) {
+            e.preventDefault();
+
+            var data = $(this).serialize();
+
+            $.ajax({
+                url: '@Url.Action("UpdateIdentificacion", "Dashboard")',
+                type: 'POST',
+                data: data,
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success('Identificacion details updated successfully!');
+                        location.reload();
+                    } else {
+                        toastr.error(response.message || 'Failed to update identificacion details.');
+                        console.log('Validation Errors:', response.errors);
+                        response.errors.forEach(function (error) {
+                            toastr.error(error);
+                        });
+                    }
+
+                    var offcanvasElement = document.getElementById('editIdentificacionOffcanvas');
+                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                    offcanvas.hide();
+                },
+                error: function () {
+                    toastr.error('Failed to update identificacion details.');
                 }
             });
         });
