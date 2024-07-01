@@ -16,5 +16,6 @@ namespace BLL.Services
         void UpdateAdministrativo(Administrativo administrativo);
         void UpdateIdentificacion(Identificacion identificacion);
         void UpdatePago(Pago pago);
+        void UpdateConfidencial(Confidencial confidencial);
     }
 }

@@ -85,7 +85,6 @@
                     </tbody>
                 </table>
                 <button type="button" class="btn btn-primary edit-button" onclick="editContributivo('@item.ID')">Update</button>
-
                 }
             </div>
         </div>
@@ -163,7 +162,7 @@
                         <tr><th>Postal en Tarjeta 2</th><td>@item.PostalBankS</td></tr>
                     </tbody>
                 </table>
-                    <button type="button" class="btn btn-primary edit-button" onclick="editPago('@item.ID')">Update</button>
+                <button type="button" class="btn btn-primary edit-button" onclick="editPago('@item.ID')">Update</button>
                 }
             </div>
         </div>
@@ -172,7 +171,7 @@
         <div class="tab-pane fade" id="confidencial" role="tabpanel" aria-labelledby="confidencial-tab">
             <div id="tblDataWrapper" class="dataTableWrapper">
                 @foreach (var item in Model.Confidenciales)
-        {
+                {
                 <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial">
                     <tbody>
                         <tr><th>Nombre</th><td>@item.Nombre</td></tr>
@@ -192,7 +191,8 @@
                         <tr><th>Contraseña Municipio</th><td>@item.PassMunicipio</td></tr>
                     </tbody>
                 </table>
-        }
+                <button type="button" class="btn btn-primary edit-button" onclick="editConfidencial('@item.ID')">Update</button>
+                }
             </div>
         </div>
 
@@ -536,6 +536,83 @@
                     <div class="mb-3">
                         <label for="pagoPostalBankS" class="form-label">Postal en Tarjeta 2</label>
                         <input type="text" class="form-control" id="pagoPostalBankS" name="PostalBankS">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Offcanvas for editing Confidenciales details -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="editConfidencialOffcanvas" aria-labelledby="editConfidencialOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="editConfidencialOffcanvasLabel">Edit Confidencial Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <form id="editConfidencialForm">
+                    <input type="hidden" id="confidencialId" name="ID" />
+                    <input type="hidden" id="confidencialCID" name="CID" />
+                    <input type="hidden" id="confidencialMID" name="MID" />
+
+                    <div class="mb-3">
+                        <label for="confidencialNombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="confidencialNombre" name="Nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialNombreComercial" class="form-label">Nombre Comercial</label>
+                        <input type="text" class="form-control" id="confidencialNombreComercial" name="NombreComercial" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialUserSuri" class="form-label">Usuario Suri</label>
+                        <input type="text" class="form-control" id="confidencialUserSuri" name="UserSuri" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialPassSuri" class="form-label">Contraseña Suri</label>
+                        <input type="text" class="form-control" id="confidencialPassSuri" name="PassSuri" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialUserEftps" class="form-label">Usuario Eftps</label>
+                        <input type="text" class="form-control" id="confidencialUserEftps" name="UserEftps" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialPassEftps" class="form-label">Contraseña Eftps</label>
+                        <input type="text" class="form-control" id="confidencialPassEftps" name="PassEftps" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialPIN" class="form-label">PIN</label>
+                        <input type="text" class="form-control" id="confidencialPIN" name="PIN" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialUserCFSE" class="form-label">Usuario CFSE</label>
+                        <input type="text" class="form-control" id="confidencialUserCFSE" name="UserCFSE" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialPassCFSE" class="form-label">Contraseña CFSE</label>
+                        <input type="text" class="form-control" id="confidencialPassCFSE" name="PassCFSE" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialUserDept" class="form-label">Usuario Dept del Trabajo</label>
+                        <input type="text" class="form-control" id="confidencialUserDept" name="UserDept" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialPassDept" class="form-label">Contraseña Dept del Trabajo</label>
+                        <input type="text" class="form-control" id="confidencialPassDept" name="PassDept" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialUserCofim" class="form-label">Usuario Cofim</label>
+                        <input type="text" class="form-control" id="confidencialUserCofim" name="UserCofim" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialPassCofim" class="form-label">Contraseña Cofim</label>
+                        <input type="text" class="form-control" id="confidencialPassCofim" name="PassCofim" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialUserMunicipio" class="form-label">Usuario Municipio</label>
+                        <input type="text" class="form-control" id="confidencialUserMunicipio" name="UserMunicipio" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confidencialPassMunicipio" class="form-label">Contraseña Municipio</label>
+                        <input type="text" class="form-control" id="confidencialPassMunicipio" name="PassMunicipio" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
@@ -994,6 +1071,74 @@
                 },
                 error: function () {
                     toastr.error('Failed to update pago details.');
+                }
+            });
+        });
+
+        function editConfidencial(id) {
+            console.log("Edit button clicked for Confidencial ID:", id);
+            $.ajax({
+                url: '@Url.Action("GetConfidencialById", "Dashboard")',
+                type: 'GET',
+                data: { id: id },
+                success: function (data) {
+                    console.log("Data fetched:", data);
+                    $('#confidencialId').val(data.id);
+                    $('#confidencialNombre').val(data.nombre);
+                    $('#confidencialNombreComercial').val(data.nombreComercial);
+                    $('#confidencialUserSuri').val(data.userSuri);
+                    $('#confidencialPassSuri').val(data.passSuri);
+                    $('#confidencialUserEftps').val(data.userEftps);
+                    $('#confidencialPassEftps').val(data.passEftps);
+                    $('#confidencialPIN').val(data.pin);
+                    $('#confidencialUserCFSE').val(data.userCFSE);
+                    $('#confidencialPassCFSE').val(data.passCFSE);
+                    $('#confidencialUserDept').val(data.userDept);
+                    $('#confidencialPassDept').val(data.passDept);
+                    $('#confidencialUserCofim').val(data.userCofim);
+                    $('#confidencialPassCofim').val(data.passCofim);
+                    $('#confidencialUserMunicipio').val(data.userMunicipio);
+                    $('#confidencialPassMunicipio').val(data.passMunicipio);
+                    $('#confidencialCID').val(data.cid);
+                    $('#confidencialMID').val(data.mid);
+
+                    var offcanvasElement = document.getElementById('editConfidencialOffcanvas');
+                    var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                    offcanvas.show();
+                },
+                error: function () {
+                    toastr.error('Failed to fetch confidencial details.');
+                }
+            });
+        }
+
+        $('#editConfidencialForm').on('submit', function (e) {
+            e.preventDefault();
+
+            var data = $(this).serialize();
+
+            $.ajax({
+                url: '@Url.Action("UpdateConfidencial", "Dashboard")',
+                type: 'POST',
+                data: data,
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success('Confidencial details updated successfully!');
+                        location.reload();
+                    } else {
+                        toastr.error(response.message || 'Failed to update confidencial details.');
+                        console.log('Validation Errors:', response.errors);
+                        response.errors.forEach(function (error) {
+                            toastr.error(error);
+                        });
+                    }
+
+                    var offcanvasElement = document.getElementById('editConfidencialOffcanvas');
+                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                    offcanvas.hide();
+                },
+                error: function () {
+                    toastr.error('Failed to update confidencial details.');
                 }
             });
         });

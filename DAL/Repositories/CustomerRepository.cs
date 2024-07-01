@@ -72,5 +72,10 @@ namespace DAL.Repositories
             _context.Entry(pago).State = EntityState.Modified;
             _context.SaveChanges();
         }
+        public void UpdateConfidencial(Confidencial confidencial)
+        {
+            _context.Entry(confidencial).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
     }
 }

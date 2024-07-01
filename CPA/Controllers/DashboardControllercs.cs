@@ -317,5 +317,56 @@ namespace CPA.Controllers
             return Json(new { success = false, message = "Model validation failed.", errors });
         }
 
+        [HttpGet]
+        public IActionResult GetConfidencialById(string id)
+        {
+            var confidencial = _customerService.GetConfidenciales().FirstOrDefault(c => c.ID == id);
+            if (confidencial == null)
+            {
+                return NotFound();
+            }
+
+            return Json(confidencial);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateConfidencial(Confidencial model)
+        {
+            ModelState.Remove(nameof(model.Registro));
+
+            if (ModelState.IsValid)
+            {
+                var existingConfidencial = _customerService.GetConfidenciales().FirstOrDefault(c => c.ID == model.ID);
+                if (existingConfidencial != null)
+                {
+                    existingConfidencial.Nombre = model.Nombre;
+                    existingConfidencial.NombreComercial = model.NombreComercial;
+                    existingConfidencial.UserSuri = model.UserSuri;
+                    existingConfidencial.PassSuri = model.PassSuri;
+                    existingConfidencial.UserEftps = model.UserEftps;
+                    existingConfidencial.PassEftps = model.PassEftps;
+                    existingConfidencial.PIN = model.PIN;
+                    existingConfidencial.UserCFSE = model.UserCFSE;
+                    existingConfidencial.PassCFSE = model.PassCFSE;
+                    existingConfidencial.UserDept = model.UserDept;
+                    existingConfidencial.PassDept = model.PassDept;
+                    existingConfidencial.UserCofim = model.UserCofim;
+                    existingConfidencial.PassCofim = model.PassCofim;
+                    existingConfidencial.UserMunicipio = model.UserMunicipio;
+                    existingConfidencial.PassMunicipio = model.PassMunicipio;
+                    existingConfidencial.CID = model.CID;
+                    existingConfidencial.MID = model.MID;
+
+                    _customerService.UpdateConfidencial(existingConfidencial);
+                    return Json(new { success = true });
+                }
+
+                return Json(new { success = false, message = "Confidencial not found." });
+            }
+
+            var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            return Json(new { success = false, message = "Model validation failed.", errors });
+        }
+
     }
 }

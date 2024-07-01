@@ -65,5 +65,9 @@ namespace BLL
         {
             _customerRepository.UpdatePago(pago);
         }
+        public void UpdateConfidencial(Confidencial confidencial)
+        {
+            _customerRepository.UpdateConfidencial(confidencial);
+        }
     }
 }
