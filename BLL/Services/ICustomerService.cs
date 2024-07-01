@@ -15,5 +15,6 @@ namespace BLL.Services
         void UpdateContributivo(Contributivo contributivo);
         void UpdateAdministrativo(Administrativo administrativo);
         void UpdateIdentificacion(Identificacion identificacion);
+        void UpdatePago(Pago pago);
     }
 }

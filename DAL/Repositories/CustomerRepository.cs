@@ -67,5 +67,10 @@ namespace DAL.Repositories
             _context.Entry(identificacion).State = EntityState.Modified;
             _context.SaveChanges();
         }
+        public void UpdatePago(Pago pago)
+        {
+            _context.Entry(pago).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
     }
 }

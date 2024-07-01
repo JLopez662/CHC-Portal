@@ -61,5 +61,9 @@ namespace BLL
         {
             _customerRepository.UpdateIdentificacion(identificacion);
         }
+        public void UpdatePago(Pago pago)
+        {
+            _customerRepository.UpdatePago(pago);
+        }
     }
 }

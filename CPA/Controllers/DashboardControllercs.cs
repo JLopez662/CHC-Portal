@@ -257,5 +257,65 @@ namespace CPA.Controllers
             return Json(new { success = false, message = "Model validation failed.", errors });
         }
 
+        [HttpGet]
+        public IActionResult GetPagoById(string id)
+        {
+            var pago = _customerService.GetPagos().FirstOrDefault(p => p.ID == id);
+            if (pago == null)
+            {
+                return NotFound();
+            }
+
+            return Json(pago);
+        }
+
+        [HttpPost]
+        public IActionResult UpdatePago(Pago model)
+        {
+            ModelState.Remove(nameof(model.Registro));
+
+            if (ModelState.IsValid)
+            {
+                var existingPago = _customerService.GetPagos().FirstOrDefault(p => p.ID == model.ID);
+                if (existingPago != null)
+                {
+                    existingPago.Nombre = model.Nombre;
+                    existingPago.NombreComercial = model.NombreComercial;
+                    existingPago.BankClient = model.BankClient;
+                    existingPago.Banco = model.Banco;
+                    existingPago.NumRuta = model.NumRuta;
+                    existingPago.NameBank = model.NameBank;
+                    existingPago.TipoCuenta = model.TipoCuenta;
+                    existingPago.BankClientS = model.BankClientS;
+                    existingPago.BancoS = model.BancoS;
+                    existingPago.NumRutaS = model.NumRutaS;
+                    existingPago.NameBankS = model.NameBankS;
+                    existingPago.TipoCuentaS = model.TipoCuentaS;
+                    existingPago.NameCard = model.NameCard;
+                    existingPago.Tarjeta = model.Tarjeta;
+                    existingPago.TipoTarjeta = model.TipoTarjeta;
+                    existingPago.CVV = model.CVV;
+                    existingPago.Expiracion = model.Expiracion;
+                    existingPago.PostalBank = model.PostalBank;
+                    existingPago.NameCardS = model.NameCardS;
+                    existingPago.TarjetaS = model.TarjetaS;
+                    existingPago.TipoTarjetaS = model.TipoTarjetaS;
+                    existingPago.CVVS = model.CVVS;
+                    existingPago.ExpiracionS = model.ExpiracionS;
+                    existingPago.PostalBankS = model.PostalBankS;
+                    existingPago.CID = model.CID;
+                    existingPago.MID = model.MID;
+
+                    _customerService.UpdatePago(existingPago);
+                    return Json(new { success = true });
+                }
+
+                return Json(new { success = false, message = "Pago not found." });
+            }
+
+            var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            return Json(new { success = false, message = "Model validation failed.", errors });
+        }
+
     }
 }

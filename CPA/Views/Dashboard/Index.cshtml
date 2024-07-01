@@ -126,7 +126,7 @@
                         <tr><th>Fecha de Nacimiento</th><td>@item.Nacimiento</td></tr>
                     </tbody>
                 </table>
-                    <button type="button" class="btn btn-primary edit-button" onclick="editIdentificacion('@item.ID')">Update</button>
+                <button type="button" class="btn btn-primary edit-button" onclick="editIdentificacion('@item.ID')">Update</button>
                 }
             </div>
         </div>
@@ -163,6 +163,7 @@
                         <tr><th>Postal en Tarjeta 2</th><td>@item.PostalBankS</td></tr>
                     </tbody>
                 </table>
+                    <button type="button" class="btn btn-primary edit-button" onclick="editPago('@item.ID')">Update</button>
                 }
             </div>
         </div>
@@ -423,6 +424,118 @@
                     <div class="mb-3">
                         <label for="identificacionNacimiento" class="form-label">Fecha de Nacimiento</label>
                         <input type="datetime-local" class="form-control" id="identificacionNacimiento" name="Nacimiento" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+        <!-- Offcanvas for editing Pagos details -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="editPagoOffcanvas" aria-labelledby="editPagoOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="editPagoOffcanvasLabel">Edit Pago Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <form id="editPagoForm">
+                    <input type="hidden" id="pagoId" name="ID" />
+                    <input type="hidden" id="pagoCID" name="CID" />
+                    <input type="hidden" id="pagoMID" name="MID" />
+
+                    <div class="mb-3">
+                        <label for="pagoNombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="pagoNombre" name="Nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoNombreComercial" class="form-label">Nombre Comercial</label>
+                        <input type="text" class="form-control" id="pagoNombreComercial" name="NombreComercial" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoBankClient" class="form-label">Cliente del Banco</label>
+                        <input type="text" class="form-control" id="pagoBankClient" name="BankClient" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoBanco" class="form-label">Banco</label>
+                        <input type="text" class="form-control" id="pagoBanco" name="Banco" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoNumRuta" class="form-label">Numero de Ruta</label>
+                        <input type="text" class="form-control" id="pagoNumRuta" name="NumRuta" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoNameBank" class="form-label">Nombre del Banco</label>
+                        <input type="text" class="form-control" id="pagoNameBank" name="NameBank" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoTipoCuenta" class="form-label">Tipo de Cuenta</label>
+                        <input type="text" class="form-control" id="pagoTipoCuenta" name="TipoCuenta" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoBankClientS" class="form-label">Cliente del Banco 2</label>
+                        <input type="text" class="form-control" id="pagoBankClientS" name="BankClientS">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoBancoS" class="form-label">Banco 2</label>
+                        <input type="text" class="form-control" id="pagoBancoS" name="BancoS">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoNumRutaS" class="form-label">Numero de Ruta 2</label>
+                        <input type="text" class="form-control" id="pagoNumRutaS" name="NumRutaS">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoNameBankS" class="form-label">Nombre del Banco 2</label>
+                        <input type="text" class="form-control" id="pagoNameBankS" name="NameBankS">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoTipoCuentaS" class="form-label">Tipo de Cuenta 2</label>
+                        <input type="text" class="form-control" id="pagoTipoCuentaS" name="TipoCuentaS">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoNameCard" class="form-label">Cliente en Tarjeta</label>
+                        <input type="text" class="form-control" id="pagoNameCard" name="NameCard">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoTarjeta" class="form-label">Tarjeta de Pago</label>
+                        <input type="text" class="form-control" id="pagoTarjeta" name="Tarjeta">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoTipoTarjeta" class="form-label">Tipo de Tarjeta</label>
+                        <input type="text" class="form-control" id="pagoTipoTarjeta" name="TipoTarjeta">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoCVV" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="pagoCVV" name="CVV">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoExpiracion" class="form-label">Fecha Expiracion</label>
+                        <input type="datetime-local" class="form-control" id="pagoExpiracion" name="Expiracion">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoPostalBank" class="form-label">Postal en Tarjeta</label>
+                        <input type="text" class="form-control" id="pagoPostalBank" name="PostalBank">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoNameCardS" class="form-label">Cliente en Tarjeta 2</label>
+                        <input type="text" class="form-control" id="pagoNameCardS" name="NameCardS">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoTarjetaS" class="form-label">Tarjeta de Pago 2</label>
+                        <input type="text" class="form-control" id="pagoTarjetaS" name="TarjetaS">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoTipoTarjetaS" class="form-label">Tipo de Tarjeta 2</label>
+                        <input type="text" class="form-control" id="pagoTipoTarjetaS" name="TipoTarjetaS">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoCVVS" class="form-label">CVVS</label>
+                        <input type="text" class="form-control" id="pagoCVVS" name="CVVS">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoExpiracionS" class="form-label">Fecha Expiracion 2</label>
+                        <input type="datetime-local" class="form-control" id="pagoExpiracionS" name="ExpiracionS">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagoPostalBankS" class="form-label">Postal en Tarjeta 2</label>
+                        <input type="text" class="form-control" id="pagoPostalBankS" name="PostalBankS">
                     </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
@@ -807,6 +920,84 @@
                 }
             });
         });
+
+        function editPago(id) {
+            console.log("Edit button clicked for Pago ID:", id);
+            $.ajax({
+                url: '@Url.Action("GetPagoById", "Dashboard")',
+                type: 'GET',
+                data: { id: id },
+                success: function (data) {
+                    console.log("Data fetched:", data);
+                    $('#pagoId').val(data.id);
+                    $('#pagoNombre').val(data.nombre);
+                    $('#pagoNombreComercial').val(data.nombreComercial);
+                    $('#pagoBankClient').val(data.bankClient);
+                    $('#pagoBanco').val(data.banco);
+                    $('#pagoNumRuta').val(data.numRuta);
+                    $('#pagoNameBank').val(data.nameBank);
+                    $('#pagoTipoCuenta').val(data.tipoCuenta);
+                    $('#pagoBankClientS').val(data.bankClientS);
+                    $('#pagoBancoS').val(data.bancoS);
+                    $('#pagoNumRutaS').val(data.numRutaS);
+                    $('#pagoNameBankS').val(data.nameBankS);
+                    $('#pagoTipoCuentaS').val(data.tipoCuentaS);
+                    $('#pagoNameCard').val(data.nameCard);
+                    $('#pagoTarjeta').val(data.tarjeta);
+                    $('#pagoTipoTarjeta').val(data.tipoTarjeta);
+                    $('#pagoCVV').val(data.cvv);
+                    $('#pagoExpiracion').val(data.expiracion);
+                    $('#pagoPostalBank').val(data.postalBank);
+                    $('#pagoNameCardS').val(data.nameCardS);
+                    $('#pagoTarjetaS').val(data.tarjetaS);
+                    $('#pagoTipoTarjetaS').val(data.tipoTarjetaS);
+                    $('#pagoCVVS').val(data.cvvs);
+                    $('#pagoExpiracionS').val(data.expiracionS);
+                    $('#pagoPostalBankS').val(data.postalBankS);
+                    $('#pagoCID').val(data.cid);
+                    $('#pagoMID').val(data.mid);
+
+                    var offcanvasElement = document.getElementById('editPagoOffcanvas');
+                    var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                    offcanvas.show();
+                },
+                error: function () {
+                    toastr.error('Failed to fetch pago details.');
+                }
+            });
+        }
+
+        $('#editPagoForm').on('submit', function (e) {
+            e.preventDefault();
+
+            var data = $(this).serialize();
+
+            $.ajax({
+                url: '@Url.Action("UpdatePago", "Dashboard")',
+                type: 'POST',
+                data: data,
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success('Pago details updated successfully!');
+                        location.reload();
+                    } else {
+                        toastr.error(response.message || 'Failed to update pago details.');
+                        console.log('Validation Errors:', response.errors);
+                        response.errors.forEach(function (error) {
+                            toastr.error(error);
+                        });
+                    }
+
+                    var offcanvasElement = document.getElementById('editPagoOffcanvas');
+                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                    offcanvas.hide();
+                },
+                error: function () {
+                    toastr.error('Failed to update pago details.');
+                }
+            });
+        });
+
     </script>
 
     <!-- Include necessary libraries -->
