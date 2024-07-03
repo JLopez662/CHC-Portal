@@ -621,16 +621,26 @@
     </div>
 </div>
 
+
 @section Scripts {
     <script>
         $(document).ready(function () {
             console.log("Document is ready");
 
+            // Restore the active tab from sessionStorage
+            var activeTab = sessionStorage.getItem('activeTab');
+            if (activeTab) {
+                $('#dashboardTabs a[href="' + activeTab + '"]').tab('show');
+            }
+
+            // Save the active tab on tab click
             $('#dashboardTabs a').on('click', function (e) {
                 e.preventDefault();
+                var tabId = $(this).attr('href');
                 $(this).tab('show');
+                sessionStorage.setItem('activeTab', tabId); // Save the active tab to sessionStorage
                 console.log($(this).attr('id') + " tab clicked");
-                prioritizeActiveTabTables($(this).attr('href'));
+                prioritizeActiveTabTables(tabId);
             });
 
         @if (TempData["Success"] != null)
@@ -767,9 +777,403 @@
             }
 
             prioritizeActiveTabTables($('#dashboardTabs a.active').attr('href'));
+
+            function editDemografico(id) {
+                console.log("Edit button clicked for ID:", id);
+                $.ajax({
+                    url: '@Url.Action("GetDemograficoById", "Dashboard")',
+                    type: 'GET',
+                    data: { id: id },
+                    success: function (data) {
+                        console.log("Data fetched:", data);
+                        $('#demograficoId').val(data.id);
+                        $('#demograficoNombre').val(data.nombre);
+                        $('#demograficoNombreComercial').val(data.nombreComercial);
+                        $('#demograficoTelefono').val(data.telefono);
+                        $('#demograficoCelular').val(data.celular);
+                        $('#demograficoDir').val(data.dir);
+                        $('#demograficoTipo').val(data.tipo);
+                        $('#demograficoPatronal').val(data.patronal);
+                        $('#demograficoSSN').val(data.ssn);
+                        $('#demograficoIncorporacion').val(data.incorporacion);
+                        $('#demograficoOperaciones').val(data.operaciones);
+                        $('#demograficoIndustria').val(data.industria);
+                        $('#demograficoNAICS').val(data.naics);
+                        $('#demograficoDescripcion').val(data.descripcion);
+                        $('#demograficoContacto').val(data.contacto);
+                        $('#demograficoDirFisica').val(data.dirFisica);
+                        $('#demograficoDirPostal').val(data.dirPostal);
+                        $('#demograficoEmail').val(data.email);
+                        $('#demograficoEmail2').val(data.email2);
+
+                        var offcanvasElement = document.getElementById('editDemograficoOffcanvas');
+                        var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                        offcanvas.show();
+                    },
+                    error: function () {
+                        toastr.error('Failed to fetch demografico details.');
+                    }
+                });
+            }
+
+            function editContributivo(id) {
+                console.log("Edit button clicked for Contributivo ID:", id);
+                $.ajax({
+                    url: '@Url.Action("GetContributivoById", "Dashboard")',
+                    type: 'GET',
+                    data: { id: id },
+                    success: function (data) {
+                        console.log("Data fetched:", data);
+                        $('#contributivoId').val(data.id);
+                        $('#contributivoNombre').val(data.nombre);
+                        $('#contributivoNombreComercial').val(data.nombreComercial);
+                        $('#contributivoEstatal').val(data.estatal);
+                        $('#contributivoPoliza').val(data.poliza);
+                        $('#contributivoRegComerciante').val(data.regComerciante);
+                        $('#contributivoVencimiento').val(data.vencimiento);
+                        $('#contributivoChoferil').val(data.choferil);
+                        $('#contributivoDeptEstado').val(data.deptEstado);
+
+                        var offcanvasElement = document.getElementById('editContributivoOffcanvas');
+                        var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                        offcanvas.show();
+                    },
+                    error: function () {
+                        toastr.error('Failed to fetch contributivo details.');
+                    }
+                });
+            }
+
+            function editAdministrativo(id) {
+                console.log("Edit button clicked for Administrativo ID:", id);
+                $.ajax({
+                    url: '@Url.Action("GetAdministrativoById", "Dashboard")',
+                    type: 'GET',
+                    data: { id: id },
+                    success: function (data) {
+                        console.log("Data fetched:", data);
+                        $('#administrativoId').val(data.id);
+                        $('#administrativoNombre').val(data.nombre);
+                        $('#administrativoNombreComercial').val(data.nombreComercial);
+                        $('#administrativoContrato').val(data.contrato);
+                        $('#administrativoFacturacion').val(data.facturacion);
+                        $('#administrativoFacturacionBase').val(data.facturacionBase);
+                        $('#administrativoIVU').val(data.ivu);
+                        $('#administrativoStaff').val(data.staff);
+                        $('#administrativoStaffDate').val(data.staffDate);
+
+                        var offcanvasElement = document.getElementById('editAdministrativoOffcanvas');
+                        var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                        offcanvas.show();
+                    },
+                    error: function () {
+                        toastr.error('Failed to fetch administrativo details.');
+                    }
+                });
+            }
+
+            function editIdentificacion(id) {
+                console.log("Edit button clicked for Identificacion ID:", id);
+                $.ajax({
+                    url: '@Url.Action("GetIdentificacionById", "Dashboard")',
+                    type: 'GET',
+                    data: { id: id },
+                    success: function (data) {
+                        console.log("Data fetched:", data);
+                        $('#identificacionId').val(data.id);
+                        $('#identificacionNombre').val(data.nombre);
+                        $('#identificacionNombreComercial').val(data.nombreComercial);
+                        $('#identificacionAccionista').val(data.accionista);
+                        $('#identificacionSSNA').val(data.ssna);
+                        $('#identificacionCargo').val(data.cargo);
+                        $('#identificacionLicConducir').val(data.licConducir);
+                        $('#identificacionNacimiento').val(data.nacimiento);
+
+                        var offcanvasElement = document.getElementById('editIdentificacionOffcanvas');
+                        var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                        offcanvas.show();
+                    },
+                    error: function () {
+                        toastr.error('Failed to fetch identificacion details.');
+                    }
+                });
+            }
+
+            function editPago(id) {
+                console.log("Edit button clicked for Pago ID:", id);
+                $.ajax({
+                    url: '@Url.Action("GetPagoById", "Dashboard")',
+                    type: 'GET',
+                    data: { id: id },
+                    success: function (data) {
+                        console.log("Data fetched:", data);
+                        $('#pagoId').val(data.id);
+                        $('#pagoNombre').val(data.nombre);
+                        $('#pagoNombreComercial').val(data.nombreComercial);
+                        $('#pagoBankClient').val(data.bankClient);
+                        $('#pagoBanco').val(data.banco);
+                        $('#pagoNumRuta').val(data.numRuta);
+                        $('#pagoNameBank').val(data.nameBank);
+                        $('#pagoTipoCuenta').val(data.tipoCuenta);
+                        $('#pagoBankClientS').val(data.bankClientS);
+                        $('#pagoBancoS').val(data.bancoS);
+                        $('#pagoNumRutaS').val(data.numRutaS);
+                        $('#pagoNameBankS').val(data.nameBankS);
+                        $('#pagoTipoCuentaS').val(data.tipoCuentaS);
+                        $('#pagoNameCard').val(data.nameCard);
+                        $('#pagoTarjeta').val(data.tarjeta);
+                        $('#pagoTipoTarjeta').val(data.tipoTarjeta);
+                        $('#pagoCVV').val(data.cvv);
+                        $('#pagoExpiracion').val(data.expiracion);
+                        $('#pagoPostalBank').val(data.postalBank);
+                        $('#pagoNameCardS').val(data.nameCardS);
+                        $('#pagoTarjetaS').val(data.tarjetaS);
+                        $('#pagoTipoTarjetaS').val(data.tipoTarjetaS);
+                        $('#pagoCVVS').val(data.cvvs);
+                        $('#pagoExpiracionS').val(data.expiracionS);
+                        $('#pagoPostalBankS').val(data.postalBankS);
+
+                        var offcanvasElement = document.getElementById('editPagoOffcanvas');
+                        var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                        offcanvas.show();
+                    },
+                    error: function () {
+                        toastr.error('Failed to fetch pago details.');
+                    }
+                });
+            }
+
+            function editConfidencial(id) {
+                console.log("Edit button clicked for Confidencial ID:", id);
+                $.ajax({
+                    url: '@Url.Action("GetConfidencialById", "Dashboard")',
+                    type: 'GET',
+                    data: { id: id },
+                    success: function (data) {
+                        console.log("Data fetched:", data);
+                        $('#confidencialId').val(data.id);
+                        $('#confidencialNombre').val(data.nombre);
+                        $('#confidencialNombreComercial').val(data.nombreComercial);
+                        $('#confidencialUserSuri').val(data.userSuri);
+                        $('#confidencialPassSuri').val(data.passSuri);
+                        $('#confidencialUserEftps').val(data.userEftps);
+                        $('#confidencialPassEftps').val(data.passEftps);
+                        $('#confidencialPIN').val(data.pin);
+                        $('#confidencialUserCFSE').val(data.userCFSE);
+                        $('#confidencialPassCFSE').val(data.passCFSE);
+                        $('#confidencialUserDept').val(data.userDept);
+                        $('#confidencialPassDept').val(data.passDept);
+                        $('#confidencialUserCofim').val(data.userCofim);
+                        $('#confidencialPassCofim').val(data.passCofim);
+                        $('#confidencialUserMunicipio').val(data.userMunicipio);
+                        $('#confidencialPassMunicipio').val(data.passMunicipio);
+
+                        var offcanvasElement = document.getElementById('editConfidencialOffcanvas');
+                        var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                        offcanvas.show();
+                    },
+                    error: function () {
+                        toastr.error('Failed to fetch confidencial details.');
+                    }
+                });
+            }
+
+            // Update your AJAX success functions to store the active tab before reloading the page
+
+            $('#editDemograficoForm').on('submit', function (e) {
+                e.preventDefault();
+                var data = $(this).serialize();
+                var activeTab = sessionStorage.getItem('activeTab');
+
+                $.ajax({
+                    url: '@Url.Action("UpdateDemografico", "Dashboard")',
+                    type: 'POST',
+                    data: data,
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success('Demografico details updated successfully!');
+                            sessionStorage.setItem('activeTab', activeTab); // Store the active tab
+                            location.reload();
+                        } else {
+                            toastr.error(response.message || 'Failed to update demografico details.');
+                            console.log('Validation Errors:', response.errors);
+                            response.errors.forEach(function (error) {
+                                toastr.error(error);
+                            });
+                        }
+
+                        var offcanvasElement = document.getElementById('editDemograficoOffcanvas');
+                        var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                        offcanvas.hide();
+                    },
+                    error: function () {
+                        toastr.error('Failed to update demografico details.');
+                    }
+                });
+            });
+
+            $('#editContributivoForm').on('submit', function (e) {
+                e.preventDefault();
+                var data = $(this).serialize();
+                var activeTab = sessionStorage.getItem('activeTab');
+
+                $.ajax({
+                    url: '@Url.Action("UpdateContributivo", "Dashboard")',
+                    type: 'POST',
+                    data: data,
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success('Contributivo details updated successfully!');
+                            sessionStorage.setItem('activeTab', activeTab); // Store the active tab
+                            location.reload();
+                        } else {
+                            toastr.error(response.message || 'Failed to update contributivo details.');
+                            console.log('Validation Errors:', response.errors);
+                            response.errors.forEach(function (error) {
+                                toastr.error(error);
+                            });
+                        }
+
+                        var offcanvasElement = document.getElementById('editContributivoOffcanvas');
+                        var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                        offcanvas.hide();
+                    },
+                    error: function () {
+                        toastr.error('Failed to update contributivo details.');
+                    }
+                });
+            });
+
+            $('#editAdministrativoForm').on('submit', function (e) {
+                e.preventDefault();
+                var data = $(this).serialize();
+                var activeTab = sessionStorage.getItem('activeTab');
+
+                $.ajax({
+                    url: '@Url.Action("UpdateAdministrativo", "Dashboard")',
+                    type: 'POST',
+                    data: data,
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success('Administrativo details updated successfully!');
+                            sessionStorage.setItem('activeTab', activeTab); // Store the active tab
+                            location.reload();
+                        } else {
+                            toastr.error(response.message || 'Failed to update administrativo details.');
+                            console.log('Validation Errors:', response.errors);
+                            response.errors.forEach(function (error) {
+                                toastr.error(error);
+                            });
+                        }
+
+                        var offcanvasElement = document.getElementById('editAdministrativoOffcanvas');
+                        var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                        offcanvas.hide();
+                    },
+                    error: function () {
+                        toastr.error('Failed to update administrativo details.');
+                    }
+                });
+            });
+
+            $('#editIdentificacionForm').on('submit', function (e) {
+                e.preventDefault();
+                var data = $(this).serialize();
+                var activeTab = sessionStorage.getItem('activeTab');
+
+                $.ajax({
+                    url: '@Url.Action("UpdateIdentificacion", "Dashboard")',
+                    type: 'POST',
+                    data: data,
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success('Identificacion details updated successfully!');
+                            sessionStorage.setItem('activeTab', activeTab); // Store the active tab
+                            location.reload();
+                        } else {
+                            toastr.error(response.message || 'Failed to update identificacion details.');
+                            console.log('Validation Errors:', response.errors);
+                            response.errors.forEach(function (error) {
+                                toastr.error(error);
+                            });
+                        }
+
+                        var offcanvasElement = document.getElementById('editIdentificacionOffcanvas');
+                        var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                        offcanvas.hide();
+                    },
+                    error: function () {
+                        toastr.error('Failed to update identificacion details.');
+                    }
+                });
+            });
+
+            $('#editPagoForm').on('submit', function (e) {
+                e.preventDefault();
+                var data = $(this).serialize();
+                var activeTab = sessionStorage.getItem('activeTab');
+
+                $.ajax({
+                    url: '@Url.Action("UpdatePago", "Dashboard")',
+                    type: 'POST',
+                    data: data,
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success('Pago details updated successfully!');
+                            sessionStorage.setItem('activeTab', activeTab); // Store the active tab
+                            location.reload();
+                        } else {
+                            toastr.error(response.message || 'Failed to update pago details.');
+                            console.log('Validation Errors:', response.errors);
+                            response.errors.forEach(function (error) {
+                                toastr.error(error);
+                            });
+                        }
+
+                        var offcanvasElement = document.getElementById('editPagoOffcanvas');
+                        var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                        offcanvas.hide();
+                    },
+                    error: function () {
+                        toastr.error('Failed to update pago details.');
+                    }
+                });
+            });
+
+            $('#editConfidencialForm').on('submit', function (e) {
+                e.preventDefault();
+                var data = $(this).serialize();
+                var activeTab = sessionStorage.getItem('activeTab');
+
+                $.ajax({
+                    url: '@Url.Action("UpdateConfidencial", "Dashboard")',
+                    type: 'POST',
+                    data: data,
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success('Confidencial details updated successfully!');
+                            sessionStorage.setItem('activeTab', activeTab); // Store the active tab
+                            location.reload();
+                        } else {
+                            toastr.error(response.message || 'Failed to update confidencial details.');
+                            console.log('Validation Errors:', response.errors);
+                            response.errors.forEach(function (error) {
+                                toastr.error(error);
+                            });
+                        }
+
+                        var offcanvasElement = document.getElementById('editConfidencialOffcanvas');
+                        var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                        offcanvas.hide();
+                    },
+                    error: function () {
+                        toastr.error('Failed to update confidencial details.');
+                    }
+                });
+            });
         });
 
-
+        // Define functions outside of the document ready function
         function editDemografico(id) {
             console.log("Edit button clicked for ID:", id);
             $.ajax({
@@ -808,37 +1212,6 @@
             });
         }
 
-        $('#editDemograficoForm').on('submit', function (e) {
-            e.preventDefault();
-
-            var data = $(this).serialize();
-
-            $.ajax({
-                url: '@Url.Action("UpdateDemografico", "Dashboard")',
-                type: 'POST',
-                data: data,
-                success: function (response) {
-                    if (response.success) {
-                        toastr.success('Demografico details updated successfully!');
-                        location.reload();
-                    } else {
-                        toastr.error(response.message || 'Failed to update demografico details.');
-                        console.log('Validation Errors:', response.errors);
-                        response.errors.forEach(function (error) {
-                            toastr.error(error);
-                        });
-                    }
-
-                    var offcanvasElement = document.getElementById('editDemograficoOffcanvas');
-                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
-                    offcanvas.hide();
-                },
-                error: function () {
-                    toastr.error('Failed to update demografico details.');
-                }
-            });
-        });
-
         function editContributivo(id) {
             console.log("Edit button clicked for Contributivo ID:", id);
             $.ajax({
@@ -866,37 +1239,6 @@
                 }
             });
         }
-
-        $('#editContributivoForm').on('submit', function (e) {
-            e.preventDefault();
-
-            var data = $(this).serialize();
-
-            $.ajax({
-                url: '@Url.Action("UpdateContributivo", "Dashboard")',
-                type: 'POST',
-                data: data,
-                success: function (response) {
-                    if (response.success) {
-                        toastr.success('Contributivo details updated successfully!');
-                        location.reload();
-                    } else {
-                        toastr.error(response.message || 'Failed to update contributivo details.');
-                        console.log('Validation Errors:', response.errors);
-                        response.errors.forEach(function (error) {
-                            toastr.error(error);
-                        });
-                    }
-
-                    var offcanvasElement = document.getElementById('editContributivoOffcanvas');
-                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
-                    offcanvas.hide();
-                },
-                error: function () {
-                    toastr.error('Failed to update contributivo details.');
-                }
-            });
-        });
 
         function editAdministrativo(id) {
             console.log("Edit button clicked for Administrativo ID:", id);
@@ -926,37 +1268,6 @@
             });
         }
 
-        $('#editAdministrativoForm').on('submit', function (e) {
-            e.preventDefault();
-
-            var data = $(this).serialize();
-
-            $.ajax({
-                url: '@Url.Action("UpdateAdministrativo", "Dashboard")',
-                type: 'POST',
-                data: data,
-                success: function (response) {
-                    if (response.success) {
-                        toastr.success('Administrativo details updated successfully!');
-                        location.reload();
-                    } else {
-                        toastr.error(response.message || 'Failed to update administrativo details.');
-                        console.log('Validation Errors:', response.errors);
-                        response.errors.forEach(function (error) {
-                            toastr.error(error);
-                        });
-                    }
-
-                    var offcanvasElement = document.getElementById('editAdministrativoOffcanvas');
-                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
-                    offcanvas.hide();
-                },
-                error: function () {
-                    toastr.error('Failed to update administrativo details.');
-                }
-            });
-        });
-
         function editIdentificacion(id) {
             console.log("Edit button clicked for Identificacion ID:", id);
             $.ajax({
@@ -983,37 +1294,6 @@
                 }
             });
         }
-
-        $('#editIdentificacionForm').on('submit', function (e) {
-            e.preventDefault();
-
-            var data = $(this).serialize();
-
-            $.ajax({
-                url: '@Url.Action("UpdateIdentificacion", "Dashboard")',
-                type: 'POST',
-                data: data,
-                success: function (response) {
-                    if (response.success) {
-                        toastr.success('Identificacion details updated successfully!');
-                        location.reload();
-                    } else {
-                        toastr.error(response.message || 'Failed to update identificacion details.');
-                        console.log('Validation Errors:', response.errors);
-                        response.errors.forEach(function (error) {
-                            toastr.error(error);
-                        });
-                    }
-
-                    var offcanvasElement = document.getElementById('editIdentificacionOffcanvas');
-                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
-                    offcanvas.hide();
-                },
-                error: function () {
-                    toastr.error('Failed to update identificacion details.');
-                }
-            });
-        });
 
         function editPago(id) {
             console.log("Edit button clicked for Pago ID:", id);
@@ -1059,37 +1339,6 @@
             });
         }
 
-        $('#editPagoForm').on('submit', function (e) {
-            e.preventDefault();
-
-            var data = $(this).serialize();
-
-            $.ajax({
-                url: '@Url.Action("UpdatePago", "Dashboard")',
-                type: 'POST',
-                data: data,
-                success: function (response) {
-                    if (response.success) {
-                        toastr.success('Pago details updated successfully!');
-                        location.reload();
-                    } else {
-                        toastr.error(response.message || 'Failed to update pago details.');
-                        console.log('Validation Errors:', response.errors);
-                        response.errors.forEach(function (error) {
-                            toastr.error(error);
-                        });
-                    }
-
-                    var offcanvasElement = document.getElementById('editPagoOffcanvas');
-                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
-                    offcanvas.hide();
-                },
-                error: function () {
-                    toastr.error('Failed to update pago details.');
-                }
-            });
-        });
-
         function editConfidencial(id) {
             console.log("Edit button clicked for Confidencial ID:", id);
             $.ajax({
@@ -1124,38 +1373,10 @@
                 }
             });
         }
-
-        $('#editConfidencialForm').on('submit', function (e) {
-            e.preventDefault();
-
-            var data = $(this).serialize();
-
-            $.ajax({
-                url: '@Url.Action("UpdateConfidencial", "Dashboard")',
-                type: 'POST',
-                data: data,
-                success: function (response) {
-                    if (response.success) {
-                        toastr.success('Confidencial details updated successfully!');
-                        location.reload();
-                    } else {
-                        toastr.error(response.message || 'Failed to update confidencial details.');
-                        console.log('Validation Errors:', response.errors);
-                        response.errors.forEach(function (error) {
-                            toastr.error(error);
-                        });
-                    }
-
-                    var offcanvasElement = document.getElementById('editConfidencialOffcanvas');
-                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
-                    offcanvas.hide();
-                },
-                error: function () {
-                    toastr.error('Failed to update confidencial details.');
-                }
-            });
-        });
     </script>
+
+
+
 
     <!-- Include necessary libraries -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
