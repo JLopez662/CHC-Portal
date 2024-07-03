@@ -67,8 +67,6 @@
             </div>
         </div>
    
-
-
         <!-- Contributivos tab contents -->
         <div class="tab-pane fade" id="contributivos" role="tabpanel" aria-labelledby="contributivos-tab">
             <div id="tblDataWrapper" class="dataTableWrapper">
@@ -638,118 +636,139 @@
         @if (TempData["Success"] != null)
         {
             <text>
-                    console.log('Showing Toastr success message');
-                toastr.success('@TempData["Success"]');
+                    toastr.success('@TempData["Success"]');
             </text>
         }
 
-        function initializeDataTables() {
-            $('.tblData').each(function () {
-                if (!$.fn.dataTable.isDataTable($(this))) {
-                    $(this).DataTable({
-                        "paging": true,
-                        "searching": true,
-                        "ordering": false,
-                        "info": false,
-                        "lengthMenu": [[4, -1], ["Summary", "All"]],
-                        "columnDefs": [
-                            { "orderable": true, "targets": 1 }
-                        ],
-                        "order": [[1, 'asc']],
-                        "autoWidth": false,
-                        "language": {
-                            "search": "Search in this record:"
+                function initializeDataTables() {
+                    console.log("Initializing DataTables");
+                    $('.tblData').each(function () {
+                        if (!$.fn.dataTable.isDataTable($(this))) {
+                            $(this).DataTable({
+                                "paging": true,
+                                "searching": true,
+                                "ordering": false,
+                                "info": false,
+                                "lengthMenu": [[4, -1], ["Summary", "All"]],
+                                "columnDefs": [
+                                    { "orderable": true, "targets": 1 }
+                                ],
+                                "order": [[1, 'asc']],
+                                "autoWidth": false,
+                                "language": {
+                                    "search": "Search in this record:"
+                                }
+                            });
                         }
                     });
                 }
-            });
-        }
 
-        initializeDataTables();
+            initializeDataTables();
 
-        $('#externalSearch').on('keyup', function () {
-            var searchTerm = $(this).val().toLowerCase();
-            var tablesMatched = false;
+            $('#externalSearch').on('keyup', function () {
+                var searchTerm = $(this).val().toLowerCase();
+                var tablesMatched = false;
 
-            $('.tblData').closest('table').hide();
-            $('.tab-pane').hide();
+                console.log("Search term: " + searchTerm);
 
-            $('.tblData').each(function () {
-                if ($.fn.dataTable.isDataTable($(this))) {
-                    $(this).DataTable().destroy();
-                }
-            });
+                $('.tab-pane').each(function () {
+                    var $tabPane = $(this);
+                    var $tables = $tabPane.find('.tblData');
 
-            $('.tblData').each(function () {
-                var nombre = $(this).data('nombre').toLowerCase();
-                var nombreComercial = $(this).data('nombrecomercial').toLowerCase();
-                var parentTable = $(this).closest('table');
-                var parentTabPane = parentTable.closest('.tab-pane');
+                    $tables.closest('table').hide();
+                    $tabPane.hide();
 
-                if (nombre.includes(searchTerm) || nombreComercial.includes(searchTerm)) {
-                    parentTable.show();
-                    parentTabPane.show();
-                    parentTable.find('.edit-button').show(); // Show the update button for the matched record
-                    tablesMatched = true;
-                    console.log("Match found: " + nombre + " or " + nombreComercial);
-                    console.log("User ID: " + $(this).data('id')); // Log the user ID
-                } else {
-                    parentTable.find('.edit-button').hide(); // Hide the update button for the non-matched record
-                }
-            });
+                    $tables.each(function () {
+                        if ($.fn.dataTable.isDataTable($(this))) {
+                            $(this).DataTable().destroy();
+                        }
+                    });
 
-            if (tablesMatched) {
-                $('.tblData:visible').each(function () {
-                    if (!$.fn.dataTable.isDataTable($(this))) {
-                        $(this).DataTable({
-                            "paging": true,
-                            "searching": true,
-                            "ordering": false,
-                            "info": false,
-                            "lengthMenu": [[4, -1], ["Summary", "All"]],
-                            "columnDefs": [
-                                { "orderable": true, "targets": 1 }
-                            ],
-                            "order": [[1, 'asc']],
-                            "autoWidth": false,
-                            "language": {
-                                "search": "Search in this record:"
+                    $tables.each(function () {
+                        var nombre = $(this).data('nombre').toLowerCase();
+                        var nombreComercial = $(this).data('nombrecomercial').toLowerCase();
+                        var parentTable = $(this).closest('table');
+                        var parentTabPane = parentTable.closest('.tab-pane');
+                        var tableUserId = $(this).data('id');
+                        console.log('Table User Id = ', tableUserId);
+
+                        console.log("Checking table with Nombre: " + nombre + " and Nombre Comercial: " + nombreComercial);
+
+                        if (nombre.includes(searchTerm) || nombreComercial.includes(searchTerm)) {
+                            console.log("nombre.includes(searchTerm) is true");
+                            parentTable.show();
+                            parentTabPane.show();
+                            tablesMatched = true;
+
+                            // Hide all edit buttons first
+                            $('.edit-button').hide();
+
+                            // Show the edit button only for the specific user ID
+                            $('.edit-button').each(function () {
+                                console.log("Button data-id: " + $(this).data('id'));
+                                if ($(this).data('id') == tableUserId) {
+                                    console.log("Matched");
+                                    $(this).show();
+                                }
+                            });
+
+                            return false; // Exit the each loop once a match is found
+                        }
+                    });
+
+                    if (tablesMatched) {
+                        $tables.filter(':visible').each(function () {
+                            if (!$.fn.dataTable.isDataTable($(this))) {
+                                $(this).DataTable({
+                                    "paging": true,
+                                    "searching": true,
+                                    "ordering": false,
+                                    "info": false,
+                                    "lengthMenu": [[4, -1], ["Summary", "All"]],
+                                    "columnDefs": [
+                                        { "orderable": true, "targets": 1 }
+                                    ],
+                                    "order": [[1, 'asc']],
+                                    "autoWidth": false,
+                                    "language": {
+                                        "search": "Search in this record:"
+                                    }
+                                });
                             }
                         });
                     }
+
+                    if (!tablesMatched) {
+                        $('.tab-pane').show();
+                        console.log("No tables matched. Showing all tab panes.");
+                    }
+
+                    if (searchTerm === "") {
+                        $('.tab-pane').removeClass('show active');
+                        $('#demograficos').addClass('show active');
+                        console.log("Search term is empty. Resetting view.");
+                    }
+
+                    $tabPane.find('.edit-button:visible').each(function () {
+                        console.log("Visible update button ID: " + $(this).data('id'));
+                    });
                 });
-            }
-
-            if (!tablesMatched) {
-                $('.tab-pane').show();
-            }
-
-            if (searchTerm === "") {
-                $('.tab-pane').removeClass('show active');
-                $('.tab-pane:first').addClass('show active');
-                $('.edit-button').show(); // Show all update buttons if no search term is provided
-            }
-
-                // Log the ID of all visible update buttons
-                $('.edit-button:visible').each(function () {
-                    console.log("Visible update button ID: " + $(this).data('id'));
-                });
-        });
-
-            $('#dashboardTabsContent .tab-pane').removeClass('show active');
-            $('#dashboardTabsContent .tab-pane:first').addClass('show active');
+            });
 
             function prioritizeActiveTabTables(activeTabId) {
+                console.log("Prioritizing tables in active tab:", activeTabId);
                 $('.tab-pane').each(function () {
                     var tabPane = $(this);
                     if (tabPane.attr('id') === activeTabId.substring(1)) {
                         tabPane.prependTo('#dashboardTabsContent');
+                        console.log("Active tab pane moved to top:", tabPane.attr('id'));
                     }
                 });
             }
 
             prioritizeActiveTabTables($('#dashboardTabs a.active').attr('href'));
         });
+
 
         function editDemografico(id) {
             console.log("Edit button clicked for ID:", id);
@@ -778,8 +797,6 @@
                     $('#demograficoDirPostal').val(data.dirPostal);
                     $('#demograficoEmail').val(data.email);
                     $('#demograficoEmail2').val(data.email2);
-                    $('#demograficoCID').val(data.cid);
-                    $('#demograficoMID').val(data.mid);
 
                     var offcanvasElement = document.getElementById('editDemograficoOffcanvas');
                     var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
@@ -822,9 +839,6 @@
             });
         });
 
-
-
-
         function editContributivo(id) {
             console.log("Edit button clicked for Contributivo ID:", id);
             $.ajax({
@@ -842,8 +856,6 @@
                     $('#contributivoVencimiento').val(data.vencimiento);
                     $('#contributivoChoferil').val(data.choferil);
                     $('#contributivoDeptEstado').val(data.deptEstado);
-                    $('#contributivoCID').val(data.cid);
-                    $('#contributivoMID').val(data.mid);
 
                     var offcanvasElement = document.getElementById('editContributivoOffcanvas');
                     var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
@@ -903,8 +915,6 @@
                     $('#administrativoIVU').val(data.ivu);
                     $('#administrativoStaff').val(data.staff);
                     $('#administrativoStaffDate').val(data.staffDate);
-                    $('#administrativoCID').val(data.cid);
-                    $('#administrativoMID').val(data.mid);
 
                     var offcanvasElement = document.getElementById('editAdministrativoOffcanvas');
                     var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
@@ -928,12 +938,7 @@
                 success: function (response) {
                     if (response.success) {
                         toastr.success('Administrativo details updated successfully!');
-                        var activeTabId = localStorage.getItem('activeTabId');
-                        if (activeTabId) {
-                            $('#' + activeTabId).tab('show');
-                        } else {
-                            location.reload();
-                        }
+                        location.reload();
                     } else {
                         toastr.error(response.message || 'Failed to update administrativo details.');
                         console.log('Validation Errors:', response.errors);
@@ -968,8 +973,6 @@
                     $('#identificacionCargo').val(data.cargo);
                     $('#identificacionLicConducir').val(data.licConducir);
                     $('#identificacionNacimiento').val(data.nacimiento);
-                    $('#identificacionCID').val(data.cid);
-                    $('#identificacionMID').val(data.mid);
 
                     var offcanvasElement = document.getElementById('editIdentificacionOffcanvas');
                     var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
@@ -1045,8 +1048,6 @@
                     $('#pagoCVVS').val(data.cvvs);
                     $('#pagoExpiracionS').val(data.expiracionS);
                     $('#pagoPostalBankS').val(data.postalBankS);
-                    $('#pagoCID').val(data.cid);
-                    $('#pagoMID').val(data.mid);
 
                     var offcanvasElement = document.getElementById('editPagoOffcanvas');
                     var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
@@ -1113,8 +1114,6 @@
                     $('#confidencialPassCofim').val(data.passCofim);
                     $('#confidencialUserMunicipio').val(data.userMunicipio);
                     $('#confidencialPassMunicipio').val(data.passMunicipio);
-                    $('#confidencialCID').val(data.cid);
-                    $('#confidencialMID').val(data.mid);
 
                     var offcanvasElement = document.getElementById('editConfidencialOffcanvas');
                     var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
@@ -1156,7 +1155,6 @@
                 }
             });
         });
-
     </script>
 
     <!-- Include necessary libraries -->
@@ -1167,3 +1165,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 }
+
