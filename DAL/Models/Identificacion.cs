@@ -19,8 +19,8 @@ namespace DAL.Models
         public string Cargo { get; set; }
         public string LicConducir { get; set; }
         public DateTime Nacimiento { get; set; }
-        public string CID { get; set; }
-        public string MID { get; set; }
+        public string? CID { get; set; }
+        public string? MID { get; set; }
 
         [ForeignKey("ID")]
         public Registro Registro { get; set; }

@@ -64,8 +64,8 @@ public class Demografico
     [EmailAddress]
     public string Email2 { get; set; }
 
-    public string CID { get; set; }
-    public string MID { get; set; }
+    public string? CID { get; set; }
+    public string? MID { get; set; }
 
     [ForeignKey("ID")]
     public Registro Registro { get; set; }

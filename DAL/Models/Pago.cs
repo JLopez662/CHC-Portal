@@ -36,8 +36,8 @@ namespace DAL.Models
         public string CVVS { get; set; }
         public DateTime ExpiracionS { get; set; }
         public string PostalBankS { get; set; }
-        public string CID { get; set; }
-        public string MID { get; set; }
+        public string? CID { get; set; }
+        public string? MID { get; set; }
 
         [ForeignKey("ID")]
         public Registro Registro { get; set; }

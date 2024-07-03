@@ -20,8 +20,8 @@ namespace DAL.Models
         public string IVU { get; set; }
         public string Staff { get; set; }
         public DateTime StaffDate { get; set; }
-        public string CID { get; set; }
-        public string MID { get; set; }
+        public string? CID { get; set; }
+        public string? MID { get; set; }
 
         [ForeignKey("ID")]
         public Registro Registro { get; set; }

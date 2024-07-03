@@ -27,8 +27,8 @@ namespace DAL.Models
         public string PassCofim { get; set; }
         public string UserMunicipio { get; set; }
         public string PassMunicipio { get; set; }
-        public string CID { get; set; }
-        public string MID { get; set; }
+        public string? CID { get; set; }
+        public string? MID { get; set; }
 
         [ForeignKey("ID")]
         public Registro Registro { get; set; }

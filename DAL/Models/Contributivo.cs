@@ -17,8 +17,8 @@ namespace DAL.Models
         public DateTime Vencimiento { get; set; }
         public string Choferil { get; set; }
         public string DeptEstado { get; set; }
-        public string CID { get; set; }
-        public string MID { get; set; }
+        public string? CID { get; set; }
+        public string? MID { get; set; }
 
         // No [Required] attribute if Registro is optional
         [ForeignKey("ID")]
