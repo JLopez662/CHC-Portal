@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Shared.Models;
-using BLL.Services;
 using DAL;
 using DAL.Repositories;
 using BLL;
+using BLL.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

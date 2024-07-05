@@ -3,6 +3,7 @@ using BLL.Services;
 using DAL.Models;
 using CPA.Models;
 using System.Linq;
+using BLL.Interfaces;
 
 namespace CPA.Controllers
 {
@@ -19,11 +20,60 @@ namespace CPA.Controllers
         {
             TempData["Success"] = "You have successfully logged in!";
             var demograficos = _customerService.GetDemograficos();
-            var contributivos = _customerService.GetContributivos();
+            var contributivos = _customerService.GetContributivos().ToList();
+            foreach (var contributivo in contributivos)
+            {
+                var demografico = demograficos.FirstOrDefault(d => d.ID == contributivo.ID);
+                if (demografico != null)
+                {
+                    contributivo.Nombre = demografico.Nombre;
+                    contributivo.NombreComercial = demografico.NombreComercial;
+                }
+            }
+
             var administrativos = _customerService.GetAdministrativos();
+            foreach (var administrativo in administrativos)
+            {
+                var demografico = demograficos.FirstOrDefault(d => d.ID == administrativo.ID);
+                if (demografico != null)
+                {
+                    administrativo.Nombre = demografico.Nombre;
+                    administrativo.NombreComercial = demografico.NombreComercial;
+                }
+            }
+
             var identificaciones = _customerService.GetIdentificaciones();
+            foreach (var identificacion in identificaciones)
+            {
+                var demografico = demograficos.FirstOrDefault(d => d.ID == identificacion.ID);
+                if (demografico != null)
+                {
+                    identificacion.Nombre = demografico.Nombre;
+                    identificacion.NombreComercial = demografico.NombreComercial;
+                }
+            }
+
             var pagos = _customerService.GetPagos();
+            foreach (var pago in pagos)
+            {
+                var demografico = demograficos.FirstOrDefault(d => d.ID == pago.ID);
+                if (demografico != null)
+                {
+                    pago.Nombre = demografico.Nombre;
+                    pago.NombreComercial = demografico.NombreComercial;
+                }
+            }
+
             var confidenciales = _customerService.GetConfidenciales();
+            foreach (var confidencial in confidenciales)
+            {
+                var demografico = demograficos.FirstOrDefault(d => d.ID == confidencial.ID);
+                if (demografico != null)
+                {
+                    confidencial.Nombre = demografico.Nombre;
+                    confidencial.NombreComercial = demografico.NombreComercial;
+                }
+            }
 
             var viewModel = new DashboardViewModel
             {
@@ -38,6 +88,7 @@ namespace CPA.Controllers
             ViewBag.FirstName = HttpContext.Session.GetString("FirstName");
             return View(viewModel);
         }
+
 
         [HttpGet]
         public IActionResult GetDemograficoById(string id)
@@ -102,12 +153,17 @@ namespace CPA.Controllers
                 return NotFound();
             }
 
-            // Convert the date to a string in the proper format (yyyy-MM-dd)
+            var demografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == id);
+            if (demografico == null)
+            {
+                return NotFound();
+            }
+
             var contributivoViewModel = new
             {
                 contributivo.ID,
-                contributivo.Nombre,
-                contributivo.NombreComercial,
+                Nombre = demografico.Nombre,
+                NombreComercial = demografico.NombreComercial,
                 contributivo.Estatal,
                 contributivo.Poliza,
                 contributivo.RegComerciante,
@@ -130,10 +186,12 @@ namespace CPA.Controllers
             if (ModelState.IsValid)
             {
                 var existingContributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == model.ID);
-                if (existingContributivo != null)
+
+                var existingDemografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == model.ID);
+
+                if (existingContributivo != null && existingDemografico != null)
                 {
-                    existingContributivo.Nombre = model.Nombre;
-                    existingContributivo.NombreComercial = model.NombreComercial;
+
                     existingContributivo.Estatal = model.Estatal;
                     existingContributivo.Poliza = model.Poliza;
                     existingContributivo.RegComerciante = model.RegComerciante;
@@ -144,6 +202,11 @@ namespace CPA.Controllers
                     existingContributivo.MID = model.MID;
 
                     _customerService.UpdateContributivo(existingContributivo);
+
+                    existingDemografico.Nombre = model.Nombre;
+                    existingDemografico.NombreComercial = model.NombreComercial;
+                    _customerService.UpdateDemografico(existingDemografico);
+
                     return Json(new { success = true });
                 }
 
@@ -163,12 +226,18 @@ namespace CPA.Controllers
                 return NotFound();
             }
 
+            var demografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == id);
+            if (demografico == null)
+            {
+                return NotFound();
+            }
+
             // Convert the date fields to a string in the proper format (yyyy-MM-ddTHH:mm)
             var administrativoViewModel = new
             {
                 administrativo.ID,
-                administrativo.Nombre,
-                administrativo.NombreComercial,
+                Nombre = demografico.Nombre,
+                NombreComercial = demografico.NombreComercial,
                 administrativo.Contrato,
                 administrativo.Facturacion,
                 administrativo.FacturacionBase,
@@ -190,10 +259,11 @@ namespace CPA.Controllers
             if (ModelState.IsValid)
             {
                 var existingAdministrativo = _customerService.GetAdministrativos().FirstOrDefault(a => a.ID == model.ID);
-                if (existingAdministrativo != null)
+                var existingDemografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == model.ID);
+
+                if (existingAdministrativo != null && existingDemografico != null)
                 {
-                    existingAdministrativo.Nombre = model.Nombre;
-                    existingAdministrativo.NombreComercial = model.NombreComercial;
+
                     existingAdministrativo.Contrato = model.Contrato;
                     existingAdministrativo.Facturacion = model.Facturacion;
                     existingAdministrativo.FacturacionBase = model.FacturacionBase;
@@ -204,6 +274,11 @@ namespace CPA.Controllers
                     existingAdministrativo.MID = model.MID;
 
                     _customerService.UpdateAdministrativo(existingAdministrativo);
+
+                    existingDemografico.Nombre = model.Nombre;
+                    existingDemografico.NombreComercial = model.NombreComercial;
+                    _customerService.UpdateDemografico(existingDemografico);
+
                     return Json(new { success = true });
                 }
 
@@ -223,7 +298,27 @@ namespace CPA.Controllers
                 return NotFound();
             }
 
-            return Json(identificacion);
+            var demografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == id);
+            if (demografico == null)
+            {
+                return NotFound();
+            }
+
+            var identificacionViewModel = new
+            {
+                identificacion.ID,
+                Nombre = demografico.Nombre,
+                NombreComercial = demografico.NombreComercial,
+                identificacion.Accionista,
+                identificacion.SSNA,
+                identificacion.Cargo,
+                identificacion.LicConducir,
+                Nacimiento = identificacion.Nacimiento.ToString("yyyy-MM-dd"),
+                identificacion.CID,
+                identificacion.MID
+            };
+
+            return Json(identificacionViewModel);
         }
 
         [HttpPost]
@@ -234,10 +329,9 @@ namespace CPA.Controllers
             if (ModelState.IsValid)
             {
                 var existingIdentificacion = _customerService.GetIdentificaciones().FirstOrDefault(i => i.ID == model.ID);
-                if (existingIdentificacion != null)
+                var existingDemografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == model.ID);
+                if (existingIdentificacion!= null && existingDemografico != null)
                 {
-                    existingIdentificacion.Nombre = model.Nombre;
-                    existingIdentificacion.NombreComercial = model.NombreComercial;
                     existingIdentificacion.Accionista = model.Accionista;
                     existingIdentificacion.SSNA = model.SSNA;
                     existingIdentificacion.Cargo = model.Cargo;
@@ -247,6 +341,11 @@ namespace CPA.Controllers
                     existingIdentificacion.MID = model.MID;
 
                     _customerService.UpdateIdentificacion(existingIdentificacion);
+
+                    existingDemografico.Nombre = model.Nombre;
+                    existingDemografico.NombreComercial = model.NombreComercial;
+                    _customerService.UpdateDemografico(existingDemografico);
+
                     return Json(new { success = true });
                 }
 
@@ -266,7 +365,45 @@ namespace CPA.Controllers
                 return NotFound();
             }
 
-            return Json(pago);
+            var demografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == id);
+            if (demografico == null)
+            {
+                return NotFound();
+            }
+
+            // Convert the date fields to a string in the proper format (yyyy-MM-ddTHH:mm)
+            var pagoViewModel = new
+            {
+                pago.ID,
+                Nombre = demografico.Nombre,
+                NombreComercial = demografico.NombreComercial,
+                pago.BankClient,
+                pago.Banco,
+                pago.NumRuta,
+                pago.NameBank,
+                pago.TipoCuenta,
+                pago.BankClientS,
+                pago.BancoS,
+                pago.NumRutaS,
+                pago.NameBankS,
+                pago.TipoCuentaS,
+                pago.NameCard,
+                pago.Tarjeta,
+                pago.TipoTarjeta,
+                pago.CVV,
+                pago.Expiracion,
+                pago.PostalBank,
+                pago.NameCardS,
+                pago.TarjetaS,
+                pago.TipoTarjetaS,
+                pago.CVVS,
+                pago.ExpiracionS,
+                pago.PostalBankS,
+                pago.CID,
+                pago.MID
+            };
+
+            return Json(pagoViewModel);
         }
 
         [HttpPost]
@@ -277,10 +414,10 @@ namespace CPA.Controllers
             if (ModelState.IsValid)
             {
                 var existingPago = _customerService.GetPagos().FirstOrDefault(p => p.ID == model.ID);
-                if (existingPago != null)
+                var existingDemografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == model.ID);
+
+                if (existingPago != null && existingDemografico != null)
                 {
-                    existingPago.Nombre = model.Nombre;
-                    existingPago.NombreComercial = model.NombreComercial;
                     existingPago.BankClient = model.BankClient;
                     existingPago.Banco = model.Banco;
                     existingPago.NumRuta = model.NumRuta;
@@ -307,6 +444,11 @@ namespace CPA.Controllers
                     existingPago.MID = model.MID;
 
                     _customerService.UpdatePago(existingPago);
+
+                    existingDemografico.Nombre = model.Nombre;
+                    existingDemografico.NombreComercial = model.NombreComercial;
+                    _customerService.UpdateDemografico(existingDemografico);
+
                     return Json(new { success = true });
                 }
 
@@ -326,7 +468,35 @@ namespace CPA.Controllers
                 return NotFound();
             }
 
-            return Json(confidencial);
+            var demografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == id);
+            if (demografico == null)
+            {
+                return NotFound();
+            }
+
+            var confidencialViewModel = new
+            {
+                confidencial.ID,
+                Nombre = demografico.Nombre,
+                NombreComercial = demografico.NombreComercial,
+                confidencial.UserSuri,
+                confidencial.PassSuri,
+                confidencial.UserEftps,
+                confidencial.PassEftps,
+                confidencial.PIN,
+                confidencial.UserCFSE,
+                confidencial.PassCFSE,
+                confidencial.UserDept,
+                confidencial.PassDept,
+                confidencial.UserCofim,
+                confidencial.PassCofim,
+                confidencial.UserMunicipio,
+                confidencial.PassMunicipio,
+                confidencial.CID,
+                confidencial.MID
+            };
+
+            return Json(confidencialViewModel);
         }
 
         [HttpPost]
@@ -337,10 +507,11 @@ namespace CPA.Controllers
             if (ModelState.IsValid)
             {
                 var existingConfidencial = _customerService.GetConfidenciales().FirstOrDefault(c => c.ID == model.ID);
-                if (existingConfidencial != null)
+                var existingDemografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == model.ID);
+
+
+                if (existingConfidencial != null && existingDemografico != null)
                 {
-                    existingConfidencial.Nombre = model.Nombre;
-                    existingConfidencial.NombreComercial = model.NombreComercial;
                     existingConfidencial.UserSuri = model.UserSuri;
                     existingConfidencial.PassSuri = model.PassSuri;
                     existingConfidencial.UserEftps = model.UserEftps;
@@ -356,8 +527,12 @@ namespace CPA.Controllers
                     existingConfidencial.PassMunicipio = model.PassMunicipio;
                     existingConfidencial.CID = model.CID;
                     existingConfidencial.MID = model.MID;
-
                     _customerService.UpdateConfidencial(existingConfidencial);
+
+                    existingDemografico.Nombre = model.Nombre;
+                    existingDemografico.NombreComercial = model.NombreComercial;
+                    _customerService.UpdateDemografico(existingDemografico);
+
                     return Json(new { success = true });
                 }
 

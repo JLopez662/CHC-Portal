@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using DAL.Models;
 
-namespace BLL.Services
+namespace BLL.Interfaces
 {
     public interface ICustomerService
     {
@@ -17,5 +17,6 @@ namespace BLL.Services
         void UpdateIdentificacion(Identificacion identificacion);
         void UpdatePago(Pago pago);
         void UpdateConfidencial(Confidencial confidencial);
+
     }
 }

@@ -1,13 +1,13 @@
 ﻿using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using BLL.Services;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using CPA.Models;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using BLL.Interfaces;
 
 namespace CPA.Controllers
 {
