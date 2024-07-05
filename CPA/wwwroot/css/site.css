@@ -135,7 +135,8 @@ a.float-right {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none; 
+    text-decoration: none;
+    margin: 5px 0 20px ;
 }
 
     .orange-button span {
@@ -172,6 +173,7 @@ a.float-right {
     margin-bottom: 5px;
     margin-top: 15px;
     text-decoration: none;
+    margin: 5px 0 20px;
 }
 
     .green-button span {
@@ -218,6 +220,10 @@ a.float-right {
         outline: none;
         box-shadow: 0 -0.2em 1.5em hsla(120, 70%, 60%, 0.3), 0 0.5em 2em hsla(120, 70%, 60%, 0.5), 0 0.25em 0.5em -0.2em hsl(120, 90%, 50%), 0 0.25em 1em hsla(120, 20%, 30%, 0.2), inset 0 -2px 2px rgba(255, 255, 255, 0.2);
         background-position: center calc(45% - 0.75em);
+    }
+
+    .green-button:hover span {
+        color: black; /* Change text color on hover */
     }
 
 
