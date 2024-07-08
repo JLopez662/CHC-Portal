@@ -1124,11 +1124,11 @@
                             parentTabPane.show();
                             tablesMatched = true;
 
-                            // Hide all edit buttons first
-                            $('.edit-button').hide();
+                            // Hide all edit and delete buttons first
+                            $('.edit-button, .delete-button').hide();
 
-                            // Show the edit button only for the specific user ID
-                            $('.edit-button').each(function () {
+                            // Show the edit and delete buttons only for the specific user ID
+                            $('.edit-button, .delete-button').each(function () {
                                 console.log("Button data-id: " + $(this).data('id'));
                                 if ($(this).data('id') == tableUserId) {
                                     console.log("Matched");
@@ -1173,25 +1173,11 @@
                         console.log("Search term is empty. Resetting view.");
                     }
 
-                    $tabPane.find('.edit-button:visible').each(function () {
-                        console.log("Visible update button ID: " + $(this).data('id'));
+                    $tabPane.find('.edit-button:visible, .delete-button:visible').each(function () {
+                        console.log("Visible button ID: " + $(this).data('id'));
                     });
                 });
             });
-
-            function prioritizeActiveTabTables(activeTabId) {
-                console.log("Prioritizing tables in active tab:", activeTabId);
-                $('.tab-pane').each(function () {
-                    var tabPane = $(this);
-                    if (tabPane.attr('id') === activeTabId.substring(1)) {
-                        tabPane.prependTo('#dashboardTabsContent');
-                        console.log("Active tab pane moved to top:", tabPane.attr('id'));
-                    }
-                });
-            }
-
-            prioritizeActiveTabTables($('#dashboardTabs a.active').attr('href'));
-
             function editDemografico(id) {
                 console.log("Edit button clicked for ID:", id);
                 $.ajax({
