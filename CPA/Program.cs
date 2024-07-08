@@ -4,6 +4,7 @@ using DAL;
 using DAL.Repositories;
 using BLL;
 using BLL.Interfaces;
+using BLL.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+builder.Services.AddScoped<IRegistroService, RegistroService>();
+
 
 // Add session services
 builder.Services.AddDistributedMemoryCache();

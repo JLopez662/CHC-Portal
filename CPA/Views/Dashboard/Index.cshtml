@@ -20,6 +20,7 @@
         </button>
     </div>
 
+
     <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <a class="nav-link active" id="demograficos-tab" data-toggle="tab" href="#demograficos" role="tab" aria-controls="demograficos" aria-selected="true">Demograficos</a>
@@ -42,7 +43,363 @@
         </li>
     </ul>
 
-
+    <!-- Modal for Creating a New Customer -->
+    <div class="modal fade" id="newCustomerModal" tabindex="-1" aria-labelledby="newCustomerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newCustomerModalLabel">Create New Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" id="modalTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="modal-demografico-tab" data-bs-toggle="tab" href="#modal-demografico" role="tab" aria-controls="modal-demografico" aria-selected="true">Demografico</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="modal-contributivo-tab" data-bs-toggle="tab" href="#modal-contributivo" role="tab" aria-controls="modal-contributivo" aria-selected="false">Contributivo</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="modal-administrativo-tab" data-bs-toggle="tab" href="#modal-administrativo" role="tab" aria-controls="modal-administrativo" aria-selected="false">Administrativo</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="modal-identificacion-tab" data-bs-toggle="tab" href="#modal-identificacion" role="tab" aria-controls="modal-identificacion" aria-selected="false">Identificacion</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="modal-pago-tab" data-bs-toggle="tab" href="#modal-pago" role="tab" aria-controls="modal-pago" aria-selected="false">Pago</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="modal-confidencial-tab" data-bs-toggle="tab" href="#modal-confidencial" role="tab" aria-controls="modal-confidencial" aria-selected="false">Confidencial</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="modalTabsContent">
+                        <div class="tab-pane fade show active" id="modal-demografico" role="tabpanel" aria-labelledby="modal-demografico-tab">
+                            <form id="createDemograficoForm" method="post" action="@Url.Action("Create", "Dashboard")">
+                                <!-- Demografico Fields -->
+                                <div class="mb-3">
+                                    <label for="newID" class="form-label">ID</label>
+                                    <input type="text" class="form-control" id="newID" name="NewDemografico.ID" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newNombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="newNombre" name="NewDemografico.Nombre" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newNombreComercial" class="form-label">Nombre Comercial</label>
+                                    <input type="text" class="form-control" id="newNombreComercial" name="NewDemografico.NombreComercial" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newTelefono" class="form-label">Teléfono</label>
+                                    <input type="text" class="form-control" id="newTelefono" name="NewDemografico.Telefono" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newCelular" class="form-label">Celular</label>
+                                    <input type="text" class="form-control" id="newCelular" name="NewDemografico.Celular">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newDir" class="form-label">Dirección</label>
+                                    <input type="text" class="form-control" id="newDir" name="NewDemografico.Dir">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newTipo" class="form-label">Tipo</label>
+                                    <input type="text" class="form-control" id="newTipo" name="NewDemografico.Tipo">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newPatronal" class="form-label">Patronal</label>
+                                    <input type="text" class="form-control" id="newPatronal" name="NewDemografico.Patronal">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newSSN" class="form-label">SSN</label>
+                                    <input type="text" class="form-control" id="newSSN" name="NewDemografico.SSN">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newIncorporacion" class="form-label">Incorporacion</label>
+                                    <input type="datetime-local" class="form-control" id="newIncorporacion" name="NewDemografico.Incorporacion">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newOperaciones" class="form-label">Operaciones</label>
+                                    <input type="datetime-local" class="form-control" id="newOperaciones" name="NewDemografico.Operaciones">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newIndustria" class="form-label">Industria</label>
+                                    <input type="text" class="form-control" id="newIndustria" name="NewDemografico.Industria">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newNAICS" class="form-label">NAICS</label>
+                                    <input type="text" class="form-control" id="newNAICS" name="NewDemografico.NAICS">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newDescripcion" class="form-label">Descripcion</label>
+                                    <input type="text" class="form-control" id="newDescripcion" name="NewDemografico.Descripcion">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newContacto" class="form-label">Contacto</label>
+                                    <input type="text" class="form-control" id="newContacto" name="NewDemografico.Contacto">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newDirFisica" class="form-label">DirFisica</label>
+                                    <input type="text" class="form-control" id="newDirFisica" name="NewDemografico.DirFisica">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newDirPostal" class="form-label">DirPostal</label>
+                                    <input type="text" class="form-control" id="newDirPostal" name="NewDemografico.DirPostal">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="newEmail" name="NewDemografico.Email">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newEmail2" class="form-label">Email2</label>
+                                    <input type="email" class="form-control" id="newEmail2" name="NewDemografico.Email2">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="modal-contributivo" role="tabpanel" aria-labelledby="modal-contributivo-tab">
+                            <form id="createContributivoForm" method="post" action="@Url.Action("Create", "Dashboard")">
+                                <!-- Contributivo Fields -->
+                                <div class="mb-3">
+                                    <label for="newRegistroEstatal" class="form-label">Registro Estatal</label>
+                                    <input type="text" class="form-control" id="newRegistroEstatal" name="NewContributivo.RegistroEstatal" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newNumeroPoliza" class="form-label">Número de Poliza</label>
+                                    <input type="text" class="form-control" id="newNumeroPoliza" name="NewContributivo.NumeroPoliza" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newRegistroComerciante" class="form-label">Registro de Comerciante</label>
+                                    <input type="text" class="form-control" id="newRegistroComerciante" name="NewContributivo.RegistroComerciante">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newFechaVencimiento" class="form-label">Fecha de Vencimiento</label>
+                                    <input type="date" class="form-control" id="newFechaVencimiento" name="NewContributivo.FechaVencimiento">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newRegistroChoferil" class="form-label">Registro Choferil</label>
+                                    <input type="text" class="form-control" id="newRegistroChoferil" name="NewContributivo.RegistroChoferil">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newDepartamentoEstado" class="form-label">Departamento de Estado</label>
+                                    <input type="text" class="form-control" id="newDepartamentoEstado" name="NewContributivo.DepartamentoEstado">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="modal-administrativo" role="tabpanel" aria-labelledby="modal-administrativo-tab">
+                            <form id="createAdministrativoForm" method="post" action="@Url.Action("Create", "Dashboard")">
+                                <!-- Administrativo Fields -->
+                                <div class="mb-3">
+                                    <label for="newFechaContrato" class="form-label">Fecha de Contrato</label>
+                                    <input type="date" class="form-control" id="newFechaContrato" name="NewAdministrativo.FechaContrato" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newTipoFacturacion" class="form-label">Tipo de Facturación</label>
+                                    <input type="text" class="form-control" id="newTipoFacturacion" name="NewAdministrativo.TipoFacturacion" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newNumeroFacturacion" class="form-label">Número de Facturación</label>
+                                    <input type="text" class="form-control" id="newNumeroFacturacion" name="NewAdministrativo.NumeroFacturacion">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newIVU" class="form-label">IVU</label>
+                                    <input type="text" class="form-control" id="newIVU" name="NewAdministrativo.IVU">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newStaff" class="form-label">Staff</label>
+                                    <input type="text" class="form-control" id="newStaff" name="NewAdministrativo.Staff">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newStaffDate" class="form-label">Contratación de Staff</label>
+                                    <input type="date" class="form-control" id="newStaffDate" name="NewAdministrativo.StaffDate">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newFacturacionBase" class="form-label">Facturación Base</label>
+                                    <input type="text" class="form-control" id="newFacturacionBase" name="NewAdministrativo.FacturacionBase">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="modal-identificacion" role="tabpanel" aria-labelledby="modal-identificacion-tab">
+                            <form id="createIdentificacionForm" method="post" action="@Url.Action("Create", "Dashboard")">
+                                <!-- Identificacion Fields -->
+                                <div class="mb-3">
+                                    <label for="newAccionista" class="form-label">Accionista</label>
+                                    <input type="text" class="form-control" id="newAccionista" name="NewIdentificacion.Accionista" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newSSNA" class="form-label">SSNA</label>
+                                    <input type="text" class="form-control" id="newSSNA" name="NewIdentificacion.SSNA" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newCargo" class="form-label">Cargo</label>
+                                    <input type="text" class="form-control" id="newCargo" name="NewIdentificacion.Cargo" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newLicConducir" class="form-label">Licencia de Conducir</label>
+                                    <input type="text" class="form-control" id="newLicConducir" name="NewIdentificacion.LicConducir" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newNacimiento" class="form-label">Fecha de Nacimiento</label>
+                                    <input type="date" class="form-control" id="newNacimiento" name="NewIdentificacion.Nacimiento" required>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="modal-pago" role="tabpanel" aria-labelledby="modal-pago-tab">
+                            <form id="createPagoForm" method="post" action="@Url.Action("Create", "Dashboard")">
+                                <!-- Pago Fields -->
+                                <div class="mb-3">
+                                    <label for="newClienteBanco" class="form-label">Cliente del Banco</label>
+                                    <input type="text" class="form-control" id="newClienteBanco" name="NewPago.ClienteBanco" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newBanco" class="form-label">Banco</label>
+                                    <input type="text" class="form-control" id="newBanco" name="NewPago.Banco" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newNumRuta" class="form-label">Numero de Ruta</label>
+                                    <input type="text" class="form-control" id="newNumRuta" name="NewPago.NumRuta">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newNombreBanco" class="form-label">Nombre del Banco</label>
+                                    <input type="text" class="form-control" id="newNombreBanco" name="NewPago.NombreBanco">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newTipoCuenta" class="form-label">Tipo de Cuenta</label>
+                                    <input type="text" class="form-control" id="newTipoCuenta" name="NewPago.TipoCuenta">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newClienteBanco2" class="form-label">Cliente del Banco 2</label>
+                                    <input type="text" class="form-control" id="newClienteBanco2" name="NewPago.ClienteBanco2">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newBanco2" class="form-label">Banco 2</label>
+                                    <input type="text" class="form-control" id="newBanco2" name="NewPago.Banco2">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newNumRuta2" class="form-label">Numero de Ruta 2</label>
+                                    <input type="text" class="form-control" id="newNumRuta2" name="NewPago.NumRuta2">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newNombreBanco2" class="form-label">Nombre del Banco 2</label>
+                                    <input type="text" class="form-control" id="newNombreBanco2" name="NewPago.NombreBanco2">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newTipoCuenta2" class="form-label">Tipo de Cuenta 2</label>
+                                    <input type="text" class="form-control" id="newTipoCuenta2" name="NewPago.TipoCuenta2">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newNombreTarjeta" class="form-label">Cliente en Tarjeta</label>
+                                    <input type="text" class="form-control" id="newNombreTarjeta" name="NewPago.NombreTarjeta">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newTarjeta" class="form-label">Tarjeta de Pago</label>
+                                    <input type="text" class="form-control" id="newTarjeta" name="NewPago.Tarjeta">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newTipoTarjeta" class="form-label">Tipo de Tarjeta</label>
+                                    <input type="text" class="form-control" id="newTipoTarjeta" name="NewPago.TipoTarjeta">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newCVV" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" id="newCVV" name="NewPago.CVV">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newFechaExpiracion" class="form-label">Fecha Expiracion</label>
+                                    <input type="date" class="form-control" id="newFechaExpiracion" name="NewPago.FechaExpiracion">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newPostalTarjeta" class="form-label">Postal en Tarjeta</label>
+                                    <input type="text" class="form-control" id="newPostalTarjeta" name="NewPago.PostalTarjeta">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newNombreTarjeta2" class="form-label">Cliente en Tarjeta 2</label>
+                                    <input type="text" class="form-control" id="newNombreTarjeta2" name="NewPago.NombreTarjeta2">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newTarjeta2" class="form-label">Tarjeta de Pago 2</label>
+                                    <input type="text" class="form-control" id="newTarjeta2" name="NewPago.Tarjeta2">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newTipoTarjeta2" class="form-label">Tipo de Tarjeta 2</label>
+                                    <input type="text" class="form-control" id="newTipoTarjeta2" name="NewPago.TipoTarjeta2">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newCVV2" class="form-label">CVV 2</label>
+                                    <input type="text" class="form-control" id="newCVV2" name="NewPago.CVV2">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newFechaExpiracion2" class="form-label">Fecha Expiracion 2</label>
+                                    <input type="date" class="form-control" id="newFechaExpiracion2" name="NewPago.FechaExpiracion2">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newPostalTarjeta2" class="form-label">Postal en Tarjeta 2</label>
+                                    <input type="text" class="form-control" id="newPostalTarjeta2" name="NewPago.PostalTarjeta2">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="modal-confidencial" role="tabpanel" aria-labelledby="modal-confidencial-tab">
+                            <form id="createConfidencialForm" method="post" action="@Url.Action("Create", "Dashboard")">
+                                <!-- Confidencial Fields -->
+                                <div class="mb-3">
+                                    <label for="newUsuarioSuri" class="form-label">Usuario Suri</label>
+                                    <input type="text" class="form-control" id="newUsuarioSuri" name="NewConfidencial.UsuarioSuri" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newContrasenaSuri" class="form-label">Contraseña Suri</label>
+                                    <input type="text" class="form-control" id="newContrasenaSuri" name="NewConfidencial.ContrasenaSuri" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newUsuarioEftps" class="form-label">Usuario Eftps</label>
+                                    <input type="text" class="form-control" id="newUsuarioEftps" name="NewConfidencial.UsuarioEftps">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newContrasenaEftps" class="form-label">Contraseña Eftps</label>
+                                    <input type="text" class="form-control" id="newContrasenaEftps" name="NewConfidencial.ContrasenaEftps">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newPIN" class="form-label">PIN</label>
+                                    <input type="text" class="form-control" id="newPIN" name="NewConfidencial.PIN">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newUsuarioCFSE" class="form-label">Usuario CFSE</label>
+                                    <input type="text" class="form-control" id="newUsuarioCFSE" name="NewConfidencial.UsuarioCFSE">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newContrasenaCFSE" class="form-label">Contraseña CFSE</label>
+                                    <input type="text" class="form-control" id="newContrasenaCFSE" name="NewConfidencial.ContrasenaCFSE">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newUsuarioDeptTrabajo" class="form-label">Usuario Dept del Trabajo</label>
+                                    <input type="text" class="form-control" id="newUsuarioDeptTrabajo" name="NewConfidencial.UsuarioDeptTrabajo">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newContrasenaDeptTrabajo" class="form-label">Contraseña Dept del Trabajo</label>
+                                    <input type="text" class="form-control" id="newContrasenaDeptTrabajo" name="NewConfidencial.ContrasenaDeptTrabajo">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newUsuarioCofim" class="form-label">Usuario Cofim</label>
+                                    <input type="text" class="form-control" id="newUsuarioCofim" name="NewConfidencial.UsuarioCofim">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newContrasenaCofim" class="form-label">Contraseña Cofim</label>
+                                    <input type="text" class="form-control" id="newContrasenaCofim" name="NewConfidencial.ContrasenaCofim">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newUsuarioMunicipio" class="form-label">Usuario Municipio</label>
+                                    <input type="text" class="form-control" id="newUsuarioMunicipio" name="NewConfidencial.UsuarioMunicipio">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newContrasenaMunicipio" class="form-label">Contraseña Municipio</label>
+                                    <input type="text" class="form-control" id="newContrasenaMunicipio" name="NewConfidencial.ContrasenaMunicipio">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="submitActiveForm()">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Demograficos tab contents -->
@@ -74,6 +431,7 @@
                         </tbody>
                     </table>
                     <button type="button" class="btn btn-primary edit-button" data-id="@item.ID" onclick="editDemografico('@item.ID')">Update</button>
+                    <button type="button" class="btn btn-danger delete-button" data-id="@item.ID" onclick="deleteCustomer('@item.ID')">Delete</button>
                 }
             </div>
         </div>
@@ -96,6 +454,8 @@
                         </tbody>
                     </table>
                     <button type="button" class="btn btn-primary edit-button" data-id="@item.ID" onclick="editContributivo('@item.ID')">Update</button>
+                    <button type="button" class="btn btn-danger delete-button" data-id="@item.ID" onclick="deleteCustomer('@item.ID')">Delete</button>
+
                 }
             </div>
         </div>
@@ -117,6 +477,8 @@
                         </tbody>
                     </table>
                     <button type="button" class="btn btn-primary edit-button" data-id="@item.ID" onclick="editAdministrativo('@item.ID')">Update</button>
+                    <button type="button" class="btn btn-danger delete-button" data-id="@item.ID" onclick="deleteCustomer('@item.ID')">Delete</button>
+
                 }
             </div>
         </div>
@@ -137,6 +499,8 @@
                         </tbody>
                     </table>
                     <button type="button" class="btn btn-primary edit-button" data-id="@item.ID" onclick="editIdentificacion('@item.ID')">Update</button>
+                    <button type="button" class="btn btn-danger delete-button" data-id="@item.ID" onclick="deleteCustomer('@item.ID')">Delete</button>
+
                 }
             </div>
         </div>
@@ -174,6 +538,8 @@
                         </tbody>
                     </table>
                     <button type="button" class="btn btn-primary edit-button" data-id="@item.ID" onclick="editPago('@item.ID')">Update</button>
+                    <button type="button" class="btn btn-danger delete-button" data-id="@item.ID" onclick="deleteCustomer('@item.ID')">Delete</button>
+
                 }
             </div>
         </div>
@@ -203,6 +569,8 @@
                         </tbody>
                     </table>
                     <button type="button" class="btn btn-primary edit-button" data-id="@item.ID" onclick="editConfidencial('@item.ID')">Update</button>
+                    <button type="button" class="btn btn-danger delete-button" data-id="@item.ID" onclick="deleteCustomer('@item.ID')">Delete</button>
+
                 }
             </div>
         </div>
@@ -635,6 +1003,41 @@
 
 @section Scripts {
     <script>
+        function submitActiveForm() {
+            const activeTab = document.querySelector('#modalTabs .nav-link.active').getAttribute('aria-controls');
+            const formId = `#${activeTab} form`;
+            const form = document.querySelector(formId);
+            const formData = new FormData(form);
+            const url = form.getAttribute('action');
+
+            fetch(url, {
+                method: 'POST', 
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => { throw new Error(text); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        toastr.success('Customer records created successfully!');
+                        $('#newCustomerModal').modal('hide');
+                        location.reload();  // Reload the page to update the table with the new data
+                    } else {
+                        toastr.error(data.message || 'Failed to create customer records.');
+                        if (data.errors) {
+                            data.errors.forEach(error => toastr.error(error));
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    toastr.error('Failed to create customer records.');
+                });
+        }
+
         $(document).ready(function () {
             console.log("Document is ready");
 
@@ -1384,9 +1787,28 @@
                 }
             });
         }
+
+        function deleteCustomer(id) {
+            if (confirm("Are you sure you want to delete this customer?")) {
+                $.ajax({
+                    url: '@Url.Action("DeleteCustomer", "Dashboard")',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.message);
+                            location.reload();  // Reload the page to update the table with the deleted data
+                        } else {
+                            toastr.error(response.message || 'Failed to delete customer.');
+                        }
+                    },
+                    error: function () {
+                        toastr.error('Failed to delete customer.');
+                    }
+                });
+            }
+        }
     </script>
-
-
 
 
     <!-- Include necessary libraries -->
@@ -1396,5 +1818,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
 }
 

@@ -18,5 +18,12 @@ namespace BLL.Interfaces
         void UpdatePago(Pago pago);
         void UpdateConfidencial(Confidencial confidencial);
 
+        void CreateDemografico(Demografico demografico);
+        void CreateContributivo(Contributivo contributivo);
+        void CreateAdministrativo(Administrativo administrativo);
+        void CreateIdentificacion(Identificacion identificacion);
+        void CreatePago(Pago pago);
+        void CreateConfidencial(Confidencial confidencial);
+        void DeleteCustomer(string id);
     }
 }

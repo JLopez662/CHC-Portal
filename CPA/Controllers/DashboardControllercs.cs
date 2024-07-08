@@ -4,16 +4,21 @@ using DAL.Models;
 using CPA.Models;
 using System.Linq;
 using BLL.Interfaces;
+using System;
+using System.Diagnostics;
+using Microsoft.Identity.Client;
 
 namespace CPA.Controllers
 {
     public class DashboardController : Controller
     {
         private readonly ICustomerService _customerService;
+        private readonly IRegistroService _registroService;
 
-        public DashboardController(ICustomerService customerService)
+        public DashboardController(ICustomerService customerService, IRegistroService registroService)
         {
             _customerService = customerService;
+            _registroService = registroService;
         }
 
         public IActionResult Index()
@@ -89,6 +94,104 @@ namespace CPA.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(DashboardViewModel model)
+        {
+            try
+            {
+                ModelState.Remove("NewDemografico.Registro");
+                ModelState.Remove("NewContributivo.Registro");
+                ModelState.Remove("NewAdministrativo.Registro");
+                ModelState.Remove("NewIdentificacion.Registro");
+                ModelState.Remove("NewPago.Registro");
+                ModelState.Remove("NewConfidencial.Registro");
+
+                if (ModelState.IsValid)
+                {
+                    // Create a new Registro and get the generated ID
+                    var registro = new Registro();
+                    _registroService.CreateRegistro(registro);
+
+                    var registroId = registro.ID; // Ensure we are using the direct ID
+
+                    // Variables to hold Nombre and NombreComercial
+                    string nombre = null;
+                    string nombreComercial = null;
+
+                    // Process NewDemografico
+                    if (model.NewDemografico != null)
+                    {
+                        model.NewDemografico.ID = registroId;
+                        _customerService.CreateDemografico(model.NewDemografico);
+                        nombre = model.NewDemografico.Nombre ?? string.Empty;
+                        nombreComercial = model.NewDemografico.NombreComercial ?? string.Empty;
+
+                        Console.WriteLine($"Demografico created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                        Debug.WriteLine($"Demografico created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                    }
+
+                    // Create and propagate default instances if necessary
+
+                    // Propagate and process NewContributivo
+                    var contributivo = model.NewContributivo ?? new Contributivo();
+                    contributivo.ID = registroId;
+                    contributivo.Nombre = nombre;
+                    contributivo.NombreComercial = nombreComercial;
+                    _customerService.CreateContributivo(contributivo);
+                    Console.WriteLine($"Contributivo created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+
+                    // Propagate and process NewAdministrativo
+                    var administrativo = model.NewAdministrativo ?? new Administrativo();
+                    administrativo.ID = registroId;
+                    administrativo.Nombre = nombre;
+                    administrativo.NombreComercial = nombreComercial;
+                    _customerService.CreateAdministrativo(administrativo);
+                    Console.WriteLine($"Administrativo created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+
+                    // Propagate and process NewIdentificacion
+                    var identificacion = model.NewIdentificacion ?? new Identificacion();
+                    identificacion.ID = registroId;
+                    identificacion.Nombre = nombre;
+                    identificacion.NombreComercial = nombreComercial;
+                    _customerService.CreateIdentificacion(identificacion);
+                    Console.WriteLine($"Identificacion created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+
+                    // Propagate and process NewPago
+                    var pago = model.NewPago ?? new Pago();
+                    pago.ID = registroId;
+                    pago.Nombre = nombre;
+                    pago.NombreComercial = nombreComercial;
+                    _customerService.CreatePago(pago);
+                    Console.WriteLine($"Pago created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+
+                    // Propagate and process NewConfidencial
+                    var confidencial = model.NewConfidencial ?? new Confidencial();
+                    confidencial.ID = registroId;
+                    confidencial.Nombre = nombre;
+                    confidencial.NombreComercial = nombreComercial;
+                    _customerService.CreateConfidencial(confidencial);
+                    Console.WriteLine($"Confidencial created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+
+                    return Json(new { success = true, message = "Customer records created successfully!" });
+                }
+
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return Json(new { success = false, message = "Model validation failed.", errors });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
+
 
         [HttpGet]
         public IActionResult GetDemograficoById(string id)
@@ -144,7 +247,6 @@ namespace CPA.Controllers
             return Json(new { success = false, message = "Model validation failed.", errors });
         }
 
-        [HttpGet]
         public IActionResult GetContributivoById(string id)
         {
             var contributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == id);
@@ -167,7 +269,8 @@ namespace CPA.Controllers
                 contributivo.Estatal,
                 contributivo.Poliza,
                 contributivo.RegComerciante,
-                Vencimiento = contributivo.Vencimiento.ToString("yyyy-MM-dd"),
+                contributivo.Vencimiento,
+                //Vencimiento = contributivo.Vencimiento.ToString("yyyy-MM-dd"), // Corrected DateTime formatting
                 contributivo.Choferil,
                 contributivo.DeptEstado,
                 contributivo.CID,
@@ -176,6 +279,7 @@ namespace CPA.Controllers
 
             return Json(contributivoViewModel);
         }
+
 
         [HttpPost]
         public IActionResult UpdateContributivo(Contributivo model)
@@ -313,7 +417,8 @@ namespace CPA.Controllers
                 identificacion.SSNA,
                 identificacion.Cargo,
                 identificacion.LicConducir,
-                Nacimiento = identificacion.Nacimiento.ToString("yyyy-MM-dd"),
+                identificacion.Nacimiento,
+                //Nacimiento = identificacion.Nacimiento.ToString("yyyy-MM-dd"),
                 identificacion.CID,
                 identificacion.MID
             };
@@ -543,5 +648,78 @@ namespace CPA.Controllers
             return Json(new { success = false, message = "Model validation failed.", errors });
         }
 
+        [HttpPost]
+        public IActionResult CreateDemografico(Demografico newDemografico)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _customerService.CreateDemografico(newDemografico);
+                    return Json(new { success = true });
+                }
+
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return Json(new { success = false, message = "Model validation failed.", errors });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreateContributivo(Contributivo newContributivo)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _customerService.CreateContributivo(newContributivo);
+                    return Json(new { success = true });
+                }
+
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return Json(new { success = false, message = "Model validation failed.", errors });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreateAdministrativo(Administrativo newAdministrativo)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _customerService.CreateAdministrativo(newAdministrativo);
+                    return Json(new { success = true });
+                }
+
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return Json(new { success = false, message = "Model validation failed.", errors });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCustomer(string id)
+        {
+            try
+            {
+                _customerService.DeleteCustomer(id);
+                return Json(new { success = true, message = "Customer deleted successfully." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
     }
 }
