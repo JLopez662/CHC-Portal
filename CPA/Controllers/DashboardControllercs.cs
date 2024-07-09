@@ -7,6 +7,8 @@ using BLL.Interfaces;
 using System;
 using System.Diagnostics;
 using Microsoft.Identity.Client;
+using Microsoft.Extensions.Logging;
+
 
 namespace CPA.Controllers
 {
@@ -100,11 +102,13 @@ namespace CPA.Controllers
             return View();
         }
 
+
         [HttpPost]
         public IActionResult Create(DashboardViewModel model)
         {
             try
             {
+                // Remove unnecessary validation
                 ModelState.Remove("NewDemografico.Registro");
                 ModelState.Remove("NewContributivo.Registro");
                 ModelState.Remove("NewAdministrativo.Registro");
@@ -118,7 +122,7 @@ namespace CPA.Controllers
                     var registro = new Registro();
                     _registroService.CreateRegistro(registro);
 
-                    var registroId = registro.ID; // Ensure we are using the direct ID
+                    var registroId = registro.ID;
 
                     // Variables to hold Nombre and NombreComercial
                     string nombre = null;
@@ -131,52 +135,82 @@ namespace CPA.Controllers
                         _customerService.CreateDemografico(model.NewDemografico);
                         nombre = model.NewDemografico.Nombre ?? string.Empty;
                         nombreComercial = model.NewDemografico.NombreComercial ?? string.Empty;
-
-                        Console.WriteLine($"Demografico created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
-                        Debug.WriteLine($"Demografico created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
                     }
 
-                    // Create and propagate default instances if necessary
+                    // Process NewContributivo
+                    if (model.NewContributivo != null)
+                    {
+                        var contributivo = model.NewContributivo;
+                        contributivo.ID = registroId;
+                        contributivo.Nombre = nombre;
+                        contributivo.NombreComercial = nombreComercial;
 
-                    // Propagate and process NewContributivo
-                    var contributivo = model.NewContributivo ?? new Contributivo();
-                    contributivo.ID = registroId;
-                    contributivo.Nombre = nombre;
-                    contributivo.NombreComercial = nombreComercial;
-                    _customerService.CreateContributivo(contributivo);
-                    Console.WriteLine($"Contributivo created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                        // Log the values before creating the Contributivo
+                        Console.WriteLine($"Creating Contributivo with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}, Estatal: {contributivo.Estatal}");
+                        Debug.WriteLine($"Creating Contributivo with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}, Estatal: {contributivo.Estatal}");
 
-                    // Propagate and process NewAdministrativo
-                    var administrativo = model.NewAdministrativo ?? new Administrativo();
-                    administrativo.ID = registroId;
-                    administrativo.Nombre = nombre;
-                    administrativo.NombreComercial = nombreComercial;
-                    _customerService.CreateAdministrativo(administrativo);
-                    Console.WriteLine($"Administrativo created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                        _customerService.CreateContributivo(contributivo);
+                    }
 
-                    // Propagate and process NewIdentificacion
-                    var identificacion = model.NewIdentificacion ?? new Identificacion();
-                    identificacion.ID = registroId;
-                    identificacion.Nombre = nombre;
-                    identificacion.NombreComercial = nombreComercial;
-                    _customerService.CreateIdentificacion(identificacion);
-                    Console.WriteLine($"Identificacion created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                    // Process NewAdministrativo
+                    if (model.NewAdministrativo != null)
+                    {
+                        var administrativo = model.NewAdministrativo;
+                        administrativo.ID = registroId;
+                        administrativo.Nombre = nombre;
+                        administrativo.NombreComercial = nombreComercial;
 
-                    // Propagate and process NewPago
-                    var pago = model.NewPago ?? new Pago();
-                    pago.ID = registroId;
-                    pago.Nombre = nombre;
-                    pago.NombreComercial = nombreComercial;
-                    _customerService.CreatePago(pago);
-                    Console.WriteLine($"Pago created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                        // Log the values before creating the Administrativo
+                        Console.WriteLine($"Creating Administrativo with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                        Debug.WriteLine($"Creating Administrativo with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
 
-                    // Propagate and process NewConfidencial
-                    var confidencial = model.NewConfidencial ?? new Confidencial();
-                    confidencial.ID = registroId;
-                    confidencial.Nombre = nombre;
-                    confidencial.NombreComercial = nombreComercial;
-                    _customerService.CreateConfidencial(confidencial);
-                    Console.WriteLine($"Confidencial created with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                        _customerService.CreateAdministrativo(administrativo);
+                    }
+
+                    // Process NewIdentificacion
+                    if (model.NewIdentificacion != null)
+                    {
+                        var identificacion = model.NewIdentificacion;
+                        identificacion.ID = registroId;
+                        identificacion.Nombre = nombre;
+                        identificacion.NombreComercial = nombreComercial;
+
+                        // Log the values before creating the Identificacion
+                        Console.WriteLine($"Creating Identificacion with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                        Debug.WriteLine($"Creating Identificacion with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+
+                        _customerService.CreateIdentificacion(identificacion);
+                    }
+
+                    // Process NewPago
+                    if (model.NewPago != null)
+                    {
+                        var pago = model.NewPago;
+                        pago.ID = registroId;
+                        pago.Nombre = nombre;
+                        pago.NombreComercial = nombreComercial;
+
+                        // Log the values before creating the Pago
+                        Console.WriteLine($"Creating Pago with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                        Debug.WriteLine($"Creating Pago with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+
+                        _customerService.CreatePago(pago);
+                    }
+
+                    // Process NewConfidencial
+                    if (model.NewConfidencial != null)
+                    {
+                        var confidencial = model.NewConfidencial;
+                        confidencial.ID = registroId;
+                        confidencial.Nombre = nombre;
+                        confidencial.NombreComercial = nombreComercial;
+
+                        // Log the values before creating the Confidencial
+                        Console.WriteLine($"Creating Confidencial with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                        Debug.WriteLine($"Creating Confidencial with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+
+                        _customerService.CreateConfidencial(confidencial);
+                    }
 
                     return Json(new { success = true, message = "Customer records created successfully!" });
                 }
@@ -186,10 +220,11 @@ namespace CPA.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error creating customer records: {ex.Message}");
+                Debug.WriteLine($"Error creating customer records: {ex.Message}");
                 return Json(new { success = false, message = ex.Message });
             }
         }
-
 
 
 
@@ -270,7 +305,6 @@ namespace CPA.Controllers
                 contributivo.Poliza,
                 contributivo.RegComerciante,
                 contributivo.Vencimiento,
-                //Vencimiento = contributivo.Vencimiento.ToString("yyyy-MM-dd"), // Corrected DateTime formatting
                 contributivo.Choferil,
                 contributivo.DeptEstado,
                 contributivo.CID,
@@ -279,7 +313,6 @@ namespace CPA.Controllers
 
             return Json(contributivoViewModel);
         }
-
 
         [HttpPost]
         public IActionResult UpdateContributivo(Contributivo model)
@@ -290,12 +323,10 @@ namespace CPA.Controllers
             if (ModelState.IsValid)
             {
                 var existingContributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == model.ID);
-
                 var existingDemografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == model.ID);
 
                 if (existingContributivo != null && existingDemografico != null)
                 {
-
                     existingContributivo.Estatal = model.Estatal;
                     existingContributivo.Poliza = model.Poliza;
                     existingContributivo.RegComerciante = model.RegComerciante;
@@ -367,7 +398,6 @@ namespace CPA.Controllers
 
                 if (existingAdministrativo != null && existingDemografico != null)
                 {
-
                     existingAdministrativo.Contrato = model.Contrato;
                     existingAdministrativo.Facturacion = model.Facturacion;
                     existingAdministrativo.FacturacionBase = model.FacturacionBase;
@@ -418,7 +448,6 @@ namespace CPA.Controllers
                 identificacion.Cargo,
                 identificacion.LicConducir,
                 identificacion.Nacimiento,
-                //Nacimiento = identificacion.Nacimiento.ToString("yyyy-MM-dd"),
                 identificacion.CID,
                 identificacion.MID
             };
@@ -435,7 +464,7 @@ namespace CPA.Controllers
             {
                 var existingIdentificacion = _customerService.GetIdentificaciones().FirstOrDefault(i => i.ID == model.ID);
                 var existingDemografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == model.ID);
-                if (existingIdentificacion!= null && existingDemografico != null)
+                if (existingIdentificacion != null && existingDemografico != null)
                 {
                     existingIdentificacion.Accionista = model.Accionista;
                     existingIdentificacion.SSNA = model.SSNA;
@@ -614,7 +643,6 @@ namespace CPA.Controllers
                 var existingConfidencial = _customerService.GetConfidenciales().FirstOrDefault(c => c.ID == model.ID);
                 var existingDemografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == model.ID);
 
-
                 if (existingConfidencial != null && existingDemografico != null)
                 {
                     existingConfidencial.UserSuri = model.UserSuri;
@@ -675,6 +703,10 @@ namespace CPA.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    // Log the incoming data to ensure it's being passed correctly
+                    Debug.WriteLine($"Creating Contributivo: ID = {newContributivo.ID}, Estatal = {newContributivo.Estatal}");
+                    Console.WriteLine($"Creating Contributivo: ID = {newContributivo.ID}, Estatal = {newContributivo.Estatal}");
+
                     _customerService.CreateContributivo(newContributivo);
                     return Json(new { success = true });
                 }
@@ -687,6 +719,7 @@ namespace CPA.Controllers
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
 
         [HttpPost]
         public IActionResult CreateAdministrativo(Administrativo newAdministrativo)
