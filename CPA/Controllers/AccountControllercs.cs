@@ -56,6 +56,13 @@ namespace CPA.Controllers
             }
         }
 
+        [HttpPost("Logout")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear(); 
+            return RedirectToAction("Index", "Home"); 
+        }
 
 
         [HttpGet("Register")]
