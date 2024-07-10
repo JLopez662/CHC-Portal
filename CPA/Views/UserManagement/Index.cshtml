@@ -21,6 +21,7 @@
                     <th>FirstName</th>
                     <th>LastName</th>
                     <th>Phone</th>
+                    <th>Role</th>
                     <th>Active</th>
                     <th>Actions</th>
                 </tr>
@@ -33,6 +34,7 @@
                         <td class="user-firstname">@user.FirstName</td>
                         <td class="user-lastname">@user.LastName</td>
                         <td class="user-phone">@user.Phone</td>
+                        <td class="user-role">@user.Role</td>
                         <td>
                             @{
                                 var lockButtonClass = user.LockoutEnd > DateTime.Now ? "btn-danger" : "btn-success";
@@ -59,7 +61,6 @@
         <div class="text-right">
             <button type="button" class="btn btn-success" onclick="createUser()">Create New User</button>
         </div>
-
     </div>
 </div>
 
@@ -70,7 +71,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <form id="userForm">
+        <form id="userForm" autocomplete="on">
             <input type="hidden" id="userId" name="Id" />
             <div class="mb-3">
                 <label for="userEmail" class="form-label">Email</label>
@@ -88,6 +89,14 @@
                 <label for="userPhone" class="form-label">Phone</label>
                 <input type="text" class="form-control" id="userPhone" name="Phone" required>
             </div>
+            <div class="mb-3">
+                <label for="userRole" class="form-label">Role</label>
+                <select class="form-control" id="userRole" name="Role" required>
+                    <option value="User">User</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+
             <div class="mb-3 password-field">
                 <label for="userPassword" class="form-label">Password</label>
                 <input type="password" class="form-control" id="userPassword" name="Password">
@@ -101,9 +110,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <script>
-        function editUser(id, email, firstName, lastName, phone) {
+        function editUser(id, email, firstName, lastName, phone, role) {
             $.ajax({
                 url: '@Url.Action("GetUserById", "UserManagement")',
                 type: 'GET',
@@ -116,6 +125,7 @@
                         $('#userFirstName').val(user.firstName);
                         $('#userLastName').val(user.lastName);
                         $('#userPhone').val(user.phone);
+                        $('#userRole').val(user.role); // Set the role dropdown value
                         $('.password-field').hide(); // Hide the password field for editing
                         $('#userPassword').val(''); // Clear the password field
                         $('#userOffcanvasLabel').text('Edit User');
@@ -131,13 +141,13 @@
             });
         }
 
-
         function createUser() {
             $('#userId').val('');
             $('#userEmail').val('');
             $('#userFirstName').val('');
             $('#userLastName').val('');
             $('#userPhone').val('');
+            $('#userRole').val('');
             $('#userPassword').val(''); // Clear the password field
             $('.password-field').show(); // Show the password field for creating
             $('#userOffcanvasLabel').text('Create New User');
@@ -189,6 +199,7 @@
                             row.find('.user-firstname').text(response.data.firstName);
                             row.find('.user-lastname').text(response.data.lastName);
                             row.find('.user-phone').text(response.data.phone);
+                            row.find('.user-role').text(response.data.role);
                         } else {
                             location.reload(); // Reload to show the new user in the table
                         }
@@ -209,6 +220,3 @@
         });
     </script>
 }
-
-
-

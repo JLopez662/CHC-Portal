@@ -8,6 +8,9 @@ using CPA.Models;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using BLL.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace CPA.Controllers
 {
@@ -32,7 +35,7 @@ namespace CPA.Controllers
         }
 
         [HttpPost("Login")]
-        public IActionResult Login(string username, string password)
+        public async Task<IActionResult> Login(string username, string password)
         {
             using var sha256 = SHA256.Create();
             var hashedPasswordBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
@@ -46,8 +49,28 @@ namespace CPA.Controllers
                     ViewBag.Error = "Your account has been locked.";
                     return View("~/Views/Home/Index.cshtml");
                 }
+
+                var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim("FullName", user.FirstName),
+            new Claim(ClaimTypes.Role, user.Role) // Add role claim
+        };
+
+                var claimsIdentity = new ClaimsIdentity(
+                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    new AuthenticationProperties
+                    {
+                        IsPersistent = true,
+                        ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
+                    });
+
                 HttpContext.Session.SetString("FirstName", user.FirstName);
-                HttpContext.Session.SetString("Username", user.Username); // Add this line
+                HttpContext.Session.SetString("Username", user.Username);
                 TempData["Success"] = "You have successfully logged in.";
                 return RedirectToAction("Index", "Dashboard");
             }
@@ -58,14 +81,15 @@ namespace CPA.Controllers
             }
         }
 
-
-        [HttpPost("Logout")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            HttpContext.Session.Clear(); 
-            return RedirectToAction("Index", "Home"); 
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
+
 
 
         [HttpGet("Register")]
@@ -240,6 +264,55 @@ namespace CPA.Controllers
             return View(user);
         }
 
+        [HttpPost("EditProfileField")]
+        public async Task<IActionResult> EditProfileField(string fieldName, string fieldValue)
+        {
+            var username = HttpContext.Session.GetString("Username");
+            if (string.IsNullOrEmpty(username))
+            {
+                return Json(new { success = false, message = "User not logged in" });
+            }
+
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+            if (user == null)
+            {
+                return Json(new { success = false, message = "User not found" });
+            }
+
+            var property = typeof(User).GetProperty(fieldName);
+            if (property == null)
+            {
+                return Json(new { success = false, message = "Invalid field name" });
+            }
+
+            property.SetValue(user, fieldValue);
+            _userRepository.UpdateUser(user);
+
+            // Sign the user out
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // Re-authenticate the user with updated claims
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, user.Username),
+        new Claim("FullName", user.FirstName),
+        new Claim(ClaimTypes.Role, user.Role) // Ensure the role claim is updated
+    };
+
+            var claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
+                });
+
+            return Json(new { success = true });
+        }
 
     }
 }

@@ -7,10 +7,10 @@
 <div class="container mt-3">
     <h2>@ViewData["Title"]</h2>
 
-@*     <div class="form-group">
+    <div class="form-group">
         <label for="profileSearch">Search Profile Details:</label>
         <input type="text" id="profileSearch" class="form-control" placeholder="Enter search term...">
-    </div> *@
+    </div>
 
     <div class="table-responsive mt-3">
         <table id="profileTable" class="table table-striped table-bordered">
@@ -18,27 +18,76 @@
                 <tr>
                     <th>Field</th>
                     <th>Value</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>First Name</td>
-                    <td>@Model.FirstName</td>
+                    <td id="FirstNameValue" data-field="FirstName">@Model.FirstName</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="editField('FirstName', '@Model.FirstName')">Edit</button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Last Name</td>
-                    <td>@Model.LastName</td>
+                    <td id="LastNameValue" data-field="LastName">@Model.LastName</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="editField('LastName', '@Model.LastName')">Edit</button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Email</td>
-                    <td>@Model.Email</td>
+                    <td id="EmailValue" data-field="Email">@Model.Email</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="editField('Email', '@Model.Email')">Edit</button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Phone</td>
-                    <td>@Model.Phone</td>
+                    <td id="PhoneValue" data-field="Phone">@Model.Phone</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="editField('Phone', '@Model.Phone')">Edit</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Role</td>
+                    <td id="RoleValue" data-field="Role">@Model.Role</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="editField('Role', '@Model.Role')">Edit</button>
+                    </td>
                 </tr>
             </tbody>
+
         </table>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Field</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        <input type="hidden" id="fieldName" name="fieldName" />
+                        <div class="mb-3" id="textField">
+                            <label for="fieldValue" class="form-label">New Value</label>
+                            <input type="text" class="form-control" id="fieldValue" name="fieldValue" />
+                        </div>
+                        <div class="mb-3" id="dropdownField" style="display:none;">
+                            <label for="roleValue" class="form-label">Select Role</label>
+                            <select class="form-control" id="roleValue" name="roleValue">
+                                <option value="User">User</option>
+                                <option value="Admin">Admin</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -58,6 +107,54 @@
             $('#profileSearch').on('keyup', function () {
                 table.search(this.value).draw();
             });
+
+            $('#editForm').on('submit', function (e) {
+                e.preventDefault();
+
+                var fieldName = $('#fieldName').val();
+                var fieldValue = fieldName === 'Role' ? $('#roleValue').val() : $('#fieldValue').val();
+
+                $.ajax({
+                    url: '@Url.Action("EditProfileField", "Account")',
+                    type: 'POST',
+                    data: {
+                        fieldName: fieldName,
+                        fieldValue: fieldValue
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            // Update the field value in the table
+                            var cell = $('#' + fieldName + 'Value');
+                            cell.text(fieldValue);
+
+                            // Optional: If you want to make the change immediately visible in DataTable
+                            var row = cell.closest('tr');
+                            table.row(row).invalidate().draw();
+
+                            $('#editModal').modal('hide');
+                        } else {
+                            alert('Error updating field: ' + data.message);
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred while updating the field.');
+                    }
+                });
+            });
         });
+
+        function editField(fieldName, fieldValue) {
+            $('#fieldName').val(fieldName);
+            if (fieldName === 'Role') {
+                $('#fieldValue').removeAttr('required').hide();
+                $('#dropdownField').show();
+                $('#roleValue').val(fieldValue);
+            } else {
+                $('#dropdownField').hide();
+                $('#fieldValue').attr('required', true).show();
+                $('#fieldValue').val(fieldValue);
+            }
+            $('#editModal').modal('show');
+        }
     </script>
 }

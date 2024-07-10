@@ -1,3 +1,8 @@
 ﻿@using CPA
 @using CPA.Models
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+@using Microsoft.Extensions.Logging
+@inject IHttpContextAccessor HttpContextAccessor
+@inject ILogger<CPA.Controllers.AccountController> Logger
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

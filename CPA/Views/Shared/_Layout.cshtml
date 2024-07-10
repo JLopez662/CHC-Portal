@@ -20,21 +20,33 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-                </ul>
-                    <ul class="navbar-nav">
-                        @if (ViewContext.RouteData.Values["controller"].ToString() != "Home" || ViewContext.RouteData.Values["action"].ToString() != "Index")
-                        {
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    @if (HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                    {
+                        Logger.LogInformation("User is authenticated.");
+                        var role = HttpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
+
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                            </li>
+@*                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li> *@
+                            @if (role == "Admin")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="UserManagement" asp-action="Index">User Management</a>
+                                </li>
+                            }
+                        </ul>
+                        <ul class="navbar-nav">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    @ViewBag.FirstName
+                                    @HttpContextAccessor.HttpContext.Session.GetString("FirstName")
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Profile">Profile</a>
@@ -46,8 +58,16 @@
                                     </form>
                                 </div>
                             </li>
-                        }
-                    </ul>
+                        </ul>
+                    }
+                    else
+                    {
+                        Logger.LogInformation("User is not authenticated.");
+                        <ul class="navbar-nav flex-grow-1">
+                            <!-- Empty navigation items for non-authenticated users -->
+                        </ul>
+                    }
+                </div>
             </div>
         </nav>
     </header>

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Text;
 using System.Security.Cryptography;
 using BLL.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace CPA.Controllers
 {
@@ -43,7 +46,8 @@ namespace CPA.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(string email, string firstName, string lastName, string password, string phone)
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(string email, string firstName, string lastName, string password, string phone, string role)
         {
             using var sha256 = SHA256.Create();
             var hashedPasswordBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
@@ -54,20 +58,21 @@ namespace CPA.Controllers
                 Email = email,
                 FirstName = firstName,
                 LastName = lastName,
-                Username = email, // Assuming username is same as email
+                Username = email,
                 Password = hashedPassword,
-                Phone = phone
+                Phone = phone,
+                Role = role
             };
 
             if (ModelState.IsValid)
             {
                 _userRepository.AddUser(user);
-
                 return Json(new { success = true, message = "User created successfully", data = user });
             }
 
             return Json(new { success = false, message = "Failed to create user" });
         }
+
 
         [HttpGet]
         public IActionResult Edit(int id)
@@ -92,7 +97,7 @@ namespace CPA.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateUser(int id, string email, string firstName, string lastName, string phone, string password)
+        public async Task<IActionResult> UpdateUser(int id, string email, string firstName, string lastName, string phone, string password, string role)
         {
             var user = _userRepository.GetUserById(id);
             if (user == null)
@@ -104,6 +109,7 @@ namespace CPA.Controllers
             user.FirstName = firstName;
             user.LastName = lastName;
             user.Phone = phone;
+            user.Role = role;
 
             if (!string.IsNullOrEmpty(password))
             {
@@ -114,8 +120,37 @@ namespace CPA.Controllers
             }
 
             _userRepository.UpdateUser(user);
+
+            // Update session and re-authenticate if the current logged-in user is being updated
+            if (User.Identity.Name == user.Email)
+            {
+                HttpContext.Session.SetString("UserRole", user.Role);
+
+                // Re-authenticate the user with updated claims
+                var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim("FullName", user.FirstName),
+            new Claim(ClaimTypes.Role, user.Role) // Ensure the role claim is updated
+        };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    new AuthenticationProperties
+                    {
+                        IsPersistent = true,
+                        ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
+                    });
+            }
+
             return Json(new { success = true, message = "User updated successfully", data = user });
         }
+
+
 
         [HttpGet]
         public IActionResult GetUserById(int id)

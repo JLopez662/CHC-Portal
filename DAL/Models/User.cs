@@ -19,6 +19,7 @@ namespace DAL.Models
         public DateTime? LockoutEnd { get; set; }
         public string? PasswordResetToken { get; set; }
         public DateTime? PasswordResetTokenExpiration { get; set; }
+        public string Role { get; set; }
     }
 
 }
