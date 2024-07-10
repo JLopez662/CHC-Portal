@@ -12,6 +12,7 @@ namespace BLL.Interfaces
         User Authenticate(string username, string password);
         IEnumerable<User> GetAllUsers();
         void Register(User user);
+        User GetUserById(int id);
     }
 }
 

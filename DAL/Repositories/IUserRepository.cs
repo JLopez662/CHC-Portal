@@ -8,13 +8,10 @@ namespace DAL.Repositories
         User GetUser(string username, string password);
         IEnumerable<User> GetAllUsers();
         User GetUserById(int id);
+        Task<User> GetUserByUsernameAsync(string username);
         User GetUserByEmail(string email);
         void AddUser(User user);
         void UpdateUser(User user);
         void DeleteUser(int id);
-
-        // Add methods for Demográficos
-        Demografico GetDemograficoById(int id);
-        void UpdateDemografico(Demografico demografico);
     }
 }

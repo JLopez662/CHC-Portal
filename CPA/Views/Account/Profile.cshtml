@@ -1,0 +1,63 @@
+﻿@model DAL.Models.User
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="container mt-3">
+    <h2>@ViewData["Title"]</h2>
+
+@*     <div class="form-group">
+        <label for="profileSearch">Search Profile Details:</label>
+        <input type="text" id="profileSearch" class="form-control" placeholder="Enter search term...">
+    </div> *@
+
+    <div class="table-responsive mt-3">
+        <table id="profileTable" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>First Name</td>
+                    <td>@Model.FirstName</td>
+                </tr>
+                <tr>
+                    <td>Last Name</td>
+                    <td>@Model.LastName</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>@Model.Email</td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td>@Model.Phone</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#profileTable').DataTable({
+                "paging": false,
+                "info": false,
+                "searching": false,
+                "ordering": false
+            });
+
+            $('#profileSearch').on('keyup', function () {
+                table.search(this.value).draw();
+            });
+        });
+    </script>
+}

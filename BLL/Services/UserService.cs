@@ -28,5 +28,10 @@ namespace BLL.Services
         {
             _userRepository.AddUser(user);
         }
+
+        User GetUserById(int id)
+        {
+            return _userRepository.GetUserById(id);
+        }
     }
 }

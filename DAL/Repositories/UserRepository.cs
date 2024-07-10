@@ -29,6 +29,11 @@ namespace DAL.Repositories
             return _context.Users.Find(id);
         }
 
+        public async Task<User> GetUserByUsernameAsync(string username)
+        {
+            return await _context.Users.SingleOrDefaultAsync(u => u.Username == username);
+        }
+
         public User GetUserByEmail(string email)
         {
             return _context.Users.SingleOrDefault(u => u.Email == email);
@@ -54,18 +59,6 @@ namespace DAL.Repositories
                 _context.Users.Remove(user);
                 _context.SaveChanges();
             }
-        }
-
-        // Implement methods for Demográficos
-        public Demografico GetDemograficoById(int id)
-        {
-            return _context.Demograficos.Find(id); // Adjust to your actual DB context and entity
-        }
-
-        public void UpdateDemografico(Demografico demografico)
-        {
-            _context.Demograficos.Update(demografico); // Adjust to your actual DB context and entity
-            _context.SaveChanges();
         }
     }
 }

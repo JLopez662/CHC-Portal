@@ -30,6 +30,7 @@ namespace CPA.Controllers
         {
             return View();
         }
+
         [HttpPost("Login")]
         public IActionResult Login(string username, string password)
         {
@@ -46,6 +47,7 @@ namespace CPA.Controllers
                     return View("~/Views/Home/Index.cshtml");
                 }
                 HttpContext.Session.SetString("FirstName", user.FirstName);
+                HttpContext.Session.SetString("Username", user.Username); // Add this line
                 TempData["Success"] = "You have successfully logged in.";
                 return RedirectToAction("Index", "Dashboard");
             }
@@ -55,6 +57,7 @@ namespace CPA.Controllers
                 return View("~/Views/Home/Index.cshtml");
             }
         }
+
 
         [HttpPost("Logout")]
         [ValidateAntiForgeryToken]
@@ -208,5 +211,35 @@ namespace CPA.Controllers
 
             await _emailService.SendEmailAsync(user.Email, subject, message);
         }
+
+        [HttpGet("Profile")]
+        public async Task<IActionResult> Profile()
+        {
+            var username = HttpContext.Session.GetString("Username");
+            if (string.IsNullOrEmpty(username))
+            {
+                _logger.LogInformation("Username is null or empty.");
+                return RedirectToAction("Index", "Home"); // Redirect to Home/Index for login
+            }
+            else
+            {
+                _logger.LogInformation($"Username retrieved from session: {username}");
+            }
+
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+            if (user == null)
+            {
+                _logger.LogInformation($"No user found for username: {username}");
+                return RedirectToAction("Index", "Home"); // Redirect to Home/Index for login
+            }
+            else
+            {
+                _logger.LogInformation($"User found: {user.FirstName} {user.LastName}");
+            }
+
+            return View(user);
+        }
+
+
     }
 }
