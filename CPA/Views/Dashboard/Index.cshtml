@@ -1107,6 +1107,10 @@
                 console.error('submitAllFormsButton not found in the DOM.');
             }
 
+            // Hide all tab panes and tables initially
+            $('.tab-pane').hide();
+            $('.tblData').closest('table').hide();
+
             // Restore the active tab from sessionStorage
             var activeTab = sessionStorage.getItem('activeTab');
             if (activeTab) {
@@ -1134,7 +1138,8 @@
                             "searching": true,
                             "ordering": false,
                             "info": false,
-                            "lengthMenu": [[4, -1], ["Summary", "All"]],
+                            "lengthMenu": [[-1, 4], ["All", "Summary"]],
+                            "pageLength": -1,
                             "columnDefs": [
                                 { "orderable": true, "targets": 1 }
                             ],
@@ -1210,6 +1215,7 @@
                                     "ordering": false,
                                     "info": false,
                                     "lengthMenu": [[4, -1], ["Summary", "All"]],
+                                    "pageLength": -1,
                                     "columnDefs": [
                                         { "orderable": true, "targets": 1 }
                                     ],
@@ -1224,14 +1230,12 @@
                     }
 
                     if (!tablesMatched) {
-                        $('.tab-pane').show();
                         console.log("No tables matched. Showing all tab panes.");
                     }
 
                     if (searchTerm === "") {
-                        $('.tab-pane').removeClass('show active');
-                        $('#demograficos').addClass('show active');
-                        console.log("Search term is empty. Resetting view.");
+                        $('.tab-pane').hide();
+                        console.log("Search term is empty. Hiding all tab panes.");
                     }
 
                     $tabPane.find('.edit-button:visible, .delete-button:visible').each(function () {
@@ -1239,6 +1243,7 @@
                     });
                 });
             });
+
 
             function prioritizeActiveTabTables(activeTabId) {
                 console.log("Prioritizing tables in active tab:", activeTabId);
@@ -1253,6 +1258,7 @@
 
             prioritizeActiveTabTables($('#dashboardTabs a.active').attr('href'));
         });
+
 
 
 
