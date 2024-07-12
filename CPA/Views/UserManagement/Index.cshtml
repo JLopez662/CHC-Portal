@@ -41,9 +41,9 @@
                                 var lockButtonText = user.LockoutEnd > DateTime.Now ? "Inactive" : "Active";
                                 var lockButtonIcon = user.LockoutEnd > DateTime.Now ? "fas fa-lock" : "fas fa-unlock";
                             }
-                            <a onclick="LockUnlock('@user.Id')" class="btn @lockButtonClass" style="cursor:pointer;">
+                            <button onclick="LockUnlock('@user.Id')" class="btn @lockButtonClass lock-unlock-btn" data-id="@user.Id" style="cursor:pointer;">
                                 <i class="@lockButtonIcon"></i> @lockButtonText
-                            </a>
+                            </button>
                         </td>
                         <td>
                             <div class="dropdown">
@@ -54,6 +54,7 @@
                                 </div>
                             </div>
                         </td>
+
                     </tr>
                 }
             </tbody>
@@ -174,9 +175,52 @@
             });
         }
 
+        function LockUnlock(userId) {
+            var parsedUserId = parseInt(userId, 10); // Parse the userId to an integer
+            console.log("LockUnlock User ID:", parsedUserId); // Log the parsed user ID for debugging
+
+            $.ajax({
+                url: '@Url.Action("LockUnlock", "UserManagement")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ id: parsedUserId }),
+                success: function (response) {
+                    console.log("LockUnlock Server Response:", response); // Log server response for debugging
+                    if (response.success) {
+                        toastr.success(response.message);
+
+                        // Update the button class, text, and icon dynamically
+                        var button = $("#user-" + parsedUserId + " .lock-unlock-btn");
+                        if (response.message.includes("Unlocked")) {
+                            button.removeClass("btn-danger").addClass("btn-success");
+                            button.html('<i class="fas fa-unlock"></i> Active');
+                        } else if (response.message.includes("Locked")) {
+                            button.removeClass("btn-success").addClass("btn-danger");
+                            button.html('<i class="fas fa-lock"></i> Inactive');
+                        }
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function () {
+                    toastr.error('An error occurred while updating user lock status.');
+                }
+            });
+        }
+
+
+
+
+
+
+
+
         $('#userForm').on('submit', function (e) {
             e.preventDefault();
             var data = $(this).serializeArray();
+
+            // Log the form data
+            console.log("Form Data Before Filter:", data);
 
             // Remove password field if it is empty (only for updates)
             if ($('#userId').val()) {
@@ -185,12 +229,17 @@
                 });
             }
 
+            // Log the form data after filtering
+            console.log("Form Data After Filter:", data);
+
             var url = $('#userId').val() ? '@Url.Action("UpdateUser", "UserManagement")' : '@Url.Action("CreateUser", "UserManagement")';
+            console.log("Form Submission URL:", url);
             $.ajax({
                 url: url,
                 type: 'POST',
                 data: $.param(data),
                 success: function (response) {
+                    console.log("Server Response:", response);
                     if (response.success) {
                         toastr.success(response.message);
                         if ($('#userId').val()) {
@@ -220,3 +269,4 @@
         });
     </script>
 }
+

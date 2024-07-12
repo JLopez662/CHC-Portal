@@ -9,6 +9,9 @@ using BLL.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace CPA.Controllers
 {
@@ -16,11 +19,13 @@ namespace CPA.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IEmailService _emailService;
+        private readonly ILogger<UserManagementController> _logger;
 
-        public UserManagementController(IUserRepository userRepository, IEmailService emailService)
+        public UserManagementController(IUserRepository userRepository, IEmailService emailService, ILogger<UserManagementController> logger)
         {
             _userRepository = userRepository;
             _emailService = emailService;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -99,9 +104,12 @@ namespace CPA.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateUser(int id, string email, string firstName, string lastName, string phone, string password, string role)
         {
+            _logger.LogInformation("UpdateUser called with ID: {Id}, Email: {Email}, FirstName: {FirstName}, LastName: {LastName}, Phone: {Phone}, Role: {Role}", id, email, firstName, lastName, phone, role);
+
             var user = _userRepository.GetUserById(id);
             if (user == null)
             {
+                _logger.LogWarning("User with ID {Id} not found", id);
                 return Json(new { success = false, message = "User not found" });
             }
 
@@ -121,18 +129,17 @@ namespace CPA.Controllers
 
             _userRepository.UpdateUser(user);
 
-            // Update session and re-authenticate if the current logged-in user is being updated
             if (User.Identity.Name == user.Email)
             {
                 HttpContext.Session.SetString("UserRole", user.Role);
 
                 // Re-authenticate the user with updated claims
                 var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, user.Username),
-            new Claim("FullName", user.FirstName),
-            new Claim(ClaimTypes.Role, user.Role) // Ensure the role claim is updated
-        };
+                {
+                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim("FullName", user.FirstName),
+                    new Claim(ClaimTypes.Role, user.Role)
+                };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -147,9 +154,10 @@ namespace CPA.Controllers
                     });
             }
 
+            _logger.LogInformation("User updated successfully: {User}", user);
+
             return Json(new { success = true, message = "User updated successfully", data = user });
         }
-
 
 
         [HttpGet]
@@ -180,26 +188,47 @@ namespace CPA.Controllers
             return RedirectToAction("Index");
         }
 
+
         [HttpPost]
-        public IActionResult LockUnlock([FromBody] int id)
+        public IActionResult LockUnlock([FromBody] JsonElement payload)
         {
+            if (!payload.TryGetProperty("id", out JsonElement idElement) || idElement.ValueKind != JsonValueKind.Number)
+            {
+                _logger.LogWarning("LockUnlock called with invalid payload or null ID");
+                return Json(new { success = false, message = "Invalid request data" });
+            }
+
+            int id = idElement.GetInt32();
+            _logger.LogInformation("LockUnlock called with ID: {UserId}", id); // Log the user ID for debugging
+
             var user = _userRepository.GetUserById(id);
             if (user == null)
             {
-                return Json(new { success = false, message = "Error while Locking/Unlocking" });
+                _logger.LogWarning("User with ID {UserId} not found", id);
+                return Json(new { success = false, message = "User not found" });
             }
 
-            if (user.LockoutEnd != null && user.LockoutEnd > DateTime.Now)
+            try
             {
-                user.LockoutEnd = DateTime.Now;
-                _userRepository.UpdateUser(user);
-                return Json(new { success = true, message = "User Unlocked Successfully" });
+                if (user.LockoutEnd != null && user.LockoutEnd > DateTime.Now)
+                {
+                    user.LockoutEnd = null; // Unlock the user
+                    _userRepository.UpdateUser(user);
+                    _logger.LogInformation("User unlocked successfully: {User}", user);
+                    return Json(new { success = true, message = "User Unlocked Successfully" });
+                }
+                else
+                {
+                    user.LockoutEnd = DateTime.Now.AddYears(1000); // Lock the user
+                    _userRepository.UpdateUser(user);
+                    _logger.LogInformation("User locked successfully: {User}", user);
+                    return Json(new { success = true, message = "User Locked Successfully" });
+                }
             }
-            else
+            catch (Exception ex)
             {
-                user.LockoutEnd = DateTime.Now.AddYears(1000);
-                _userRepository.UpdateUser(user);
-                return Json(new { success = true, message = "User Locked Successfully" });
+                _logger.LogError(ex, "Error while locking/unlocking user with ID {UserId}", id);
+                return Json(new { success = false, message = "Error while locking/unlocking user" });
             }
         }
 

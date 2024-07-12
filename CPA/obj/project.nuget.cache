@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1ptGLVSSOgab/pj8rcGKnPJkMKpRd7+D65uqARy3jCQh8R99EKZHFPlT6FZC4FsUNddDngxCmoWXeZezOPSUyQ==",
+  "dgSpecHash": "zyoJvh8DdGphR9YAGb8oh3qKBCHsd3/LmRDsf7fKO7szhRN7cPWk+rXUWOcfgd4LZhQP4qz0370ACcBNDqJWEA==",
   "success": true,
   "projectFilePath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\CPA.csproj",
   "expectedPackageFiles": [
@@ -48,6 +48,7 @@
     "C:\\Users\\execu\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\execu\\.nuget\\packages\\mimekit\\4.6.0\\mimekit.4.6.0.nupkg.sha512",
     "C:\\Users\\execu\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\execu\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\execu\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
     "C:\\Users\\execu\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\execu\\.nuget\\packages\\system.composition\\6.0.0\\system.composition.6.0.0.nupkg.sha512",

@@ -35,9 +35,9 @@
                             </li> *@
                             @if (role == "Admin")
                             {
-                                <li class="nav-item">
+@*                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
-                                </li>
+                                </li> *@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="UserManagement" asp-action="Index">User Management</a>
                                 </li>
@@ -50,8 +50,8 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Profile">Profile</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Settings">Settings</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="ActivityLog">Activity Log</a>
+@*                                     <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Settings">Settings</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="ActivityLog">Activity Log</a> *@
                                     <div class="dropdown-divider"></div>
                                     <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
                                         <button type="submit" class="dropdown-item">Logout</button>

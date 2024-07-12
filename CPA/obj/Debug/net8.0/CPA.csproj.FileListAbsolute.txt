@@ -290,3 +290,4 @@ C:\Users\execu\Source\Repos\JLopez662\CHC-Portal\CPA\obj\Debug\net8.0\refint\CPA
 C:\Users\execu\Source\Repos\JLopez662\CHC-Portal\CPA\obj\Debug\net8.0\CPA.pdb
 C:\Users\execu\Source\Repos\JLopez662\CHC-Portal\CPA\obj\Debug\net8.0\CPA.genruntimeconfig.cache
 C:\Users\execu\Source\Repos\JLopez662\CHC-Portal\CPA\obj\Debug\net8.0\ref\CPA.dll
+C:\Users\execu\Source\Repos\JLopez662\CHC-Portal\CPA\bin\Debug\net8.0\Newtonsoft.Json.dll

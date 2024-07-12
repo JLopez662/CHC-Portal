@@ -2,16 +2,19 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace DAL.Repositories
 {
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<UserRepository> _logger;
 
-        public UserRepository(ApplicationDbContext context)
+        public UserRepository(ApplicationDbContext context, ILogger<UserRepository> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public User GetUser(string username, string password)
@@ -26,8 +29,11 @@ namespace DAL.Repositories
 
         public User GetUserById(int id)
         {
+            _logger.LogInformation("Fetching user with ID: {UserId}", id); // Log the user ID for debugging
             return _context.Users.Find(id);
         }
+
+
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
