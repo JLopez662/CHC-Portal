@@ -373,3 +373,32 @@ footer {
     color: #ff5722; /* Change this color as needed */
 }
 
+.newClient {
+    width: 350px; /* Adjust the width as needed */
+    height: 50px; /* Adjust the height as needed */
+    margin: 20px 0 30px 0;
+    font-size: 1.00rem; /* Adjust the font size as needed */
+    background-color: hsl(120, 100%, 40%); /* Green color */
+    background-image: linear-gradient(180deg, hsl(120, 100%, 40%) 30%, hsl(120, 100%, 35%) 70%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 200%;
+    border-radius: 2em;
+    border: none;
+    box-shadow: 0 -0.5em 1em rgba(0, 0, 0, 0.1), 0 0.5em 1em rgba(0, 0, 0, 0.1), 0 0.25em 0.5em -0.2em rgba(0, 0, 0, 0.2), 0 0.25em 1em rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.5s ease;
+    outline: none;
+    color: white;
+}
+
+    .newClient:hover,
+    .newClient:focus {
+        outline: none;
+        box-shadow: 0 -0.2em 1.5em hsla(120, 70%, 60%, 0.3), 0 0.5em 2em hsla(120, 70%, 60%, 0.5), 0 0.25em 0.5em -0.2em hsl(120, 90%, 50%), 0 0.25em 1em hsla(120, 20%, 30%, 0.2), inset 0 -2px 2px rgba(255, 255, 255, 0.2);
+        background-position: center calc(45% - 0.75em);
+        color: black;
+    }
