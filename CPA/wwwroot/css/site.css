@@ -402,3 +402,11 @@ footer {
         background-position: center calc(45% - 0.75em);
         color: black;
     }
+
+.hidden-table {
+    display: none !important;
+}
+
+.hidden {
+    display: none !important;
+}

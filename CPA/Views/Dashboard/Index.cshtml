@@ -1095,17 +1095,14 @@
         }
 
         $(document).ready(function () {
-            $('#dashboardTabsContent .tab-pane').hide();
-            $('#dashboardTabsContent .tblData').closest('table').hide();
-
-
+            // Hide all tab panes and tables initially
+            $('#dashboardTabsContent .tab-pane').addClass('hidden');
+            $('#dashboardTabsContent .tblData').closest('table').addClass('hidden');
             $('#createCustomerForms').show();
             console.log("Document is ready");
 
-            // Initialization flag to prevent re-initializing DataTables unnecessarily
             let dataTablesInitialized = false;
 
-            // Function to initialize DataTables
             function initializeDataTables() {
                 if (!dataTablesInitialized) {
                     $('#exampleTable1').DataTable();
@@ -1124,8 +1121,7 @@
             }
 
             $('#newCustomerModal').on('shown.bs.modal', function () {
-                //$('#dashboardTabsContent .tab-pane').hide(); // Hide all tab panes
-                //$('#dashboardTabsContent .tblData').closest('table').hide(); // Hide all tables
+                console.log('New Customer Modal is shown');
             });
 
             $('#newCustomerModal').on('hidden.bs.modal', function () {
@@ -1135,13 +1131,8 @@
             $('#modalTabs a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
                 var target = $(e.target).attr("href"); // activated tab
                 console.log("Activated tab: ", target);
-                console.log("Showing form for tab: ", target);
                 $(target).find('form').show();
             });
-
-            $('#dashboardTabsContent .tab-pane').hide();
-            $('#dashboardTabsContent .tblData').closest('table').hide();
-            $('#createCustomerForms').show();
 
             var activeTab = sessionStorage.getItem('activeTab');
             if (activeTab) {
@@ -1156,45 +1147,50 @@
                 sessionStorage.setItem('activeTab', tabId);
                 console.log($(this).attr('id') + " tab clicked");
                 prioritizeActiveTabTables(tabId);
+                applySearchTerm();
             });
 
-            $('#modalTabs a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $('#dashboardTabs a').on('shown.bs.tab', function (e) {
                 var target = $(e.target).attr("href"); // activated tab
                 console.log("Activated tab: ", target);
-                console.log("Showing form for tab: ", target);
-                $(target).find('form').show();
-            });
 
-            toastr.success('You have successfully logged in!');
+                // Ensure all other tab content is hidden
+                $('.tab-pane').addClass('hidden').removeClass('show active');
 
-            function initializeDataTables() {
-                console.log("Initializing DataTables");
-                $('.tblData').each(function () {
-                    if (!$.fn.dataTable.isDataTable($(this))) {
+                // Show the activated tab content
+                $(target).removeClass('hidden').addClass('show active');
+
+                // Initialize DataTable if not already initialized
+                $(target).find('.tblData').each(function () {
+                    if (!$.fn.dataTable.isDataTable(this)) {
                         $(this).DataTable({
-                            "paging": true,
-                            "searching": true,
-                            "ordering": false,
-                            "info": false,
-                            "lengthMenu": [[-1, 4], ["All", "Summary"]],
-                            "pageLength": -1,
-                            "columnDefs": [
-                                { "orderable": true, "targets": 1 }
+                            paging: true,
+                            searching: true,
+                            ordering: false,
+                            info: false,
+                            lengthMenu: [[4, -1], ["Summary", "All"]],
+                            pageLength: -1,
+                            columnDefs: [
+                                { orderable: true, targets: 1 }
                             ],
-                            "order": [[1, 'asc']],
-                            "autoWidth": false,
-                            "language": {
-                                "search": "Search in this record:"
+                            order: [[1, 'asc']],
+                            autoWidth: false,
+                            language: {
+                                search: "Search in this record:"
                             }
                         });
-                        console.log("DataTable initialized for table:", $(this));
                     }
                 });
-            }
+            });
 
-            initializeDataTables();
             $('#externalSearch').on('keyup', function () {
                 var searchTerm = $(this).val().toLowerCase();
+                sessionStorage.setItem('searchTerm', searchTerm);
+                applySearchTerm();
+            });
+
+            function applySearchTerm() {
+                var searchTerm = sessionStorage.getItem('searchTerm') || '';
                 var tablesMatched = false;
 
                 console.log("Search term: " + searchTerm);
@@ -1203,8 +1199,8 @@
                     var $tabPane = $(this);
                     var $tables = $tabPane.find('.tblData');
 
-                    //$tables.closest('table').hide();
-                    //$tabPane.hide();
+                    $tables.closest('table').addClass('hidden'); // Use 'hidden' class to hide tables
+                    $tabPane.addClass('hidden');
 
                     $tables.each(function () {
                         if ($.fn.dataTable.isDataTable($(this))) {
@@ -1225,8 +1221,8 @@
 
                         if (nombre.includes(searchTerm) || nombreComercial.includes(searchTerm)) {
                             console.log("nombre.includes(searchTerm) is true");
-                            parentTable.show();
-                            parentTabPane.show();
+                            parentTable.removeClass('hidden'); // Use 'hidden' class to show tables
+                            parentTabPane.removeClass('hidden');
                             tablesMatched = true;
 
                             $('.edit-button, .delete-button').hide();
@@ -1247,19 +1243,19 @@
                         $tables.filter(':visible').each(function () {
                             if (!$.fn.dataTable.isDataTable($(this))) {
                                 $(this).DataTable({
-                                    "paging": true,
-                                    "searching": true,
-                                    "ordering": false,
-                                    "info": false,
-                                    "lengthMenu": [[4, -1], ["Summary", "All"]],
-                                    "pageLength": -1,
-                                    "columnDefs": [
-                                        { "orderable": true, "targets": 1 }
+                                    paging: true,
+                                    searching: true,
+                                    ordering: false,
+                                    info: false,
+                                    lengthMenu: [[4, -1], ["Summary", "All"]],
+                                    pageLength: -1,
+                                    columnDefs: [
+                                        { orderable: true, targets: 1 }
                                     ],
-                                    "order": [[1, 'asc']],
-                                    "autoWidth": false,
-                                    "language": {
-                                        "search": "Search in this record:"
+                                    order: [[1, 'asc']],
+                                    autoWidth: false,
+                                    language: {
+                                        search: "Search in this record:"
                                     }
                                 });
                                 console.log("DataTable re-initialized for visible table:", $(this));
@@ -1270,16 +1266,16 @@
 
                 if (!tablesMatched) {
                     console.log("No tables matched.");
-                    $('.tab-pane').show(); // Ensure all tab panes are shown if no match is found
+                    $('.tab-pane').removeClass('hidden'); // Ensure all tab panes are shown if no match is found
                 }
 
                 if (searchTerm === "") {
-                    $('.tab-pane').hide();
+                    $('.tab-pane').addClass('hidden');
                     console.log("Search term is empty. Hiding all tab panes.");
                 }
 
                 $('#createCustomerForms').show(); // Ensure the create customer forms are always shown
-            });
+            }
 
             function prioritizeActiveTabTables(activeTabId) {
                 console.log("Prioritizing tables in active tab:", activeTabId);
@@ -1293,8 +1289,8 @@
             }
 
             prioritizeActiveTabTables($('#dashboardTabs a.active').attr('href'));
+            applySearchTerm();
         });
-
 
 
         function editDemografico(id) {
