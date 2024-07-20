@@ -1290,9 +1290,68 @@
 
             prioritizeActiveTabTables($('#dashboardTabs a.active').attr('href'));
             applySearchTerm();
+
+            // Handle form submissions for each entity
+            $('#editDemograficoForm').submit(function (e) {
+                e.preventDefault();
+                submitForm('#editDemograficoForm', '@Url.Action("UpdateDemografico", "Dashboard")');
+            });
+
+            $('#editContributivoForm').submit(function (e) {
+                e.preventDefault();
+                submitForm('#editContributivoForm', '@Url.Action("UpdateContributivo", "Dashboard")');
+            });
+
+            $('#editAdministrativoForm').submit(function (e) {
+                e.preventDefault();
+                submitForm('#editAdministrativoForm', '@Url.Action("UpdateAdministrativo", "Dashboard")');
+            });
+
+            $('#editIdentificacionForm').submit(function (e) {
+                e.preventDefault();
+                submitForm('#editIdentificacionForm', '@Url.Action("UpdateIdentificacion", "Dashboard")');
+            });
+
+            $('#editPagoForm').submit(function (e) {
+                e.preventDefault();
+                submitForm('#editPagoForm', '@Url.Action("UpdatePago", "Dashboard")');
+            });
+
+            $('#editConfidencialForm').submit(function (e) {
+                e.preventDefault();
+                submitForm('#editConfidencialForm', '@Url.Action("UpdateConfidencial", "Dashboard")');
+            });
+
+            // General form submission handler
+            function submitForm(formId, url) {
+                var form = $(formId);
+                var formData = new FormData(form[0]);
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if (data.success) {
+                            toastr.success('Update successful!');
+                            location.reload();
+                        } else {
+                            toastr.error(data.message || 'Update failed.');
+                            if (data.errors) {
+                                data.errors.forEach(error => toastr.error(error));
+                            }
+                        }
+                    },
+                    error: function () {
+                        toastr.error('Update failed.');
+                    }
+                });
+            }
         });
 
-
+        // Example edit functions (repeat for other entities)
         function editDemografico(id) {
             console.log("Edit button clicked for ID:", id);
             $.ajax({
@@ -1493,6 +1552,7 @@
             });
         }
 
+
         function deleteCustomer(id) {
             if (confirm("Are you sure you want to delete this customer?")) {
                 $.ajax({
@@ -1513,8 +1573,8 @@
                 });
             }
         }
-
     </script>
+
 
     <!-- Include necessary libraries -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
