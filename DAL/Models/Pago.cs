@@ -38,6 +38,6 @@ namespace DAL.Models
         public string? MID { get; set; }
 
         [ForeignKey("ID")]
-        public Registro Registro { get; set; }
+        public Registro? Registro { get; set; }
     }
 }

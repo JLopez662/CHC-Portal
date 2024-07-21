@@ -96,136 +96,6 @@ namespace CPA.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-
-        [HttpPost]
-        public IActionResult Create(DashboardViewModel model)
-        {
-            try
-            {
-                // Remove unnecessary validation
-                ModelState.Remove("NewDemografico.Registro");
-                ModelState.Remove("NewContributivo.Registro");
-                ModelState.Remove("NewAdministrativo.Registro");
-                ModelState.Remove("NewIdentificacion.Registro");
-                ModelState.Remove("NewPago.Registro");
-                ModelState.Remove("NewConfidencial.Registro");
-
-                if (ModelState.IsValid)
-                {
-                    // Create a new Registro and get the generated ID
-                    var registro = new Registro();
-                    _registroService.CreateRegistro(registro);
-
-                    var registroId = registro.ID;
-
-                    // Variables to hold Nombre and NombreComercial
-                    string nombre = null;
-                    string nombreComercial = null;
-
-                    // Process NewDemografico
-                    if (model.NewDemografico != null)
-                    {
-                        model.NewDemografico.ID = registroId;
-                        _customerService.CreateDemografico(model.NewDemografico);
-                        nombre = model.NewDemografico.Nombre ?? string.Empty;
-                        nombreComercial = model.NewDemografico.NombreComercial ?? string.Empty;
-                    }
-
-                    // Process NewContributivo
-                    if (model.NewContributivo != null)
-                    {
-                        var contributivo = model.NewContributivo;
-                        contributivo.ID = registroId;
-                        contributivo.Nombre = nombre;
-                        contributivo.NombreComercial = nombreComercial;
-
-                        // Log the values before creating the Contributivo
-                        Console.WriteLine($"Creating Contributivo with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}, Estatal: {contributivo.Estatal}");
-                        Debug.WriteLine($"Creating Contributivo with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}, Estatal: {contributivo.Estatal}");
-
-                        _customerService.CreateContributivo(contributivo);
-                    }
-
-                    // Process NewAdministrativo
-                    if (model.NewAdministrativo != null)
-                    {
-                        var administrativo = model.NewAdministrativo;
-                        administrativo.ID = registroId;
-                        administrativo.Nombre = nombre;
-                        administrativo.NombreComercial = nombreComercial;
-
-                        // Log the values before creating the Administrativo
-                        Console.WriteLine($"Creating Administrativo with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
-                        Debug.WriteLine($"Creating Administrativo with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
-
-                        _customerService.CreateAdministrativo(administrativo);
-                    }
-
-                    // Process NewIdentificacion
-                    if (model.NewIdentificacion != null)
-                    {
-                        var identificacion = model.NewIdentificacion;
-                        identificacion.ID = registroId;
-                        identificacion.Nombre = nombre;
-                        identificacion.NombreComercial = nombreComercial;
-
-                        // Log the values before creating the Identificacion
-                        Console.WriteLine($"Creating Identificacion with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
-                        Debug.WriteLine($"Creating Identificacion with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
-
-                        _customerService.CreateIdentificacion(identificacion);
-                    }
-
-                    // Process NewPago
-                    if (model.NewPago != null)
-                    {
-                        var pago = model.NewPago;
-                        pago.ID = registroId;
-                        pago.Nombre = nombre;
-                        pago.NombreComercial = nombreComercial;
-
-                        // Log the values before creating the Pago
-                        Console.WriteLine($"Creating Pago with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
-                        Debug.WriteLine($"Creating Pago with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
-
-                        _customerService.CreatePago(pago);
-                    }
-
-                    // Process NewConfidencial
-                    if (model.NewConfidencial != null)
-                    {
-                        var confidencial = model.NewConfidencial;
-                        confidencial.ID = registroId;
-                        confidencial.Nombre = nombre;
-                        confidencial.NombreComercial = nombreComercial;
-
-                        // Log the values before creating the Confidencial
-                        Console.WriteLine($"Creating Confidencial with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
-                        Debug.WriteLine($"Creating Confidencial with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
-
-                        _customerService.CreateConfidencial(confidencial);
-                    }
-
-                    return Json(new { success = true, message = "Customer records created successfully!" });
-                }
-
-                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                return Json(new { success = false, message = "Model validation failed.", errors });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error creating customer records: {ex.Message}");
-                Debug.WriteLine($"Error creating customer records: {ex.Message}");
-                return Json(new { success = false, message = ex.Message });
-            }
-        }
-
 
 
         [HttpGet]
@@ -659,15 +529,122 @@ namespace CPA.Controllers
             return Json(new { success = false, message = "Model validation failed.", errors });
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public IActionResult CreateDemografico(Demografico newDemografico)
+        public IActionResult Create(DashboardViewModel model)
         {
             try
             {
+                // Remove unnecessary validation
+                ModelState.Remove("NewDemografico.Registro");
+                ModelState.Remove("NewContributivo.Registro");
+                ModelState.Remove("NewAdministrativo.Registro");
+                ModelState.Remove("NewIdentificacion.Registro");
+                ModelState.Remove("NewPago.Registro");
+                ModelState.Remove("NewConfidencial.Registro");
+
                 if (ModelState.IsValid)
                 {
-                    _customerService.CreateDemografico(newDemografico);
-                    return Json(new { success = true });
+                    // Create a new Registro and get the generated ID
+                    var registro = new Registro();
+                    _registroService.CreateRegistro(registro);
+
+                    var registroId = registro.ID;
+
+                    // Variables to hold Nombre and NombreComercial
+                    string nombre = null;
+                    string nombreComercial = null;
+
+                    // Process NewDemografico
+                    if (model.NewDemografico != null)
+                    {
+                        model.NewDemografico.ID = registroId;
+                        _customerService.CreateDemografico(model.NewDemografico);
+                        nombre = model.NewDemografico.Nombre ?? string.Empty;
+                        nombreComercial = model.NewDemografico.NombreComercial ?? string.Empty;
+                    }
+
+                    // Process NewContributivo
+                    if (model.NewContributivo != null)
+                    {
+                        var contributivo = model.NewContributivo;
+                        contributivo.ID = registroId;
+                        contributivo.Nombre = nombre;
+                        contributivo.NombreComercial = nombreComercial;
+
+                        // Log the values before creating the Contributivo
+                        Console.WriteLine($"Creating Contributivo with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}, Estatal: {contributivo.Estatal}");
+                        Debug.WriteLine($"Creating Contributivo with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}, Estatal: {contributivo.Estatal}");
+
+                        _customerService.CreateContributivo(contributivo);
+                    }
+
+                    // Process NewAdministrativo
+                    if (model.NewAdministrativo != null)
+                    {
+                        var administrativo = model.NewAdministrativo;
+                        administrativo.ID = registroId;
+                        administrativo.Nombre = nombre;
+                        administrativo.NombreComercial = nombreComercial;
+
+                        // Log the values before creating the Administrativo
+                        Console.WriteLine($"Creating Administrativo with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                        Debug.WriteLine($"Creating Administrativo with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+
+                        _customerService.CreateAdministrativo(administrativo);
+                    }
+
+                    // Process NewIdentificacion
+                    if (model.NewIdentificacion != null)
+                    {
+                        var identificacion = model.NewIdentificacion;
+                        identificacion.ID = registroId;
+                        identificacion.Nombre = nombre;
+                        identificacion.NombreComercial = nombreComercial;
+
+                        // Log the values before creating the Identificacion
+                        Console.WriteLine($"Creating Identificacion with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                        Debug.WriteLine($"Creating Identificacion with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+
+                        _customerService.CreateIdentificacion(identificacion);
+                    }
+
+                    // Process NewPago
+                    if (model.NewPago != null)
+                    {
+                        var pago = model.NewPago;
+                        pago.ID = registroId;
+                        pago.Nombre = nombre;
+                        pago.NombreComercial = nombreComercial;
+
+                        // Log the values before creating the Pago
+                        Console.WriteLine($"Creating Pago with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                        Debug.WriteLine($"Creating Pago with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+
+                        _customerService.CreatePago(pago);
+                    }
+
+                    // Process NewConfidencial
+                    if (model.NewConfidencial != null)
+                    {
+                        var confidencial = model.NewConfidencial;
+                        confidencial.ID = registroId;
+                        confidencial.Nombre = nombre;
+                        confidencial.NombreComercial = nombreComercial;
+
+                        // Log the values before creating the Confidencial
+                        Console.WriteLine($"Creating Confidencial with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+                        Debug.WriteLine($"Creating Confidencial with ID: {registroId}, Nombre: {nombre}, NombreComercial: {nombreComercial}");
+
+                        _customerService.CreateConfidencial(confidencial);
+                    }
+
+                    return Json(new { success = true, message = "Customer records created successfully!" });
                 }
 
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
@@ -675,9 +652,137 @@ namespace CPA.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error creating customer records: {ex.Message}");
+                Debug.WriteLine($"Error creating customer records: {ex.Message}");
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
+
+        [HttpPost]
+        public IActionResult CreateOtherEntities(DashboardViewModel model)
+        {
+            try
+            {
+                var demograficoResult = CreateDemograficoInternal(model.NewDemografico);
+                if (!demograficoResult.success)
+                {
+                    return Json(new { success = false, message = demograficoResult.message, errors = demograficoResult.errors });
+                }
+
+                var newDemografico = demograficoResult.demografico;
+                model.NewDemografico = newDemografico;
+
+                Console.WriteLine("NewDemografico is not null");
+                Console.WriteLine($"ID: {model.NewDemografico.ID}");
+                Console.WriteLine($"Nombre: {model.NewDemografico.Nombre}");
+                Console.WriteLine($"NombreComercial: {model.NewDemografico.NombreComercial}");
+
+                var registroId = model.NewDemografico.ID;
+                var nombre = model.NewDemografico.Nombre;
+                var nombreComercial = model.NewDemografico.NombreComercial;
+
+                if (model.NewContributivo != null)
+                {
+                    var contributivo = model.NewContributivo;
+                    contributivo.ID = registroId;
+                    contributivo.Nombre = nombre;
+                    contributivo.NombreComercial = nombreComercial;
+                    _customerService.CreateContributivo(contributivo);
+                }
+
+                if (model.NewAdministrativo != null)
+                {
+                    var administrativo = model.NewAdministrativo;
+                    administrativo.ID = registroId;
+                    administrativo.Nombre = nombre;
+                    administrativo.NombreComercial = nombreComercial;
+                    _customerService.CreateAdministrativo(administrativo);
+                }
+
+                if (model.NewIdentificacion != null)
+                {
+                    var identificacion = model.NewIdentificacion;
+                    identificacion.ID = registroId;
+                    identificacion.Nombre = nombre;
+                    identificacion.NombreComercial = nombreComercial;
+                    _customerService.CreateIdentificacion(identificacion);
+                }
+
+                if (model.NewPago != null)
+                {
+                    var pago = model.NewPago;
+                    pago.ID = registroId;
+                    pago.Nombre = nombre;
+                    pago.NombreComercial = nombreComercial;
+                    _customerService.CreatePago(pago);
+                }
+
+                if (model.NewConfidencial != null)
+                {
+                    var confidencial = model.NewConfidencial;
+                    confidencial.ID = registroId;
+                    confidencial.Nombre = nombre;
+                    confidencial.NombreComercial = nombreComercial;
+                    _customerService.CreateConfidencial(confidencial);
+                }
+
+                return Json(new { success = true, message = "Customer records created successfully!" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
+
+        [HttpPost]
+        public IActionResult CreateDemografico(Demografico newDemografico)
+        {
+            var result = CreateDemograficoInternal(newDemografico);
+            if (result.success)
+            {
+                return Json(new { success = true, registroId = result.demografico.ID });
+            }
+            return Json(new { success = false, message = result.message, errors = result.errors });
+        }
+
+
+        private (bool success, string message, List<string> errors, Demografico demografico) CreateDemograficoInternal(Demografico newDemografico)
+        {
+            try
+            {
+                if (newDemografico == null)
+                {
+                    return (false, "New Demografico object is null.", null, null);
+                }
+
+                if (ModelState.IsValid)
+                {
+                    var registro = new Registro();
+                    _registroService.CreateRegistro(registro);
+
+                    newDemografico.Registro = registro;
+                    newDemografico.ID = registro.ID;
+
+                    _customerService.CreateDemografico(newDemografico);
+
+                    return (true, null, null, newDemografico);
+                }
+
+                var errorList = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return (false, "Model validation failed.", errorList, null);
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message, null, null);
+            }
+        }
+
+
+
 
         [HttpPost]
         public IActionResult CreateContributivo(Contributivo newContributivo)

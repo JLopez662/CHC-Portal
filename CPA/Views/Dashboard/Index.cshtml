@@ -46,36 +46,34 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="newCustomerModalLabel">Crear Nuevo Cliente</h5>
+                    <h5 class="modal-title" id="newCustomerModalLabel">Create New Customer</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="createCustomerForms">
+                <div class="modal-body">
                     <ul class="nav nav-tabs" id="modalTabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="modal-demografico-tab" data-bs-toggle="tab" href="#modal-demografico" role="tab" aria-controls="modal-demografico" aria-selected="true">Demográficos</a>
+                            <a class="nav-link active" id="modal-demografico-tab" data-bs-toggle="tab" href="#modal-demografico" role="tab" aria-controls="modal-demografico" aria-selected="true">Demografico</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="modal-contributivo-tab" data-bs-toggle="tab" href="#modal-contributivo" role="tab" aria-controls="modal-contributivo" aria-selected="false">Contributivos</a>
+                            <a class="nav-link" id="modal-contributivo-tab" data-bs-toggle="tab" href="#modal-contributivo" role="tab" aria-controls="modal-contributivo" aria-selected="false">Contributivo</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="modal-administrativo-tab" data-bs-toggle="tab" href="#modal-administrativo" role="tab" aria-controls="modal-administrativo" aria-selected="false">Administrativos</a>
+                            <a class="nav-link" id="modal-administrativo-tab" data-bs-toggle="tab" href="#modal-administrativo" role="tab" aria-controls="modal-administrativo" aria-selected="false">Administrativo</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="modal-identificacion-tab" data-bs-toggle="tab" href="#modal-identificacion" role="tab" aria-controls="modal-identificacion" aria-selected="false">Identificación</a>
+                            <a class="nav-link" id="modal-identificacion-tab" data-bs-toggle="tab" href="#modal-identificacion" role="tab" aria-controls="modal-identificacion" aria-selected="false">Identificacion</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="modal-pago-tab" data-bs-toggle="tab" href="#modal-pago" role="tab" aria-controls="modal-pago" aria-selected="false">Métodos de Pago</a>
+                            <a class="nav-link" id="modal-pago-tab" data-bs-toggle="tab" href="#modal-pago" role="tab" aria-controls="modal-pago" aria-selected="false">Pago</a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" id="modal-confidencial-tab" data-bs-toggle="tab" href="#modal-confidencial" role="tab" aria-controls="modal-confidencial" aria-selected="false">Confidencial</a>
                         </li>
                     </ul>
-
                     <div class="tab-content" id="modalTabsContent">
-                        <!-- Demográfico Tab -->
                         <div class="tab-pane fade show active" id="modal-demografico" role="tabpanel" aria-labelledby="modal-demografico-tab">
                             <form id="createDemograficoForm" method="post" action="@Url.Action("Create", "Dashboard")">
-                                <!-- Demográfico Fields -->
+                                <!-- Demografico Fields -->
                                 <div class="mb-3">
                                     <label for="newID" class="form-label">ID</label>
                                     <input type="text" class="form-control" id="newID" name="NewDemografico.ID" required>
@@ -105,19 +103,19 @@
                                     <input type="text" class="form-control" id="newTipo" name="NewDemografico.Tipo">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newPatronal" class="form-label">Número Patronal</label>
+                                    <label for="newPatronal" class="form-label">Patronal</label>
                                     <input type="text" class="form-control" id="newPatronal" name="NewDemografico.Patronal">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newSSN" class="form-label">Número de Seguro Social</label>
+                                    <label for="newSSN" class="form-label">SSN</label>
                                     <input type="text" class="form-control" id="newSSN" name="NewDemografico.SSN">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newIncorporacion" class="form-label">Fecha de Incorporación</label>
+                                    <label for="newIncorporacion" class="form-label">Incorporacion</label>
                                     <input type="datetime-local" class="form-control" id="newIncorporacion" name="NewDemografico.Incorporacion">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newOperaciones" class="form-label">Fecha de Inicio de Operaciones</label>
+                                    <label for="newOperaciones" class="form-label">Operaciones</label>
                                     <input type="datetime-local" class="form-control" id="newOperaciones" name="NewDemografico.Operaciones">
                                 </div>
                                 <div class="mb-3">
@@ -125,11 +123,11 @@
                                     <input type="text" class="form-control" id="newIndustria" name="NewDemografico.Industria">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newNAICS" class="form-label">Código NAICS</label>
+                                    <label for="newNAICS" class="form-label">NAICS</label>
                                     <input type="text" class="form-control" id="newNAICS" name="NewDemografico.NAICS">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newDescripcion" class="form-label">Descripción</label>
+                                    <label for="newDescripcion" class="form-label">Descripcion</label>
                                     <input type="text" class="form-control" id="newDescripcion" name="NewDemografico.Descripcion">
                                 </div>
                                 <div class="mb-3">
@@ -137,25 +135,23 @@
                                     <input type="text" class="form-control" id="newContacto" name="NewDemografico.Contacto">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newDirFisica" class="form-label">Dirección Física</label>
+                                    <label for="newDirFisica" class="form-label">DirFisica</label>
                                     <input type="text" class="form-control" id="newDirFisica" name="NewDemografico.DirFisica">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newDirPostal" class="form-label">Dirección Postal</label>
+                                    <label for="newDirPostal" class="form-label">DirPostal</label>
                                     <input type="text" class="form-control" id="newDirPostal" name="NewDemografico.DirPostal">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newEmail" class="form-label">Correo Electrónico</label>
+                                    <label for="newEmail" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="newEmail" name="NewDemografico.Email">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newEmail2" class="form-label">Correo Electrónico 2</label>
+                                    <label for="newEmail2" class="form-label">Email2</label>
                                     <input type="email" class="form-control" id="newEmail2" name="NewDemografico.Email2">
                                 </div>
                             </form>
                         </div>
-
-                        <!-- Contributivo Tab -->
                         <div class="tab-pane fade" id="modal-contributivo" role="tabpanel" aria-labelledby="modal-contributivo-tab">
                             <form id="createContributivoForm" method="post" action="@Url.Action("Create", "Dashboard")">
                                 <!-- Contributivo Fields -->
@@ -165,7 +161,7 @@
                                     <input type="text" class="form-control" id="newRegistroEstatal" name="NewContributivo.Estatal" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newNumeroPoliza" class="form-label">Número de Póliza</label>
+                                    <label for="newNumeroPoliza" class="form-label">Número de Poliza</label>
                                     <input type="text" class="form-control" id="newNumeroPoliza" name="NewContributivo.Poliza" required>
                                 </div>
                                 <div class="mb-3">
@@ -186,8 +182,6 @@
                                 </div>
                             </form>
                         </div>
-
-                        <!-- Administrativo Tab -->
                         <div class="tab-pane fade" id="modal-administrativo" role="tabpanel" aria-labelledby="modal-administrativo-tab">
                             <form id="createAdministrativoForm" method="post" action="@Url.Action("Create", "Dashboard")">
                                 <!-- Administrativo Fields -->
@@ -218,11 +212,9 @@
                                 </div>
                             </form>
                         </div>
-
-                        <!-- Identificación Tab -->
                         <div class="tab-pane fade" id="modal-identificacion" role="tabpanel" aria-labelledby="modal-identificacion-tab">
                             <form id="createIdentificacionForm" method="post" action="@Url.Action("Create", "Dashboard")">
-                                <!-- Identificación Fields -->
+                                <!-- Identificacion Fields -->
                                 <input type="hidden" id="newIDIdentificacion" name="NewIdentificacion.ID">
                                 <div class="mb-3">
                                     <label for="newAccionista" class="form-label">Accionista</label>
@@ -246,22 +238,20 @@
                                 </div>
                             </form>
                         </div>
-
-                        <!-- Métodos de Pago Tab -->
                         <div class="tab-pane fade" id="modal-pago" role="tabpanel" aria-labelledby="modal-pago-tab">
                             <form id="createPagoForm" method="post" action="@Url.Action("Create", "Dashboard")">
-                                <!-- Métodos de Pago Fields -->
+                                <!-- Pago Fields -->
                                 <input type="hidden" id="newIDPago" name="NewPago.ID">
                                 <div class="mb-3">
                                     <label for="newClienteBanco" class="form-label">Cliente del Banco</label>
                                     <input type="text" class="form-control" id="newClienteBanco" name="NewPago.BankClient" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newBanco" class="form-label">Número de Cuenta del Banco</label>
+                                    <label for="newBanco" class="form-label">Banco</label>
                                     <input type="text" class="form-control" id="newBanco" name="NewPago.Banco" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newNumRuta" class="form-label">Número de Ruta</label>
+                                    <label for="newNumRuta" class="form-label">Numero de Ruta</label>
                                     <input type="text" class="form-control" id="newNumRuta" name="NewPago.NumRuta">
                                 </div>
                                 <div class="mb-3">
@@ -277,11 +267,11 @@
                                     <input type="text" class="form-control" id="newClienteBanco2" name="NewPago.BankClientS">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newBanco2" class="form-label">Número de Cuenta del Banco 2</label>
+                                    <label for="newBanco2" class="form-label">Banco 2</label>
                                     <input type="text" class="form-control" id="newBanco2" name="NewPago.BancoS">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newNumRuta2" class="form-label">Número de Ruta 2</label>
+                                    <label for="newNumRuta2" class="form-label">Numero de Ruta 2</label>
                                     <input type="text" class="form-control" id="newNumRuta2" name="NewPago.NumRutaS">
                                 </div>
                                 <div class="mb-3">
@@ -301,7 +291,7 @@
                                     <input type="text" class="form-control" id="newTarjeta" name="NewPago.Tarjeta">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newTipoTarjeta" class="form-label">Tipo de Tarjeta de Pago</label>
+                                    <label for="newTipoTarjeta" class="form-label">Tipo de Tarjeta</label>
                                     <input type="text" class="form-control" id="newTipoTarjeta" name="NewPago.TipoTarjeta">
                                 </div>
                                 <div class="mb-3">
@@ -309,15 +299,15 @@
                                     <input type="text" class="form-control" id="newCVV" name="NewPago.CVV">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newFechaExpiracion" class="form-label">Fecha Expiración</label>
+                                    <label for="newFechaExpiracion" class="form-label">Fecha Expiracion</label>
                                     <input type="date" class="form-control" id="newFechaExpiracion" name="NewPago.Expiracion">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newPostalTarjeta" class="form-label">Dirección Postal de Tarjeta de Pago</label>
+                                    <label for="newPostalTarjeta" class="form-label">Postal en Tarjeta</label>
                                     <input type="text" class="form-control" id="newPostalTarjeta" name="NewPago.PostalBank">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newNombreTarjeta2" class="form-label">Cliente en Tarjeta de Pago 2</label>
+                                    <label for="newNombreTarjeta2" class="form-label">Cliente en Tarjeta 2</label>
                                     <input type="text" class="form-control" id="newNombreTarjeta2" name="NewPago.NameCardS">
                                 </div>
                                 <div class="mb-3">
@@ -333,17 +323,15 @@
                                     <input type="text" class="form-control" id="newCVV2" name="NewPago.CVVS">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newFechaExpiracion2" class="form-label">Fecha de Expiración 2</label>
+                                    <label for="newFechaExpiracion2" class="form-label">Fecha Expiracion 2</label>
                                     <input type="date" class="form-control" id="newFechaExpiracion2" name="NewPago.ExpiracionS">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newPostalTarjeta2" class="form-label">Dirección Postal en Tarjeta de Pago 2</label>
+                                    <label for="newPostalTarjeta2" class="form-label">Postal en Tarjeta 2</label>
                                     <input type="text" class="form-control" id="newPostalTarjeta2" name="NewPago.PostalBankS">
                                 </div>
                             </form>
                         </div>
-
-                        <!-- Confidencial Tab -->
                         <div class="tab-pane fade" id="modal-confidencial" role="tabpanel" aria-labelledby="modal-confidencial-tab">
                             <form id="createConfidencialForm" method="post" action="@Url.Action("Create", "Dashboard")">
                                 <!-- Confidencial Fields -->
@@ -1014,6 +1002,16 @@
 @section Scripts {
     <script>
         function submitAllForms() {
+            // Get the ID from the Demografico form
+            const id = document.getElementById('newID').value;
+
+            // Update hidden ID fields in all forms
+            document.getElementById('newIDContributivo').value = id;
+            document.getElementById('newIDAdministrativo').value = id;
+            document.getElementById('newIDIdentificacion').value = id;
+            document.getElementById('newIDPago').value = id;
+            document.getElementById('newIDConfidencial').value = id;
+
             const forms = [
                 document.getElementById('createDemograficoForm'),
                 document.getElementById('createContributivoForm'),
@@ -1058,6 +1056,8 @@
                     toastr.error('Failed to create customer records.');
                 });
         }
+
+
 
         function submitActiveForm() {
             const activeTab = document.querySelector('#modalTabs .nav-link.active').getAttribute('aria-controls');

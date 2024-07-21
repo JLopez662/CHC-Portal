@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DAL.Repositories;
 using DAL.Models;
 using BLL.Interfaces;
@@ -28,7 +29,23 @@ namespace BLL
         public void UpdatePago(Pago pago) => _customerRepository.UpdatePago(pago);
         public void UpdateConfidencial(Confidencial confidencial) => _customerRepository.UpdateConfidencial(confidencial);
 
-        public void CreateDemografico(Demografico demografico) => _customerRepository.CreateDemografico(demografico);
+        public void CreateDemografico(Demografico demografico)
+        {
+            if (demografico.Registro == null)
+            {
+                demografico.Registro = new Registro
+                {
+                    ID = Guid.NewGuid().ToString() // Ensure the ID is set
+                };
+            }
+            else if (string.IsNullOrEmpty(demografico.Registro.ID))
+            {
+                demografico.Registro.ID = Guid.NewGuid().ToString(); // Ensure the ID is set if it's not already
+            }
+
+            _customerRepository.CreateDemografico(demografico);
+        }
+
         public void CreateContributivo(Contributivo contributivo) => _customerRepository.CreateContributivo(contributivo);
         public void CreateAdministrativo(Administrativo administrativo) => _customerRepository.CreateAdministrativo(administrativo);
         public void CreateIdentificacion(Identificacion identificacion) => _customerRepository.CreateIdentificacion(identificacion);
@@ -36,6 +53,5 @@ namespace BLL
         public void CreateConfidencial(Confidencial confidencial) => _customerRepository.CreateConfidencial(confidencial);
 
         public void DeleteCustomer(string id) => _customerRepository.DeleteCustomer(id);
-
     }
 }

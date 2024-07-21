@@ -64,6 +64,12 @@ namespace DAL.Repositories
 
         public void CreateDemografico(Demografico demografico)
         {
+            if (demografico.Registro == null)
+            {
+                demografico.Registro = new Registro();
+                // Set any default values or required properties for Registro here
+            }
+
             _context.Demograficos.Add(demografico);
             _context.SaveChanges();
         }
