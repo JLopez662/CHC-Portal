@@ -112,16 +112,27 @@ namespace CPA.Controllers
                 Email = email,
                 Phone = phone,
                 Username = email,
-                Password = hashedPassword
+                Password = hashedPassword,
+                Role = "User" // Set default role as "User"
             };
 
             _userRepository.AddUser(user);
 
             string subject = "Welcome to CPA Portal";
             string message = $"Hello {firstName},\n\nThank you for registering at CPA Portal.\n\nBest Regards,\nCPA Portal Team";
-            await _emailService.SendEmailAsync(email, subject, message);
 
-            return Json(new { success = true, data = user });
+            try
+            {
+                await _emailService.SendEmailAsync(email, subject, message);
+                _logger.LogInformation("Welcome email sent successfully to {Email}", email);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while sending welcome email to {Email}", email);
+            }
+
+            TempData["Success"] = "Registration successful. Welcome to CPA Portal!";
+            return RedirectToAction("Index", "Home");
         }
 
 

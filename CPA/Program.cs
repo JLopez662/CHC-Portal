@@ -13,7 +13,8 @@ builder.Services.AddControllersWithViews();
 
 // Configure Entity Framework and Dependency Injection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+    sqlOptions => sqlOptions.MigrationsAssembly("DAL")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
@@ -25,10 +26,8 @@ builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
-
 builder.Services.AddScoped<IRegistroService, RegistroService>();
 
 // Add session services
@@ -59,9 +58,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
