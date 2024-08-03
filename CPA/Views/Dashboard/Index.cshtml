@@ -408,6 +408,7 @@
                 {
                     <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial" data-id="@item.ID">
                         <tbody>
+                            <tr><th>ID</th><td>@item.ID</td></tr>
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
                             <tr><th>Teléfono</th><td>@item.Telefono</td></tr>
@@ -441,6 +442,7 @@
                 {
                     <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial" data-id="@item.ID">
                         <tbody>
+                            <tr><th>ID</th><td>@item.ID</td></tr>
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
                             <tr><th>Registro Estatal</th><td>@item.Estatal</td></tr>
@@ -464,6 +466,7 @@
                 {
                     <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial" data-id="@item.ID">
                         <tbody>
+                            <tr><th>ID</th><td>@item.ID</td></tr>
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
                             <tr><th>Fecha de Contrato</th><td>@item.Contrato</td></tr>
@@ -487,6 +490,7 @@
                 {
                     <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial" data-id="@item.ID">
                         <tbody>
+                            <tr><th>ID</th><td>@item.ID</td></tr>
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
                             <tr><th>Accionista</th><td>@item.Accionista</td></tr>
@@ -509,6 +513,7 @@
                 {
                     <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial" data-id="@item.ID">
                         <tbody>
+                            <tr><th>ID</th><td>@item.ID</td></tr>
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
                             <tr><th>Cliente del Banco</th><td>@item.BankClient</td></tr>
@@ -548,6 +553,7 @@
                 {
                     <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial" data-id="@item.ID">
                         <tbody>
+                            <tr><th>ID</th><td>@item.ID</td></tr>
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
                             <tr><th>Usuario Suri</th><td>@item.UserSuri</td></tr>
@@ -1004,10 +1010,13 @@
         function submitAllForms() {
             // Get the ID from the Demografico form
             const id = document.getElementById('newID').value;
+            console.log('newID value from Demografico =' + id);
 
             // Update hidden ID fields in all forms
             document.getElementById('newIDContributivo').value = id;
+            console.log('newID value from Contributivo =' + document.getElementById('newIDContributivo').value);
             document.getElementById('newIDAdministrativo').value = id;
+            console.log('newID value from Administrativo =' + document.getElementById('newIDAdministrativo').value);
             document.getElementById('newIDIdentificacion').value = id;
             document.getElementById('newIDPago').value = id;
             document.getElementById('newIDConfidencial').value = id;
@@ -1062,6 +1071,7 @@
         function submitActiveForm() {
             const activeTab = document.querySelector('#modalTabs .nav-link.active').getAttribute('aria-controls');
             const formId = `#${activeTab} form`;
+            console.log('formId = ' + formId);
             const form = document.querySelector(formId);
             const formData = new FormData(form);
             const url = form.getAttribute('action');
@@ -1099,7 +1109,7 @@
             $('#dashboardTabsContent .tab-pane').addClass('hidden');
             $('#dashboardTabsContent .tblData').closest('table').addClass('hidden');
             $('#createCustomerForms').show();
-            console.log("Document is ready");
+            //console.log("Document is ready");
 
             let dataTablesInitialized = false;
 
@@ -1109,7 +1119,7 @@
                     $('#exampleTable2').DataTable();
                     // Initialize other tables as needed
                     dataTablesInitialized = true;
-                    console.log("DataTables initialized");
+                    //console.log("DataTables initialized");
                 }
             }
 
@@ -1121,28 +1131,29 @@
             }
 
             $('#newCustomerModal').on('shown.bs.modal', function () {
-                console.log('New Customer Modal is shown');
+                //console.log('New Customer Modal is shown');
             });
 
             $('#newCustomerModal').on('hidden.bs.modal', function () {
-                console.log('New Customer Modal is hidden');
+                //console.log('New Customer Modal is hidden');
             });
 
             $('#modalTabs a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
                 var target = $(e.target).attr("href"); // activated tab
-                console.log("Activated tab: ", target);
+                //console.log("Activated tab: ", target);
                 $(target).find('form').show();
             });
 
             var activeTab = sessionStorage.getItem('activeTab');
             if (activeTab) {
                 $('#dashboardTabs a[href="' + activeTab + '"]').tab('show');
-                console.log("Restored active tab from sessionStorage:", activeTab);
+                //console.log("Restored active tab from sessionStorage:", activeTab);
             }
 
             $('#dashboardTabs a').on('click', function (e) {
                 e.preventDefault();
                 var tabId = $(this).attr('href');
+                console.log('tabId = ' + tabId);
                 $(this).tab('show');
                 sessionStorage.setItem('activeTab', tabId);
                 console.log($(this).attr('id') + " tab clicked");
@@ -1193,7 +1204,7 @@
                 var searchTerm = sessionStorage.getItem('searchTerm') || '';
                 var tablesMatched = false;
 
-                console.log("Search term: " + searchTerm);
+                //console.log("Search term: " + searchTerm);
 
                 $('.tab-pane').each(function () {
                     var $tabPane = $(this);
@@ -1205,7 +1216,7 @@
                     $tables.each(function () {
                         if ($.fn.dataTable.isDataTable($(this))) {
                             $(this).DataTable().destroy();
-                            console.log("DataTable destroyed for table:", $(this));
+                            //console.log("DataTable destroyed for table:", $(this));
                         }
                     });
 
@@ -1217,10 +1228,10 @@
                         var tableUserId = $(this).data('id');
                         console.log('Table User Id = ', tableUserId);
 
-                        console.log("Checking table with Nombre: " + nombre + " and Nombre Comercial: " + nombreComercial);
+                        //console.log("Checking table with Nombre: " + nombre + " and Nombre Comercial: " + nombreComercial);
 
                         if (nombre.includes(searchTerm) || nombreComercial.includes(searchTerm)) {
-                            console.log("nombre.includes(searchTerm) is true");
+                            //console.log("nombre.includes(searchTerm) is true");
                             parentTable.removeClass('hidden'); // Use 'hidden' class to show tables
                             parentTabPane.removeClass('hidden');
                             tablesMatched = true;
@@ -1228,9 +1239,9 @@
                             $('.edit-button, .delete-button').hide();
 
                             $('.edit-button, .delete-button').each(function () {
-                                console.log("Button data-id: " + $(this).data('id'));
+                                //console.log("Button data-id: " + $(this).data('id'));
                                 if ($(this).data('id') == tableUserId) {
-                                    console.log("Matched");
+                                    //console.log("Matched");
                                     $(this).show();
                                 }
                             });
@@ -1258,32 +1269,33 @@
                                         search: "Search in this record:"
                                     }
                                 });
-                                console.log("DataTable re-initialized for visible table:", $(this));
+                                //console.log("DataTable re-initialized for visible table:", $(this));
                             }
                         });
                     }
                 });
 
                 if (!tablesMatched) {
-                    console.log("No tables matched.");
+                    //console.log("No tables matched.");
                     $('.tab-pane').removeClass('hidden'); // Ensure all tab panes are shown if no match is found
                 }
 
                 if (searchTerm === "") {
                     $('.tab-pane').addClass('hidden');
-                    console.log("Search term is empty. Hiding all tab panes.");
+                    //console.log("Search term is empty. Hiding all tab panes.");
                 }
 
                 $('#createCustomerForms').show(); // Ensure the create customer forms are always shown
             }
 
+
             function prioritizeActiveTabTables(activeTabId) {
-                console.log("Prioritizing tables in active tab:", activeTabId);
+                //console.log("Prioritizing tables in active tab:", activeTabId);
                 $('.tab-pane').each(function () {
                     var tabPane = $(this);
                     if (tabPane.attr('id') === activeTabId.substring(1)) {
                         tabPane.prependTo('#dashboardTabsContent');
-                        console.log("Active tab pane moved to top:", tabPane.attr('id'));
+                        //console.log("Active tab pane moved to top:", tabPane.attr('id'));
                     }
                 });
             }
@@ -1353,13 +1365,13 @@
 
         // Example edit functions (repeat for other entities)
         function editDemografico(id) {
-            console.log("Edit button clicked for ID:", id);
+            //console.log("Edit button clicked for ID:", id);
             $.ajax({
                 url: '@Url.Action("GetDemograficoById", "Dashboard")',
                 type: 'GET',
                 data: { id: id },
                 success: function (data) {
-                    console.log("Data fetched:", data);
+                    //console.log("Data fetched:", data);
                     $('#demograficoId').val(data.id);
                     $('#demograficoNombre').val(data.nombre);
                     $('#demograficoNombreComercial').val(data.nombreComercial);
@@ -1391,13 +1403,13 @@
         }
 
         function editContributivo(id) {
-            console.log("Edit button clicked for Contributivo ID:", id);
+            //console.log("Edit button clicked for Contributivo ID:", id);
             $.ajax({
                 url: '@Url.Action("GetContributivoById", "Dashboard")',
                 type: 'GET',
                 data: { id: id },
                 success: function (data) {
-                    console.log("Data fetched:", data);
+                    //console.log("Data fetched:", data);
                     $('#contributivoId').val(data.id);
                     $('#contributivoNombre').val(data.nombre);
                     $('#contributivoNombreComercial').val(data.nombreComercial);
@@ -1419,13 +1431,13 @@
         }
 
         function editAdministrativo(id) {
-            console.log("Edit button clicked for Administrativo ID:", id);
+            //console.log("Edit button clicked for Administrativo ID:", id);
             $.ajax({
                 url: '@Url.Action("GetAdministrativoById", "Dashboard")',
                 type: 'GET',
                 data: { id: id },
                 success: function (data) {
-                    console.log("Data fetched:", data);
+                    //console.log("Data fetched:", data);
                     $('#administrativoId').val(data.id);
                     $('#administrativoNombre').val(data.nombre);
                     $('#administrativoNombreComercial').val(data.nombreComercial);
@@ -1447,13 +1459,13 @@
         }
 
         function editIdentificacion(id) {
-            console.log("Edit button clicked for Identificacion ID:", id);
+            //console.log("Edit button clicked for Identificacion ID:", id);
             $.ajax({
                 url: '@Url.Action("GetIdentificacionById", "Dashboard")',
                 type: 'GET',
                 data: { id: id },
                 success: function (data) {
-                    console.log("Data fetched:", data);
+                    //console.log("Data fetched:", data);
                     $('#identificacionId').val(data.id);
                     $('#identificacionNombre').val(data.nombre);
                     $('#identificacionNombreComercial').val(data.nombreComercial);
@@ -1474,13 +1486,13 @@
         }
 
         function editPago(id) {
-            console.log("Edit button clicked for Pago ID:", id);
+            //console.log("Edit button clicked for Pago ID:", id);
             $.ajax({
                 url: '@Url.Action("GetPagoById", "Dashboard")',
                 type: 'GET',
                 data: { id: id },
                 success: function (data) {
-                    console.log("Data fetched:", data);
+                    //console.log("Data fetched:", data);
                     $('#pagoId').val(data.id);
                     $('#pagoNombre').val(data.nombre);
                     $('#pagoNombreComercial').val(data.nombreComercial);
@@ -1518,13 +1530,13 @@
         }
 
         function editConfidencial(id) {
-            console.log("Edit button clicked for Confidencial ID:", id);
+            //console.log("Edit button clicked for Confidencial ID:", id);
             $.ajax({
                 url: '@Url.Action("GetConfidencialById", "Dashboard")',
                 type: 'GET',
                 data: { id: id },
                 success: function (data) {
-                    console.log("Data fetched:", data);
+                    //console.log("Data fetched:", data);
                     $('#confidencialId').val(data.id);
                     $('#confidencialNombre').val(data.nombre);
                     $('#confidencialNombreComercial').val(data.nombreComercial);

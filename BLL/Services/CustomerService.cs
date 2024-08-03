@@ -29,22 +29,35 @@ namespace BLL
         public void UpdatePago(Pago pago) => _customerRepository.UpdatePago(pago);
         public void UpdateConfidencial(Confidencial confidencial) => _customerRepository.UpdateConfidencial(confidencial);
 
-        public void CreateDemografico(Demografico demografico)
-        {
-            if (demografico.Registro == null)
-            {
-                demografico.Registro = new Registro
+        /*        public void CreateDemografico(Demografico demografico)
                 {
-                    ID = Guid.NewGuid().ToString() // Ensure the ID is set
-                };
-            }
-            else if (string.IsNullOrEmpty(demografico.Registro.ID))
-            {
-                demografico.Registro.ID = Guid.NewGuid().ToString(); // Ensure the ID is set if it's not already
-            }
+                    if (demografico.Registro == null)
+                    {
+                        demografico.Registro = new Registro
+                        {
+                            ID = Guid.NewGuid().ToString() // Ensure the ID is set
+                        };
+                    }
+                    else if (string.IsNullOrEmpty(demografico.Registro.ID))
+                    {
+                        demografico.Registro.ID = Guid.NewGuid().ToString(); // Ensure the ID is set if it's not already
+                    }
 
-            _customerRepository.CreateDemografico(demografico);
-        }
+                    _customerRepository.CreateDemografico(demografico);
+                }*/
+
+        /*        public void CreateDemografico(Demografico demografico)
+                {
+                    if (demografico.Registro == null || string.IsNullOrEmpty(demografico.Registro.ID))
+                    {
+                        throw new ArgumentException("Registro ID must be provided.");
+                    }
+
+                    _customerRepository.CreateDemografico(demografico);
+                }*/
+
+        public void CreateDemografico(Demografico demografico) => _customerRepository.CreateDemografico(demografico);
+
 
         public void CreateContributivo(Contributivo contributivo) => _customerRepository.CreateContributivo(contributivo);
         public void CreateAdministrativo(Administrativo administrativo) => _customerRepository.CreateAdministrativo(administrativo);
