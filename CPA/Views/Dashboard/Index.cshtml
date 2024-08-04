@@ -1196,12 +1196,27 @@
                 console.log("Showing createCustomerForms.");
             }
 
+            /*
             $('#externalSearch').on('keyup', function () {
                 var searchTerm = $(this).val().toLowerCase();
                 console.log("externalSearch: searchTerm =", searchTerm);
                 sessionStorage.setItem('searchTerm', searchTerm);
                 applySearchTerm();
             });
+            */
+
+            $('#externalSearch').on('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    var searchTerm = $(this).val().toLowerCase();
+                    console.log("externalSearch: searchTerm =", searchTerm);
+                    sessionStorage.setItem('searchTerm', searchTerm);
+                    applySearchTerm();
+                    sessionStorage.setItem('pageReloaded', 'false'); // Reset pageReloaded flag
+                    location.reload();  // Reload the page to update the table with the new data
+                }
+            });
+
 
             var activeTab = sessionStorage.getItem('activeTab');
             if (activeTab) {
