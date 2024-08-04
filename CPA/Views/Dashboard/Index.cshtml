@@ -1105,121 +1105,23 @@
         }
 
         $(document).ready(function () {
-            // Hide all tab panes and tables initially
-            $('#dashboardTabsContent .tab-pane').addClass('hidden');
-            $('#dashboardTabsContent .tblData').closest('table').addClass('hidden');
-            $('#createCustomerForms').show();
-            //console.log("Document is ready");
-
-            let dataTablesInitialized = false;
-
-            function initializeDataTables() {
-                if (!dataTablesInitialized) {
-                    $('#exampleTable1').DataTable();
-                    $('#exampleTable2').DataTable();
-                    // Initialize other tables as needed
-                    dataTablesInitialized = true;
-                    //console.log("DataTables initialized");
-                }
-            }
-
-            const submitButton = document.querySelector('#submitAllFormsButton');
-            if (submitButton) {
-                submitButton.addEventListener('click', submitAllForms);
-            } else {
-                console.error('submitAllFormsButton not found in the DOM.');
-            }
-
-            $('#newCustomerModal').on('shown.bs.modal', function () {
-                //console.log('New Customer Modal is shown');
-            });
-
-            $('#newCustomerModal').on('hidden.bs.modal', function () {
-                //console.log('New Customer Modal is hidden');
-            });
-
-            $('#modalTabs a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-                var target = $(e.target).attr("href"); // activated tab
-                //console.log("Activated tab: ", target);
-                $(target).find('form').show();
-            });
-
-            var activeTab = sessionStorage.getItem('activeTab');
-            if (activeTab) {
-                $('#dashboardTabs a[href="' + activeTab + '"]').tab('show');
-                //console.log("Restored active tab from sessionStorage:", activeTab);
-            }
-
-            $('#dashboardTabs a').on('click', function (e) {
-                e.preventDefault();
-                var tabId = $(this).attr('href');
-                console.log('tabId = ' + tabId);
-                $(this).tab('show');
-                sessionStorage.setItem('activeTab', tabId);
-                console.log($(this).attr('id') + " tab clicked");
-                prioritizeActiveTabTables(tabId);
-                applySearchTerm();
-            });
-
-            $('#dashboardTabs a').on('shown.bs.tab', function (e) {
-                var target = $(e.target).attr("href"); // activated tab
-                console.log("Activated tab: ", target);
-
-                // Ensure all other tab content is hidden
-                $('.tab-pane').addClass('hidden').removeClass('show active');
-
-                // Show the activated tab content
-                $(target).removeClass('hidden').addClass('show active');
-
-                // Initialize DataTable if not already initialized
-                $(target).find('.tblData').each(function () {
-                    if (!$.fn.dataTable.isDataTable(this)) {
-                        $(this).DataTable({
-                            paging: true,
-                            searching: true,
-                            ordering: false,
-                            info: false,
-                            lengthMenu: [[4, -1], ["Summary", "All"]],
-                            pageLength: -1,
-                            columnDefs: [
-                                { orderable: true, targets: 1 }
-                            ],
-                            order: [[1, 'asc']],
-                            autoWidth: false,
-                            language: {
-                                search: "Search in this record:"
-                            }
-                        });
-                    }
-                });
-            });
-
-            $('#externalSearch').on('keyup', function () {
-                var searchTerm = $(this).val().toLowerCase();
-                $('#externalSearch').val(searchTerm);
-                sessionStorage.setItem('searchTerm', searchTerm);
-                applySearchTerm();
-            });
-
             function applySearchTerm() {
                 var searchTerm = sessionStorage.getItem('searchTerm') || '';
-                var tablesMatched = false;
+                console.log("applySearchTerm: searchTerm =", searchTerm);
+                $('#externalSearch').val(searchTerm);  // Set the search input value
 
-                //console.log("Search term: " + searchTerm);
+                var tablesMatched = false;
 
                 $('.tab-pane').each(function () {
                     var $tabPane = $(this);
+                    console.log("Checking tabPane:", $tabPane.attr('id'));
                     var $tables = $tabPane.find('.tblData');
+                    console.log("Number of tables in tabPane:", $tables.length);
 
-                    $tables.closest('table').addClass('hidden'); // Use 'hidden' class to hide tables
+                    $tables.closest('table').addClass('hidden');
+                    console.log("Hiding table in tabPane:", $tabPane.attr('id'));
                     $tabPane.addClass('hidden');
-
-                    $tables.each(function () {
-                        if ($.fn.dataTable.isDataTable($(this))) {
-                            $(this).DataTable().destroy();
-                            //console.log("DataTable destroyed for table:", $(this));
-                        }
-                    });
+                    console.log("Hiding tabPane:", $tabPane.attr('id'));
 
                     $tables.each(function () {
                         var nombre = $(this).data('nombre').toLowerCase();
@@ -1227,23 +1129,21 @@
                         var parentTable = $(this).closest('table');
                         var parentTabPane = parentTable.closest('.tab-pane');
                         var tableUserId = $(this).data('id');
-                        console.log('Table User Id = ', tableUserId);
-
-                        //console.log("Checking table with Nombre: " + nombre + " and Nombre Comercial: " + nombreComercial);
+                        console.log("Checking table: nombre =", nombre, ", nombreComercial =", nombreComercial, ", tableUserId =", tableUserId);
 
                         if (nombre.includes(searchTerm) || nombreComercial.includes(searchTerm)) {
-                            //console.log("nombre.includes(searchTerm) is true");
-                            parentTable.removeClass('hidden'); // Use 'hidden' class to show tables
+                            parentTable.removeClass('hidden');
+                            console.log("Showing table for userId:", tableUserId);
                             parentTabPane.removeClass('hidden');
+                            console.log("Showing tabPane:", parentTabPane.attr('id'));
                             tablesMatched = true;
+                            console.log("Match found in table:", tableUserId);
 
                             $('.edit-button, .delete-button').hide();
-
                             $('.edit-button, .delete-button').each(function () {
-                                //console.log("Button data-id: " + $(this).data('id'));
                                 if ($(this).data('id') == tableUserId) {
-                                    //console.log("Matched");
                                     $(this).show();
+                                    console.log("Showing buttons for tableUserId:", tableUserId);
                                 }
                             });
 
@@ -1270,104 +1170,97 @@
                                         search: "Search in this record:"
                                     }
                                 });
-                                //console.log("DataTable re-initialized for visible table:", $(this));
+                                console.log("DataTable initialized for table.");
                             }
                         });
                     }
                 });
 
                 if (!tablesMatched) {
-                    //console.log("No tables matched.");
-                    $('.tab-pane').removeClass('hidden'); // Ensure all tab panes are shown if no match is found
+                    console.log("No tables matched the search term.");
+                    $('.tab-pane').removeClass('hidden');
+                    console.log("Showing all tab panes.");
+                    $('.nav-tabs a:first').tab('show'); // Show the first tab if no match is found
                 }
 
                 if (searchTerm === "") {
+                    console.log("Search term is empty, hiding all tab panes and nav-tabs.");
                     $('.tab-pane').addClass('hidden');
                     $('.nav-tabs').addClass('hidden');
-                    //console.log("Search term is empty. Hiding all tab panes.");
-                }
-                else {
-                    $('.nav-tabs').removeClass('hidden'); // Show the tabs when the search term is not empty
+                } else {
+                    console.log("Search term is not empty, showing nav-tabs.");
+                    $('.nav-tabs').removeClass('hidden');
                 }
 
-
-                $('#createCustomerForms').show(); // Ensure the create customer forms are always shown
+                $('#createCustomerForms').show();
+                console.log("Showing createCustomerForms.");
             }
 
+            $('#externalSearch').on('keyup', function () {
+                var searchTerm = $(this).val().toLowerCase();
+                console.log("externalSearch: searchTerm =", searchTerm);
+                sessionStorage.setItem('searchTerm', searchTerm);
+                applySearchTerm();
+            });
 
-            function prioritizeActiveTabTables(activeTabId) {
-                //console.log("Prioritizing tables in active tab:", activeTabId);
-                $('.tab-pane').each(function () {
-                    var tabPane = $(this);
-                    if (tabPane.attr('id') === activeTabId.substring(1)) {
-                        tabPane.prependTo('#dashboardTabsContent');
-                        //console.log("Active tab pane moved to top:", tabPane.attr('id'));
-                    }
-                });
+            var activeTab = sessionStorage.getItem('activeTab');
+            if (activeTab) {
+                console.log("Setting active tab from sessionStorage: activeTab =", activeTab);
+                $('#dashboardTabs a[href="' + activeTab + '"]').tab('show');
             }
 
-            prioritizeActiveTabTables($('#dashboardTabs a.active').attr('href'));
+            $('#dashboardTabs a').on('click', function (e) {
+                e.preventDefault();
+                var tabId = $(this).attr('href');
+                console.log("Tab clicked: tabId =", tabId);
+                sessionStorage.setItem('activeTab', tabId);
+                sessionStorage.setItem('pageReloaded', 'false'); // Reset pageReloaded flag
+                location.reload();  // Reload the page to update the table with the new data
+            });
+
+            if (sessionStorage.getItem('pageReloaded') === 'false') {
+                sessionStorage.setItem('pageReloaded', 'true');
+            }
+
             applySearchTerm();
 
-            // Handle form submissions for each entity
-            $('#editDemograficoForm').submit(function (e) {
-                e.preventDefault();
-                submitForm('#editDemograficoForm', '@Url.Action("UpdateDemografico", "Dashboard")');
-            });
+            // Reinitialize DataTables when a tab is shown
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                var target = $(e.target).attr("href");
+                var searchTerm = $('#externalSearch').val().toLowerCase();
+                var foundMatch = false;
 
-            $('#editContributivoForm').submit(function (e) {
-                e.preventDefault();
-                submitForm('#editContributivoForm', '@Url.Action("UpdateContributivo", "Dashboard")');
-            });
+                $(target).find('.tblData').each(function () {
+                    if (foundMatch) return;
 
-            $('#editAdministrativoForm').submit(function (e) {
-                e.preventDefault();
-                submitForm('#editAdministrativoForm', '@Url.Action("UpdateAdministrativo", "Dashboard")');
-            });
+                    var nombre = $(this).data('nombre').toLowerCase();
+                    var nombreComercial = $(this).data('nombrecomercial').toLowerCase();
 
-            $('#editIdentificacionForm').submit(function (e) {
-                e.preventDefault();
-                submitForm('#editIdentificacionForm', '@Url.Action("UpdateIdentificacion", "Dashboard")');
-            });
-
-            $('#editPagoForm').submit(function (e) {
-                e.preventDefault();
-                submitForm('#editPagoForm', '@Url.Action("UpdatePago", "Dashboard")');
-            });
-
-            $('#editConfidencialForm').submit(function (e) {
-                e.preventDefault();
-                submitForm('#editConfidencialForm', '@Url.Action("UpdateConfidencial", "Dashboard")');
-            });
-
-            // General form submission handler
-            function submitForm(formId, url) {
-                var form = $(formId);
-                var formData = new FormData(form[0]);
-
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        if (data.success) {
-                            toastr.success('Update successful!');
-                            location.reload();
-                        } else {
-                            toastr.error(data.message || 'Update failed.');
-                            if (data.errors) {
-                                data.errors.forEach(error => toastr.error(error));
-                            }
+                    if (nombre.includes(searchTerm) || nombreComercial.includes(searchTerm)) {
+                        if (!$.fn.dataTable.isDataTable($(this))) {
+                            $(this).DataTable({
+                                paging: true,
+                                searching: true,
+                                ordering: false,
+                                info: false,
+                                lengthMenu: [[4, -1], ["Summary", "All"]],
+                                pageLength: -1,
+                                columnDefs: [
+                                    { orderable: true, targets: 1 }
+                                ],
+                                order: [[1, 'asc']],
+                                autoWidth: false,
+                                language: {
+                                    search: "Search in this record:"
+                                }
+                            });
                         }
-                    },
-                    error: function () {
-                        toastr.error('Update failed.');
+                        foundMatch = true; // Stop after the first match is found and initialized
                     }
                 });
-            }
+            });
         });
+
 
         // Example edit functions (repeat for other entities)
         function editDemografico(id) {
