@@ -591,7 +591,7 @@
 
                     <div class="mb-3">
                         <label for="demograficoNombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="demograficoNombre" name="Nombre">
+                        <input type="text" class="form-control" id="demograficoNombre" name="Nombre" >
                     </div>
                     <div class="mb-3">
                         <label for="demograficoNombreComercial" class="form-label">Nombre Comercial</label>
@@ -1196,6 +1196,7 @@
 
             $('#externalSearch').on('keyup', function () {
                 var searchTerm = $(this).val().toLowerCase();
+                $('#externalSearch').val(searchTerm);
                 sessionStorage.setItem('searchTerm', searchTerm);
                 applySearchTerm();
             });
@@ -1282,8 +1283,13 @@
 
                 if (searchTerm === "") {
                     $('.tab-pane').addClass('hidden');
+                    $('.nav-tabs').addClass('hidden');
                     //console.log("Search term is empty. Hiding all tab panes.");
                 }
+                else {
+                    $('.nav-tabs').removeClass('hidden'); // Show the tabs when the search term is not empty
+                }
+
 
                 $('#createCustomerForms').show(); // Ensure the create customer forms are always shown
             }
