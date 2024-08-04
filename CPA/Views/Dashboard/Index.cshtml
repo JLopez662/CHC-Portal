@@ -400,6 +400,8 @@
         </div>
     </div>
 
+
+
     <div class="tab-content" id="dashboardTabsContent">
         <!-- Demográficos Tab Content -->
         <div class="tab-pane fade show active" id="demograficos" role="tabpanel" aria-labelledby="demograficos-tab">
@@ -1003,6 +1005,7 @@
         </div>
 
     </div>
+ 
 </div>
 
 @section Scripts {
@@ -1105,6 +1108,8 @@
         }
 
         $(document).ready(function () {
+            var isNuevoClienteClicked = false;
+
             function applySearchTerm() {
                 var searchTerm = sessionStorage.getItem('searchTerm') || '';
                 console.log("applySearchTerm: searchTerm =", searchTerm);
@@ -1114,14 +1119,13 @@
 
                 $('.tab-pane').each(function () {
                     var $tabPane = $(this);
-                    console.log("Checking tabPane:", $tabPane.attr('id'));
                     var $tables = $tabPane.find('.tblData');
-                    console.log("Number of tables in tabPane:", $tables.length);
 
+                    // Hide all tables and tab panes initially, excluding the creation form modal
                     $tables.closest('table').addClass('hidden');
-                    console.log("Hiding table in tabPane:", $tabPane.attr('id'));
-                    $tabPane.addClass('hidden');
-                    console.log("Hiding tabPane:", $tabPane.attr('id'));
+                    if (!$tabPane.is('#newCustomerModal')) {
+                        $tabPane.addClass('hidden');
+                    }
 
                     $tables.each(function () {
                         var nombre = $(this).data('nombre').toLowerCase();
@@ -1129,21 +1133,16 @@
                         var parentTable = $(this).closest('table');
                         var parentTabPane = parentTable.closest('.tab-pane');
                         var tableUserId = $(this).data('id');
-                        console.log("Checking table: nombre =", nombre, ", nombreComercial =", nombreComercial, ", tableUserId =", tableUserId);
 
                         if (nombre.includes(searchTerm) || nombreComercial.includes(searchTerm)) {
                             parentTable.removeClass('hidden');
-                            console.log("Showing table for userId:", tableUserId);
                             parentTabPane.removeClass('hidden');
-                            console.log("Showing tabPane:", parentTabPane.attr('id'));
                             tablesMatched = true;
-                            console.log("Match found in table:", tableUserId);
 
                             $('.edit-button, .delete-button').hide();
                             $('.edit-button, .delete-button').each(function () {
                                 if ($(this).data('id') == tableUserId) {
                                     $(this).show();
-                                    console.log("Showing buttons for tableUserId:", tableUserId);
                                 }
                             });
 
@@ -1170,40 +1169,38 @@
                                         search: "Search in this record:"
                                     }
                                 });
-                                console.log("DataTable initialized for table.");
                             }
                         });
                     }
                 });
 
                 if (!tablesMatched) {
-                    console.log("No tables matched the search term.");
-                    $('.tab-pane').removeClass('hidden');
-                    console.log("Showing all tab panes.");
-                    $('.nav-tabs a:first').tab('show'); // Show the first tab if no match is found
+                    //$('.tab-pane').removeClass('hidden');
+                    //$('.nav-tabs a:first').tab('show'); // Show the first tab if no match is found4
+                    $('.tab-pane').addClass('hidden');
+                    $('.nav-tabs').addClass('hidden');
+                    $('.edit-button, .delete-button').addClass('hidden');
+                    $('#dashboardTabs').addClass('hidden-content');
+
                 }
 
                 if (searchTerm === "") {
-                    console.log("Search term is empty, hiding all tab panes and nav-tabs.");
+                    // Hide the tab panes and nav-tabs if the search term is empty, excluding the creation form modal
                     $('.tab-pane').addClass('hidden');
                     $('.nav-tabs').addClass('hidden');
+                    if (isNuevoClienteClicked) {
+                        console.log("Inside if clicked condition");
+                        $('#newCustomerModal').modal('show'); // Show the modal if Nuevo Cliente button was clicked
+                        $('.nav-tabs').removeClass('hidden');
+                    }
                 } else {
-                    console.log("Search term is not empty, showing nav-tabs.");
                     $('.nav-tabs').removeClass('hidden');
+                    $('#newCustomerModal').addClass('show');
+                    if ($('#newCustomerModal').hasClass('show')) {
+                        $('.tab-pane').removeClass('hidden');
+                    }
                 }
-
-                $('#createCustomerForms').show();
-                console.log("Showing createCustomerForms.");
             }
-
-            /*
-            $('#externalSearch').on('keyup', function () {
-                var searchTerm = $(this).val().toLowerCase();
-                console.log("externalSearch: searchTerm =", searchTerm);
-                sessionStorage.setItem('searchTerm', searchTerm);
-                applySearchTerm();
-            });
-            */
 
             $('#externalSearch').on('keydown', function (e) {
                 if (e.key === 'Enter') {
@@ -1216,7 +1213,6 @@
                     location.reload();  // Reload the page to update the table with the new data
                 }
             });
-
 
             var activeTab = sessionStorage.getItem('activeTab');
             if (activeTab) {
@@ -1274,6 +1270,34 @@
                     }
                 });
             });
+
+            // Ensure the "Nuevo Cliente" button shows the modal unconditionally
+            $('.newClient').on('click', function () {
+                isNuevoClienteClicked = true;
+                $('.tab-pane').removeClass('hidden');
+                $('.nav-tabs').removeClass('hidden');
+
+                console.log("Nuevo Cliente button clicked"); // Log when the button is clicked
+                var newCustomerModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('newCustomerModal'));
+                newCustomerModal.show();
+
+                $('#dashboardTabsContent').addClass('hidden-content');
+                $('#dashboardTabs').addClass('hidden-content');
+            });
+
+            // Hide tabs when the modal is closed
+            $('#newCustomerModal').on('hide.bs.modal', function () {
+                $('.tab-pane').addClass('hidden');
+                $('.nav-tabs').addClass('hidden');
+
+                $('#dashboardTabsContent').removeClass('hidden-content');
+                $('#dashboardTabs').removeClass('hidden-content');
+
+            });
+        });
+
+        $('#submitAllFormsButton').on('click', function () {
+            submitAllForms();
         });
 
 
