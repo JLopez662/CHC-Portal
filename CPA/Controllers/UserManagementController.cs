@@ -72,10 +72,19 @@ namespace CPA.Controllers
             if (ModelState.IsValid)
             {
                 _userRepository.AddUser(user);
+                await SendWelcomeEmailAsync(user);
                 return Json(new { success = true, message = "User created successfully", data = user });
             }
 
             return Json(new { success = false, message = "Failed to create user" });
+        }
+
+        private async Task SendWelcomeEmailAsync(User user)
+        {
+            var subject = "Welcome to CPA Portal";
+            var message = $"Hello {user.FirstName},<br><br>Welcome to CPA Portal! Your account has been successfully created.<br><br>Best Regards,<br>CPA Portal Team";
+
+            await _emailService.SendEmailAsync(user.Email, subject, message);
         }
 
 
