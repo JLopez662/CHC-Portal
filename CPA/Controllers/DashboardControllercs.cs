@@ -552,7 +552,11 @@ namespace CPA.Controllers
                 if (ModelState.IsValid)
                 {
                     // Create a new Registro and get the generated ID
-                    var registro = new Registro();
+                    // Create a new Registro and get the provided ID if available
+                    var registro = new Registro
+                    {
+                        ID = model.NewDemografico?.ID // Use provided ID or null
+                    };
                     _registroService.CreateRegistro(registro);
 
                     var registroId = registro.ID;

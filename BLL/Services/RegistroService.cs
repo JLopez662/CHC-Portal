@@ -21,8 +21,11 @@ namespace BLL.Services
                 throw new ArgumentNullException(nameof(registro));
             }
 
-            // Generate a new ID for the registro if necessary
-            registro.ID = Guid.NewGuid().ToString();
+            // Only assign a new ID if none is provided
+            if (string.IsNullOrEmpty(registro.ID))
+            {
+                registro.ID = Guid.NewGuid().ToString();
+            }
 
             _context.Registros.Add(registro);
             _context.SaveChanges();

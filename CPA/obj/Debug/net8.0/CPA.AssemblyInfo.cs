@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CPA")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4732b23f0ddb3f887534b37ef74789d306e20244")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+60e1c029b4e8f82e2cd40f0f06012527b16c42ab")]
 [assembly: System.Reflection.AssemblyProductAttribute("CPA")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CPA")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1152,11 +1152,12 @@
                     $tables.each(function () {
                         var nombre = $(this).data('nombre').toLowerCase();
                         var nombreComercial = $(this).data('nombrecomercial').toLowerCase();
+                        var id = $(this).data('id').toLowerCase();
                         var parentTable = $(this).closest('table');
                         var parentTabPane = parentTable.closest('.tab-pane');
                         var tableUserId = $(this).data('id');
 
-                        if (nombre.includes(searchTerm) || nombreComercial.includes(searchTerm)) {
+                        if (nombre.includes(searchTerm) || nombreComercial.includes(searchTerm) || id.includes(searchTerm)) {
                             parentTable.removeClass('hidden');
                             parentTabPane.removeClass('hidden');
                             tablesMatched = true;
