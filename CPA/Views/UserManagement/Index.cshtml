@@ -14,56 +14,58 @@
     </div>
 
     <div class="card-body p-4">
-        <table id="customTable" class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Email</th>
-                    <th>FirstName</th>
-                    <th>LastName</th>
-                    <th>Phone</th>
-                    <th>Role</th>
-                    <th>Active</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var user in Model)
-                {
-                    <tr id="user-@user.Id">
-                        <td class="user-email">@user.Email</td>
-                        <td class="user-firstname">@user.FirstName</td>
-                        <td class="user-lastname">@user.LastName</td>
-                        <td class="user-phone">@user.Phone</td>
-                        <td class="user-role">@user.Role</td>
-                        <td>
-                            @{
-                                var lockButtonClass = user.LockoutEnd > DateTime.Now ? "btn-danger" : "btn-success";
-                                var lockButtonText = user.LockoutEnd > DateTime.Now ? "Inactive" : "Active";
-                                var lockButtonIcon = user.LockoutEnd > DateTime.Now ? "fas fa-lock" : "fas fa-unlock";
-                            }
-                            <button onclick="LockUnlock('@user.Id')" class="btn @lockButtonClass lock-unlock-btn" data-id="@user.Id" style="cursor:pointer;">
-                                <i class="@lockButtonIcon"></i> @lockButtonText
-                            </button>
-                        </td>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropbtn">...</button>
-                                <div class="dropdown-content">
-                                    <a href="#" onclick="editUser('@user.Id', '@user.Email', '@user.FirstName', '@user.LastName', '@user.Phone')">Update</a>
-                                    <a href="#" onclick="passwordRecovery('@user.Email')">Password Recovery</a>
-                                </div>
-                            </div>
-                        </td>
-
+        <div class="table-responsive">
+            <table id="customTable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Email</th>
+                        <th style="width: 10%;">FirstName</th>
+                        <th style="width: 10%;">LastName</th>
+                        <th style="width: 15%;">Phone</th>
+                        <th style="width: 10%;">Role</th>
+                        <th style="width: 10%;">Active</th>
+                        <th style="width: 25%;">Actions</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr id="user-@user.Id">
+                            <td class="user-email">@user.Email</td>
+                            <td class="user-firstname">@user.FirstName</td>
+                            <td class="user-lastname">@user.LastName</td>
+                            <td class="user-phone">@user.Phone</td>
+                            <td class="user-role">@user.Role</td>
+                            <td>
+                                @{
+                                    var lockButtonClass = user.LockoutEnd > DateTime.Now ? "btn-danger" : "btn-success";
+                                    var lockButtonText = user.LockoutEnd > DateTime.Now ? "Inactive" : "Active";
+                                    var lockButtonIcon = user.LockoutEnd > DateTime.Now ? "fas fa-lock" : "fas fa-unlock";
+                                }
+                                <button onclick="LockUnlock('@user.Id')" class="btn @lockButtonClass lock-unlock-btn" data-id="@user.Id" style="cursor:pointer;">
+                                    <i class="@lockButtonIcon"></i> @lockButtonText
+                                </button>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropbtn">...</button>
+                                    <div class="dropdown-content">
+                                        <a href="#" onclick="editUser('@user.Id', '@user.Email', '@user.FirstName', '@user.LastName', '@user.Phone')">Update</a>
+                                        <a href="#" onclick="passwordRecovery('@user.Email')">Password Recovery</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
         <div class="text-right">
             <button type="button" class="btn btn-success" onclick="createUser()">Create New User</button>
         </div>
     </div>
 </div>
+
 
 <!-- Off-canvas for editing/creating user details -->
 <div class="offcanvas offcanvas-start" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel">

@@ -563,6 +563,10 @@ footer {
         border-right: 1px solid #dee2e6; /* Add border to the last cell to maintain table structure */
     }
 
+.table-responsive {
+    overflow-x: auto;
+}
+
 
 .hidden-table {
     display: none !important;
