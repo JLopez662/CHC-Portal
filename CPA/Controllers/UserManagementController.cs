@@ -51,7 +51,6 @@ namespace CPA.Controllers
         }
 
         [HttpPost]
-        [HttpPost]
         public async Task<IActionResult> CreateUser(string email, string firstName, string lastName, string password, string phone, string role)
         {
             using var sha256 = SHA256.Create();
@@ -72,7 +71,9 @@ namespace CPA.Controllers
             if (ModelState.IsValid)
             {
                 _userRepository.AddUser(user);
-                await SendWelcomeEmailAsync(user);
+                //await SendWelcomeEmailAsync(user);
+                // Send the welcome email in a background task
+                Task.Run(() => SendWelcomeEmailAsync(user));
                 return Json(new { success = true, message = "User created successfully", data = user });
             }
 
