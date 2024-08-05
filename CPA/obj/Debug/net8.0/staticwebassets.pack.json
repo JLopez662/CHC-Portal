@@ -13,6 +13,18 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\wwwroot\\images\\logo1.png",
+      "PackagePath": "staticwebassets\\images\\logo1.png"
+    },
+    {
+      "Id": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\wwwroot\\images\\logo2.png",
+      "PackagePath": "staticwebassets\\images\\logo2.png"
+    },
+    {
+      "Id": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\wwwroot\\images\\logo3.png",
+      "PackagePath": "staticwebassets\\images\\logo3.png"
+    },
+    {
       "Id": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\wwwroot\\js\\dashboard.js",
       "PackagePath": "staticwebassets\\js\\dashboard.js"
     },

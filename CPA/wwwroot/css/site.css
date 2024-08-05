@@ -1,10 +1,21 @@
-  /* Custom login form styling */
+/* Color Palette */
+:root {
+    --true-blue: #0080CC;
+    --jet: #383839ff;
+    --persian-orange: #FF8033;
+    --white: #FFFFFFff;
+    --picton-blue: #56A6D5ff;
+    --soft-blue: #F0F8FF; /* Soft blue for background */
+    --red: #ff0000; /* Red color for delete button */
+}
+
+/* Custom login form styling */
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
-    background-color: #f7f7f7;
+    background-color: #E6F7FF; /* Light blue background */
 }
 
 .card {
@@ -18,13 +29,13 @@ body {
 }
 
 .btn-primary {
-    background-color: #ff5722;
-    border-color: #ff5722;
+    background-color: var(--persian-orange);
+    border-color: var(--persian-orange);
 }
 
     .btn-primary:hover {
-        background-color: #e64a19;
-        border-color: #e64a19;
+        background-color: hsla(29, 48%, 45%, 1);
+        border-color: hsla(29, 48%, 45%, 1);
     }
 
 .form-check-label {
@@ -33,26 +44,21 @@ body {
 
 a.float-right {
     font-size: 0.875rem;
-    color: #ff5722;
+    color: var(--persian-orange);
     text-decoration: none;
 }
 
     a.float-right:hover {
-        color: #e64a19;
+        color: hsla(29, 48%, 45%, 1);
     }
 
-:root {
-    --hue: 30deg; /* Orange hue */
-    --sat: 100%;
-    --blur: 0px;
-}
 
 .aqua-button {
     font-size: 1em;
-    color: #2c3e50; /* Text color */
+    color: var(--jet); /* Text color */
     font-weight: 500;
-    background-color: hsl(240, 100%, 90%); /* Background color */
-    background-image: linear-gradient(180deg, hsl(240, 100%, 90%) 30%, hsl(200, 100%, 85%) 70%);
+    background-color: var(--picton-blue); /* Background color */
+    background-image: linear-gradient(180deg, var(--picton-blue) 30%, hsla(200, 100%, 85%, 1) 70%);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 200%;
@@ -118,17 +124,17 @@ a.float-right {
 
 .orange-button {
     font-size: 1em;
-    color: white; /* Initial text color */
+    color: var(--white); /* Initial text color */
     font-weight: 500;
-    background-color: hsl(30, 100%, 50%);
-    background-image: linear-gradient(180deg, hsl(50, 80%, 60%) 30%, transparent 70%);
+    background-color: var(--persian-orange);
+    background-image: linear-gradient(180deg, hsla(29, 48%, 65%, 1) 30%, transparent 70%);
     background-repeat: no-repeat;
     background-position: center 45%;
     background-size: 100% 200%;
     padding: 0.75em 2.5em; /* Increased padding for wider button */
     border-radius: 2em;
     border: none;
-    box-shadow: 0 -0.5em 0.5em transparent, 0 0.5em 0.5em transparent, 0 0.25em 0.3em -0.2em hsla(30, 50%, 50%, 0.46), 0 0.25em 0.75em hsla(30, 40%, 40%, 0.3);
+    box-shadow: 0 -0.5em 0.5em transparent, 0 0.5em 0.5em transparent, 0 0.25em 0.3em -0.2em hsla(29, 48%, 55%, 0.46), 0 0.25em 0.75em hsla(29, 48%, 55%, 0.3);
     position: relative;
     transition: all 0.5s ease;
     outline: none;
@@ -136,27 +142,27 @@ a.float-right {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    margin: 5px 0 20px ;
+    margin: 5px 0 20px;
 }
 
     .orange-button span {
         display: inline-flex;
         align-content: center;
         align-self: center;
-        filter: drop-shadow(0 1px 0 hsla(30, 90%, 10%, 1));
+        filter: drop-shadow(0 1px 0 hsla(29, 48%, 15%, 1));
         transition: color 0.15s ease; /* Add transition for text color */
     }
 
     .orange-button:hover span {
-        color: black; /* Change text color on hover */
+        color: var(--jet); /* Change text color on hover */
     }
 
 .green-button {
     font-size: 1em;
-    color: white; /* Text color */
+    color: var(--white); /* Text color */
     font-weight: 500;
-    background-color: hsl(120, 100%, 40%); /* Green color */
-    background-image: linear-gradient(180deg, hsl(120, 100%, 40%) 30%, hsl(120, 100%, 35%) 70%);
+    background-color: var(--true-blue); /* Green color */
+    background-image: linear-gradient(180deg, var(--true-blue) 30%, hsla(216, 31%, 40%, 1) 70%);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 200%;
@@ -218,14 +224,13 @@ a.float-right {
     .green-button:active,
     .green-button:focus {
         outline: none;
-        box-shadow: 0 -0.2em 1.5em hsla(120, 70%, 60%, 0.3), 0 0.5em 2em hsla(120, 70%, 60%, 0.5), 0 0.25em 0.5em -0.2em hsl(120, 90%, 50%), 0 0.25em 1em hsla(120, 20%, 30%, 0.2), inset 0 -2px 2px rgba(255, 255, 255, 0.2);
+        box-shadow: 0 -0.2em 1.5em hsla(216, 70%, 60%, 0.3), 0 0.5em 2em hsla(216, 70%, 60%, 0.5), 0 0.25em 0.5em -0.2em hsl(216, 90%, 50%), 0 0.25em 1em hsla(216, 20%, 30%, 0.2), inset 0 -2px 2px rgba(255, 255, 255, 0.2);
         background-position: center calc(45% - 0.75em);
     }
 
-    .green-button:hover span {
-        color: black; /* Change text color on hover */
-    }
-
+        .green-button:hover span {
+            color: var(--jet); /* Change text color on hover */
+        }
 
 .content {
     flex: 1;
@@ -234,7 +239,7 @@ a.float-right {
 /* Custom rounded button styling */
 .rounded-button {
     font-size: 1em;
-    color: white; /* Text color */
+    color: var(--white); /* Text color */
     font-weight: 500;
     padding: 0.75em 2.5em; /* Increased padding for wider button */
     border-radius: 2em;
@@ -250,25 +255,25 @@ a.float-right {
 }
 
     .rounded-button:hover {
-        color: black; /* Change text color on hover */
+        color: var(--jet); /* Change text color on hover */
     }
 
 /* Specific colors for lock/unlock buttons */
 .lock-button {
-    background-color: hsl(0, 100%, 50%); /* Red color */
-    background-image: linear-gradient(180deg, hsl(0, 80%, 60%) 30%, transparent 70%);
+    background-color: var(--persian-orange); /* Red color */
+    background-image: linear-gradient(180deg, hsla(29, 48%, 65%, 1) 30%, transparent 70%);
 }
 
 .unlock-button {
-    background-color: hsl(120, 100%, 40%); /* Green color */
-    background-image: linear-gradient(180deg, hsl(120, 80%, 60%) 30%, transparent 70%);
+    background-color: var(--true-blue); /* Green color */
+    background-image: linear-gradient(180deg, hsla(216, 80%, 60%, 1) 30%, transparent 70%);
 }
 
 /* Custom button styles */
 
 .custom-button {
     font-size: 1em;
-    color: white;
+    color: var(--white);
     font-weight: 500;
     padding: 0.75em 2.5em;
     border-radius: 2em;
@@ -284,30 +289,69 @@ a.float-right {
 }
 
     .custom-button:hover {
-        color: black;
+        color: var(--jet);
     }
 
 .edit-button {
-    background-color: hsl(30, 100%, 50%);
-    background-image: linear-gradient(180deg, hsl(50, 80%, 60%) 30%, transparent 70%);
+    background-color: var(--persian-orange);
+    background-image: linear-gradient(180deg, var(--persian-orange) 30%, #FFAA33 70%);
     margin: 20px 0;
-    color: black;
+    color: var(--white);
+    border: 2px solid var(--persian-orange);
+    padding: 0.75em 2.5em;
+    border-radius: 2em;
+    box-shadow: 0 -0.5em 0.5em transparent, 0 0.5em 0.5em transparent, 0 0.25em 0.3em -0.2em rgba(0, 0, 0, 0.2), 0 0.25em 0.75em rgba(0, 0, 0, 0.3);
+    position: relative;
+    transition: background-color 0.3s, background-image 0.3s, box-shadow 0.3s;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
+
+    .edit-button:hover {
+        background-color: #cc6d1a;
+        background-image: linear-gradient(180deg, #cc6d1a 30%, #e57c23 70%);
+        color: var(--white);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+
 
 .delete-button {
-    background-color: hsl(0, 100%, 50%);
-    background-image: linear-gradient(180deg, hsl(0, 80%, 60%) 30%, transparent 70%);
+    background-color: var(--red);
+    background-image: linear-gradient(180deg, #d73a2e 30%, transparent 70%);
     margin: 20px 0;
+    padding: 0.75em 2.5em; /* Match the padding of the edit button */
+    border: none;
+    border-radius: 2em; /* Match the border-radius of the edit button */
+    color: white;
+    font-size: 1em; /* Match the font-size of the edit button */
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 -0.5em 0.5em transparent, 0 0.5em 0.5em transparent, 0 0.25em 0.3em -0.2em rgba(0, 0, 0, 0.2), 0 0.25em 0.75em rgba(0, 0, 0, 0.3);
 }
 
+    .delete-button:hover {
+        background-color: #b71c1c; /* Slightly darker red */
+        background-image: linear-gradient(180deg, #c62828 30%, transparent 70%);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow effect */
+    }
+
+
 .lock-button {
-    background-color: hsl(0, 100%, 50%);
-    background-image: linear-gradient(180deg, hsl(0, 80%, 60%) 30%, transparent 70%);
+    background-color: var(--persian-orange);
+    background-image: linear-gradient(180deg, hsla(29, 48%, 65%, 1) 30%, transparent 70%);
 }
 
 .unlock-button {
-    background-color: hsl(120, 100%, 40%);
-    background-image: linear-gradient(180deg, hsl(120, 80%, 60%) 30%, transparent 70%);
+    background-color: var(--true-blue);
+    background-image: linear-gradient(180deg, hsla(216, 80%, 60%, 1) 30%, transparent 70%);
 }
 
 .text-field {
@@ -318,10 +362,8 @@ a.float-right {
     display: none;
 }
 
-
-
 footer {
-    background-color: #f8f9fa;
+    background-color: var(--white);
     text-align: center;
     padding: 1rem 0;
     margin-top: auto;
@@ -342,20 +384,20 @@ footer {
     border: none;
     cursor: pointer;
     font-size: 1.5em;
-    color: #000; /* Change this color as needed */
+    color: var(--jet); /* Change this color as needed */
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: var(--white);
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
 
     .dropdown-content a {
-        color: orangered;
+        color: var(--persian-orange);
         padding: 12px 16px;
         text-decoration: none;
         display: block;
@@ -370,7 +412,7 @@ footer {
 }
 
 .dropdown:hover .dropbtn {
-    color: #ff5722; /* Change this color as needed */
+    color: var(--persian-orange); /* Change this color as needed */
 }
 
 .newClient {
@@ -378,8 +420,8 @@ footer {
     height: 50px; /* Adjust the height as needed */
     margin: 20px 0 30px 0;
     font-size: 1.00rem; /* Adjust the font size as needed */
-    background-color: hsl(120, 100%, 40%); /* Green color */
-    background-image: linear-gradient(180deg, hsl(120, 100%, 40%) 30%, hsl(120, 100%, 35%) 70%);
+    background-color: var(--true-blue); /* Initial color */
+    background-image: linear-gradient(180deg, var(--true-blue) 30%, hsla(216, 100%, 35%, 1) 70%);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 200%;
@@ -390,18 +432,42 @@ footer {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    transition: all 0.5s ease;
+    transition: background-color 0.5s ease, background-image 0.5s ease, box-shadow 0.5s ease, color 0.5s ease; /* Adjusted transition for smooth color change */
     outline: none;
-    color: white;
+    color: #FFFFFF;
 }
 
     .newClient:hover,
     .newClient:focus {
         outline: none;
-        box-shadow: 0 -0.2em 1.5em hsla(120, 70%, 60%, 0.3), 0 0.5em 2em hsla(120, 70%, 60%, 0.5), 0 0.25em 0.5em -0.2em hsl(120, 90%, 50%), 0 0.25em 1em hsla(120, 20%, 30%, 0.2), inset 0 -2px 2px rgba(255, 255, 255, 0.2);
-        background-position: center calc(45% - 0.75em);
-        color: black;
+        box-shadow: 0 -0.2em 1.5em hsla(216, 70%, 60%, 0.3), 0 0.5em 2em hsla(216, 70%, 60%, 0.5), 0 0.25em 0.5em -0.2em hsl(216, 90%, 50%), 0 0.25em 1em hsla(216, 20%, 30%, 0.2), inset 0 -2px 2px rgba(255, 255, 255, 0.2); /* Adjusted box-shadow */
+        background-color: #0059b3; /* Slightly darker blue on hover */
+        background-image: linear-gradient(180deg, #0059b3 30%, #003366 70%); /* Adjusted gradient on hover */
+        color: #FFFFFF; /* Ensure text color stays white on hover */
     }
+
+.custom-logo {
+    width: 450px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.custom-logo-login {
+    width: 450px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-top: -90px;
+    margin-bottom: -50px;
+}
+
+.custom-welcome-text {
+    font-size: 24px; /* Adjust the font size as needed */
+    font-weight: normal; /* Adjust font weight if necessary */
+    text-align: left; /* Align text to the left */
+    margin-left: -66px; /* Optional: Add some margin to the left for better alignment */
+}
+
+
+
+
 
 .hidden-table {
     display: none !important;
@@ -414,3 +480,4 @@ footer {
 .hidden-content {
     display: none;
 }
+

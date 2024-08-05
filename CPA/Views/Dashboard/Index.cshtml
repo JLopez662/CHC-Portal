@@ -5,12 +5,15 @@
 }
 
 <div class="container mt-1">
-    <h1 class="display-4 text-center">Bienvenido @ViewBag.FirstName</h1>
+@*     <p class="custom-welcome-text text-left">Bienvenido @ViewBag.FirstName</p>
+ *@    <div class="text-center">
+        <img src="~/images/logo3.png" alt="Logo" class="img-fluid custom-logo" />
+    </div>
 
     <!-- External search input -->
     <div class="form-group">
-        <label for="externalSearch">Busqueda por Nombre o Nombre Comercial:</label>
-        <input type="text" id="externalSearch" class="form-control" placeholder="Enter search term...">
+        <label for="externalSearch">Search by Name or ID:</label>
+        <input type="text" id="externalSearch" class="form-control" placeholder="Press Enter to Search">
     </div>
 
     <!-- New Customer Button -->
@@ -410,7 +413,7 @@
                 {
                     <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial" data-id="@item.ID">
                         <tbody>
-                            <tr><th>ID</th><td>@item.ID</td></tr>
+                            @* <tr><th>ID</th><td>@item.ID</td></tr> *@
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
                             <tr><th>Teléfono</th><td>@item.Telefono</td></tr>
@@ -444,7 +447,7 @@
                 {
                     <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial" data-id="@item.ID">
                         <tbody>
-                            <tr><th>ID</th><td>@item.ID</td></tr>
+                            @* <tr><th>ID</th><td>@item.ID</td></tr> *@
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
                             <tr><th>Registro Estatal</th><td>@item.Estatal</td></tr>
@@ -468,7 +471,7 @@
                 {
                     <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial" data-id="@item.ID">
                         <tbody>
-                            <tr><th>ID</th><td>@item.ID</td></tr>
+                            @* <tr><th>ID</th><td>@item.ID</td></tr> *@
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
                             <tr><th>Fecha de Contrato</th><td>@item.Contrato</td></tr>
@@ -492,7 +495,7 @@
                 {
                     <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial" data-id="@item.ID">
                         <tbody>
-                            <tr><th>ID</th><td>@item.ID</td></tr>
+                            @* <tr><th>ID</th><td>@item.ID</td></tr> *@
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
                             <tr><th>Accionista</th><td>@item.Accionista</td></tr>
@@ -515,7 +518,7 @@
                 {
                     <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial" data-id="@item.ID">
                         <tbody>
-                            <tr><th>ID</th><td>@item.ID</td></tr>
+                            @* <tr><th>ID</th><td>@item.ID</td></tr> *@
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
                             <tr><th>Cliente del Banco</th><td>@item.BankClient</td></tr>
@@ -555,7 +558,7 @@
                 {
                     <table class="table table-striped table-bordered tblData" data-nombre="@item.Nombre" data-nombrecomercial="@item.NombreComercial" data-id="@item.ID">
                         <tbody>
-                            <tr><th>ID</th><td>@item.ID</td></tr>
+                            @* <tr><th>ID</th><td>@item.ID</td></tr> *@
                             <tr><th>Nombre</th><td>@item.Nombre</td></tr>
                             <tr><th>Nombre Comercial</th><td>@item.NombreComercial</td></tr>
                             <tr><th>Usuario Suri</th><td>@item.UserSuri</td></tr>
@@ -1109,6 +1112,25 @@
 
         $(document).ready(function () {
             var isNuevoClienteClicked = false;
+
+            $('#homeLink').on('click', function () {
+                // Clear the search term from sessionStorage
+                sessionStorage.removeItem('searchTerm');
+
+                // Clear the search input value
+                $('#externalSearch').val('');
+
+                // Hide all tables and tab panes initially, excluding the creation form modal
+                $('.tab-pane').addClass('hidden');
+                $('.nav-tabs').addClass('hidden');
+                $('#dashboardTabs').addClass('hidden-content');
+
+                // Show default view
+                $('#newCustomerModal').removeClass('show');
+                $('.nav-tabs').removeClass('hidden');
+                $('#dashboardTabsContent').removeClass('hidden-content');
+                $('#dashboardTabs').removeClass('hidden-content');
+            });
 
             function applySearchTerm() {
                 var searchTerm = sessionStorage.getItem('searchTerm') || '';
