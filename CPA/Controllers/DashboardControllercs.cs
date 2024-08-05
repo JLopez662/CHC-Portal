@@ -25,6 +25,11 @@ namespace CPA.Controllers
 
         public IActionResult Index()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             TempData["Success"] = "You have successfully logged in!";
             var demograficos = _customerService.GetDemograficos();
             var contributivos = _customerService.GetContributivos().ToList();

@@ -30,6 +30,10 @@ namespace CPA.Controllers
 
         public IActionResult Index()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var users = _userRepository.GetAllUsers();
             return View(users);
         }
