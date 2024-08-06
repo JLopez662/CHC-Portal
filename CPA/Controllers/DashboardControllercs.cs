@@ -129,7 +129,22 @@ namespace CPA.Controllers
                     // Update properties
                     existingDemografico.Nombre = model.Nombre;
                     existingDemografico.NombreComercial = model.NombreComercial;
-                    // Update other properties...
+                    existingDemografico.Telefono = model.Telefono;
+                    existingDemografico.Celular = model.Celular;
+                    existingDemografico.Dir = model.Dir;
+                    existingDemografico.Tipo = model.Tipo;
+                    existingDemografico.Patronal = model.Patronal;
+                    existingDemografico.SSN = model.SSN;
+                    existingDemografico.Incorporacion = model.Incorporacion;
+                    existingDemografico.Operaciones = model.Operaciones;
+                    existingDemografico.Industria = model.Industria;
+                    existingDemografico.NAICS = model.NAICS;
+                    existingDemografico.Descripcion = model.Descripcion;
+                    existingDemografico.Contacto = model.Contacto;
+                    existingDemografico.DirFisica = model.DirFisica;
+                    existingDemografico.DirPostal = model.DirPostal;
+                    existingDemografico.Email = model.Email;
+                    existingDemografico.Email2 = model.Email2;
 
                     _customerService.UpdateDemografico(existingDemografico);
                     return Json(new { success = true });
@@ -141,6 +156,8 @@ namespace CPA.Controllers
             var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
             return Json(new { success = false, message = "Model validation failed.", errors });
         }
+
+
         public IActionResult GetContributivoById(string id)
         {
             var contributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == id);
