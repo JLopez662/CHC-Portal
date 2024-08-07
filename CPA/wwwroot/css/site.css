@@ -7,6 +7,7 @@
     --picton-blue: #56A6D5ff;
     --soft-blue: #F0F8FF; /* Soft blue for background */
     --red: #ff0000; /* Red color for delete button */
+    --darker-blue: #0056b3; /* Update the gray to light blue */
 }
 
 /* Custom login form styling */
@@ -24,8 +25,16 @@ body {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
+.card-header {
+    background-color: var(--darker-blue) !important;
+}
+
 .card-body {
     padding: 30px;
+}
+
+.user-management-title {
+    color: white;
 }
 
 .btn-primary {
@@ -567,6 +576,11 @@ footer {
 
 .table-responsive {
     overflow-x: auto;
+}
+
+/* Modal and Offcanvas Background Color */
+.modal-content, .offcanvas-body {
+    background-color: var(--soft-blue); /* Soft blue background */
 }
 
 
