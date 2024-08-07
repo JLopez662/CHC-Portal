@@ -102,9 +102,18 @@
                                     <input type="text" class="form-control" id="newDir" name="NewDemografico.Dir">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newTipo" class="form-label">Type</label>
-                                    <input type="text" class="form-control" id="newTipo" name="NewDemografico.Tipo">
+                                    <label for="newTipo" class="form-label">Business Type</label>
+                                    <select class="form-control" id="newTipo" name="NewDemografico.Tipo" required>
+                                        <option value="">--Select--</option>
+                                        <option value="Soleproprietor">Soleproprietor</option>
+                                        <option value="Corporation">Corporation</option>
+                                        <option value="LLC">LLC</option>
+                                        <option value="Partnership">Partnership</option>
+                                        <option value="Non for Profit">Non for Profit</option>
+                                        <option value="Other">Other</option>
+                                    </select>
                                 </div>
+
                                 <div class="mb-3">
                                     <label for="newPatronal" class="form-label">Federal Employer Identification Number</label>
                                     <input type="text" class="form-control" id="newPatronal" name="NewDemografico.Patronal">
@@ -263,8 +272,15 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="newTipoCuenta" class="form-label">Account Type</label>
-                                    <input type="text" class="form-control" id="newTipoCuenta" name="NewPago.TipoCuenta">
+                                    <select class="form-control" id="newTipoCuenta" name="NewPago.TipoCuenta" required>
+                                        <option value="">--Select--</option>
+                                        <option value="Commercial Checking">Commercial Checking</option>
+                                        <option value="Commercial Savings">Commercial Savings</option>
+                                        <option value="Personal Checking">Personal Checking</option>
+                                        <option value="Personal Savings">Personal Savings</option>
+                                    </select>
                                 </div>
+
                                 <div class="mb-3">
                                     <label for="newClienteBanco2" class="form-label">Secondary Customer's Name in Bank</label>
                                     <input type="text" class="form-control" id="newClienteBanco2" name="NewPago.BankClientS">
@@ -419,7 +435,7 @@
                             <tr><th>Phone Number</th><td>@item.Telefono</td></tr>
                             <tr><th>Mobile Number</th><td>@item.Celular</td></tr>
                             <tr><th>Address</th><td>@item.Dir</td></tr>
-                            <tr><th>Type</th><td>@item.Tipo</td></tr>
+                            <tr><th>Business Type</th><td>@item.Tipo</td></tr>
                             <tr><th>Federal Employer Identification Number</th><td>@item.Patronal</td></tr>
                             <tr><th>Social Security Number</th><td>@item.SSN</td></tr>
                             <tr><th>Date of Incorporation</th><td>@item.Incorporacion</td></tr>
@@ -615,9 +631,18 @@
                         <input type="text" class="form-control" id="demograficoDir" name="Dir">
                     </div>
                     <div class="mb-3">
-                        <label for="demograficoTipo" class="form-label">Type</label>
-                        <input type="text" class="form-control" id="demograficoTipo" name="Tipo">
+                        <label for="demograficoTipo" class="form-label">Business Type</label>
+                        <select class="form-control" id="demograficoTipo" name="Tipo" required>
+                            <option value="">--Select--</option>
+                            <option value="Soleproprietor">Soleproprietor</option>
+                            <option value="Corporation">Corporation</option>
+                            <option value="LLC">LLC</option>
+                            <option value="Partnership">Partnership</option>
+                            <option value="Non for Profit">Non for Profit</option>
+                            <option value="Other">Other</option>
+                        </select>
                     </div>
+
                     <div class="mb-3">
                         <label for="demograficoPatronal" class="form-label">Federal Employer Identification Number</label>
                         <input type="text" class="form-control" id="demograficoPatronal" name="Patronal">
@@ -855,8 +880,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="pagoTipoCuenta" class="form-label">Account Type</label>
-                        <input type="text" class="form-control" id="pagoTipoCuenta" name="TipoCuenta">
+                        <select class="form-control" id="pagoTipoCuenta" name="TipoCuenta" required>
+                            <option value="">--Select--</option>
+                            <option value="Commercial Checking">Commercial Checking</option>
+                            <option value="Commercial Savings">Commercial Savings</option>
+                            <option value="Personal Checking">Personal Checking</option>
+                            <option value="Personal Savings">Personal Savings</option>
+                        </select>
                     </div>
+
                     <div class="mb-3">
                         <label for="pagoBankClientS" class="form-label">Secondary Customer's Name in Bank</label>
                         <input type="text" class="form-control" id="pagoBankClientS" name="BankClientS">
@@ -1473,7 +1505,6 @@
         });
 
 
-        // Example edit functions (repeat for other entities)
         function editDemografico(id) {
             $.ajax({
                 url: '@Url.Action("GetDemograficoById", "Dashboard")',
@@ -1487,6 +1518,7 @@
                     $('#demograficoCelular').val(data.celular);
                     $('#demograficoDir').val(data.dir);
                     $('#demograficoTipo').val(data.tipo);
+                    $('#demograficoTipo option[value="' + data.tipo + '"]').attr('selected', 'selected');
                     $('#demograficoPatronal').val(data.patronal);
                     $('#demograficoSSN').val(data.ssn);
                     $('#demograficoIncorporacion').val(data.incorporacion);
