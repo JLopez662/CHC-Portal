@@ -276,53 +276,70 @@ namespace CPA.Controllers
         }
 
         [HttpPost("EditProfileField")]
-        public async Task<IActionResult> EditProfileField(string fieldName, string fieldValue)
+        public async Task<IActionResult> EditProfileField([FromForm] User updatedUser)
         {
-            var username = HttpContext.Session.GetString("Username");
-            if (string.IsNullOrEmpty(username))
+            _logger.LogInformation("EditProfileField called");
+
+            try
             {
-                return Json(new { success = false, message = "User not logged in" });
-            }
-
-            var user = await _userRepository.GetUserByUsernameAsync(username);
-            if (user == null)
-            {
-                return Json(new { success = false, message = "User not found" });
-            }
-
-            var property = typeof(User).GetProperty(fieldName);
-            if (property == null)
-            {
-                return Json(new { success = false, message = "Invalid field name" });
-            }
-
-            property.SetValue(user, fieldValue);
-            _userRepository.UpdateUser(user);
-
-            // Sign the user out
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-            // Re-authenticate the user with updated claims
-            var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Name, user.Username),
-        new Claim("FullName", user.FirstName),
-        new Claim(ClaimTypes.Role, user.Role) // Ensure the role claim is updated
-    };
-
-            var claimsIdentity = new ClaimsIdentity(
-                claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                new AuthenticationProperties
+                var username = HttpContext.Session.GetString("Username");
+                if (string.IsNullOrEmpty(username))
                 {
-                    IsPersistent = true,
-                    ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
-                });
+                    _logger.LogWarning("User not logged in");
+                    return Json(new { success = false, message = "User not logged in" });
+                }
 
-            return Json(new { success = true });
+                _logger.LogInformation($"Logged in as: {username}");
+
+                var user = await _userRepository.GetUserByUsernameAsync(username);
+                if (user == null)
+                {
+                    _logger.LogWarning($"User not found: {username}");
+                    return Json(new { success = false, message = "User not found" });
+                }
+
+                _logger.LogInformation($"Updating user: {user.Username}");
+
+                // Update user properties
+                user.FirstName = updatedUser.FirstName;
+                user.LastName = updatedUser.LastName;
+                user.Email = updatedUser.Email;
+                user.Phone = updatedUser.Phone;
+
+                _userRepository.UpdateUser(user);
+                _logger.LogInformation("User updated successfully");
+
+                // Sign the user out
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                // Re-authenticate the user with updated claims
+                var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim("FullName", user.FirstName),
+            new Claim(ClaimTypes.Role, user.Role) // Ensure the role claim is updated
+        };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    new AuthenticationProperties
+                    {
+                        IsPersistent = true,
+                        ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
+                    });
+
+                _logger.LogInformation("User re-authenticated successfully");
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while updating the profile");
+                return Json(new { success = false, message = "An error occurred while updating the profile" });
+            }
         }
 
     }

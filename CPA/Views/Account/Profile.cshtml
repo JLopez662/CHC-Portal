@@ -8,134 +8,123 @@
     <h2>Feel free to change your profile details</h2>
 
     <div class="table-responsive mt-3">
-        <table id="profileTable" class="table table-striped table-bordered">
+        <table id="profileTable" class="table table-striped table-bordered" style="width: 100%;">
             <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>First Name</td>
                     <td id="FirstNameValue" data-field="FirstName">@Model.FirstName</td>
-                    <td class="action-column">
-                        <button class="btn edit-button-profile" onclick="editField('FirstName', '@Model.FirstName')">Edit</button>
-                    </td>
                 </tr>
                 <tr>
                     <td>Last Name</td>
                     <td id="LastNameValue" data-field="LastName">@Model.LastName</td>
-                    <td class="action-column">
-                        <button class="btn edit-button-profile" onclick="editField('LastName', '@Model.LastName')">Edit</button>
-                    </td>
                 </tr>
                 <tr>
                     <td>Email</td>
                     <td id="EmailValue" data-field="Email">@Model.Email</td>
-                    <td class="action-column">
-                        <button class="btn edit-button-profile" onclick="editField('Email', '@Model.Email')">Edit</button>
-                    </td>
                 </tr>
                 <tr>
                     <td>Phone</td>
                     <td id="PhoneValue" data-field="Phone">@Model.Phone</td>
-                    <td class="action-column">
-                        <button class="btn edit-button-profile" onclick="editField('Phone', '@Model.Phone')">Edit</button>
-                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Field</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editForm">
-                        <input type="hidden" id="fieldName" name="fieldName" />
-                        <div class="mb-3" id="textField">
-                            <label for="fieldValue" class="form-label">New Value</label>
-                            <input type="text" class="form-control" id="fieldValue" name="fieldValue" />
-                        </div>
-                        <div class="mb-3" id="dropdownField" style="display:none;">
-                            <label for="roleValue" class="form-label">Select Role</label>
-                            <select class="form-control" id="roleValue" name="roleValue">
-                                <option value="User">User</option>
-                                <option value="Admin">Admin</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn edit-button-profile">Save changes</button>
-                    </form>
-                </div>
+    <div class="text-right" style="margin-top: 20px;">
+        <button class="btn edit-button-profile" onclick="openEditModal()">Edit Profile</button>
+    </div>
+</div>
+
+<!-- Modal for editing profile details -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="mb-3">
+                        <label for="editFirstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="editFirstName" name="FirstName" value="@Model.FirstName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editLastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="editLastName" name="LastName" value="@Model.LastName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="editEmail" name="Email" value="@Model.Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editPhone" class="form-label">Phone</label>
+                        <input type="text" class="form-control" id="editPhone" name="Phone" value="@Model.Phone" required>
+                    </div>
+                    <button type="submit" class="btn save-button">Save changes</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
-            var table = $('#profileTable').DataTable({
+            $('#profileTable').DataTable({
                 "paging": false,
                 "info": false,
                 "searching": false,
                 "ordering": false
             });
 
-            $('#profileSearch').on('keyup', function () {
-                table.search(this.value).draw();
-            });
-
             $('#editForm').on('submit', function (e) {
                 e.preventDefault();
 
-                var fieldName = $('#fieldName').val();
-                var fieldValue = fieldName === 'Role' ? $('#roleValue').val() : $('#fieldValue').val();
+                var formData = $(this).serialize();
+                console.log("Form Data: ", formData);
 
                 $.ajax({
                     url: '@Url.Action("EditProfileField", "Account")',
                     type: 'POST',
-                    data: {
-                        fieldName: fieldName,
-                        fieldValue: fieldValue
-                    },
+                    data: formData,
                     success: function (data) {
+                        console.log("Server Response: ", data);
                         if (data.success) {
-                            // Update the field value in the table
-                            var cell = $('#' + fieldName + 'Value');
-                            cell.text(fieldValue);
-
-                            // Optional: If you want to make the change immediately visible in DataTable
-                            var row = cell.closest('tr');
-                            table.row(row).invalidate().draw();
+                            // Update the table fields with the new values
+                            $('#FirstNameValue').text($('#editFirstName').val());
+                            $('#LastNameValue').text($('#editLastName').val());
+                            $('#EmailValue').text($('#editEmail').val());
+                            $('#PhoneValue').text($('#editPhone').val());
 
                             $('#editModal').modal('hide');
+
+                            // Show Toastr success message
+                            toastr.success('Profile updated successfully!');
                         } else {
-                            alert('Error updating field: ' + data.message);
+                            toastr.error('Error updating profile: ' + data.message);
                         }
                     },
-                    error: function () {
-                        alert('An error occurred while updating the field.');
+                    error: function (xhr, status, error) {
+                        console.log("AJAX Error: ", xhr, status, error);
+                        toastr.error('An error occurred while updating the profile.');
                     }
                 });
             });
         });
 
-        function editField(fieldName, fieldValue) {
-            $('#fieldName').val(fieldName);
-            if (fieldName === 'Role') {
-                $('#fieldValue').removeAttr('required').hide();
-                $('#dropdownField').show();
-                $('#roleValue').val(fieldValue);
-            } else {
-                $('#dropdownField').hide();
-                $('#fieldValue').attr('required', true).show();
-                $('#fieldValue').val(fieldValue);
-            }
+        function openEditModal() {
             $('#editModal').modal('show');
         }
     </script>

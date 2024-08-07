@@ -329,7 +329,7 @@ a.float-right {
 .edit-button-profile {
     background-color: var(--persian-orange);
     background-image: linear-gradient(180deg, var(--persian-orange) 30%, #FFAA33 70%);
-    margin: 0; /* Remove margin for better alignment */
+    margin: 2px 0; /* Remove margin for better alignment */
     color: var(--white);
     border: 2px solid var(--persian-orange);
     padding: 0.5em 1.5em; /* Adjust padding for a better size */
