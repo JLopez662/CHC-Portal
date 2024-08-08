@@ -46,15 +46,19 @@ ClientManager Pro provides an efficient and user-friendly approach for accountan
 
 ## Contact
 
-- [LinkedIn](https://www.linkedin.com/in/yourprofile/)
-- [GitHub](https://github.com/YourUsername)
+- [LinkedIn](https://www.linkedin.com/in/jlopezgonzalez/)
+- [GitHub](https://github.com/JLopez662)
+- [GitLab](https://gitlab.com/jorge.lopez19)
 
 <p align="center">
-  <a href="https://www.linkedin.com/in/yourprofile/">
+  <a href="https://www.linkedin.com/in/jlopezgonzalez/">
     <img src="https://upload.wikimedia.org/wikipedia/commons/0/01/LinkedIn_Logo.svg" alt="LinkedIn" width="150" height="50">
   </a>
-  <a href="https://github.com/YourUsername">
+  <a href="https://github.com/JLopez662">
     <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" width="50" height="50">
+  </a>
+  <a href="https://gitlab.com/jorge.lopez19">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/GitLab_logo.svg" alt="GitLab" width="150" height="50">
   </a>
 </p>
 
