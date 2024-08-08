@@ -9,10 +9,13 @@ ClientManager provides accountants with a structured and efficient platform to h
 
 ## Methods
 - User Account Management
+- Role-Based Access Control
   ![User Management Page](./User%20Management%20Page%20One.png)
 - Customer Data Management
   ![Customer Searched Page](./Customer%20Searched%20Page%20One.png)
-- Role-Based Access Control
+- Customer Data Creation
+  ![Customer Searched Page](./Create%20Customer%20Page%20One.png)
+
    
 
 ## Technologies
