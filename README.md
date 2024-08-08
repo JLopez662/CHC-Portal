@@ -33,7 +33,7 @@ ClientManager provides accountants with a structured and efficient platform to h
    - **Data Access Layers (DAL)**: Managing database interactions with repositories and migrations.
 
 ## Project Description
-ClientManager Pro is a web application designed for accountants to manage their customers' data efficiently. The platform includes functionalities for user account management, role-based access control, and comprehensive data management through a structured set of tabs covering various information categories.
+ClientManager is a web application designed for accountants to manage their customers' data efficiently. The platform includes functionalities for user account management, role-based access control, and comprehensive data management through a structured set of tabs covering various information categories.
 
 ### Key Features:
 - **User Registration and Profile Management**: Users can register, receive confirmation emails, and edit their profiles.
@@ -42,7 +42,7 @@ ClientManager Pro is a web application designed for accountants to manage their 
 - **Search Functionality**: Easily search for customers by name, commercial name, or ID.
 
 ## Conclusion
-ClientManager Pro provides an efficient and user-friendly approach for accountants to manage their customers' data. By automating various aspects of data management and providing a comprehensive set of features, it enhances productivity and ensures accurate record-keeping.
+ClientManager provides an efficient and user-friendly approach for accountants to manage their customers' data. By automating various aspects of data management and providing a comprehensive set of features, it enhances productivity and ensures accurate record-keeping.
 
 ## Contact
 
