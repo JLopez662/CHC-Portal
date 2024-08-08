@@ -9,11 +9,11 @@ ClientManager provides accountants with a structured and efficient platform to h
 
 ## Methods
 - User Account Management
+  ![User Management Page](./User%20Management%20Page%20One.png)
 - Customer Data Management
+  ![Customer Searched Page](./Customer%20Searched%20Page.png)
 - Role-Based Access Control
-
-   - **Customer Data Management:**
-   ![Customer Searched Page](./Customer%20Searched%20Page.png)
+   
 
 ## Technologies
 - `ASP.NET Core 8 MVC`
