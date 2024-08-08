@@ -1,4 +1,4 @@
-# Client Manager for Accounting.
+# Client Manager for Accounting
 ![Project Status: Active](https://img.shields.io/badge/Project%20Status-Active-brightgreen)
 
 A comprehensive Software as a Service (SaaS) platform for accountants to manage their customers' accounting and tax information efficiently.
