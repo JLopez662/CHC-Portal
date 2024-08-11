@@ -29,6 +29,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IRegistroService, RegistroService>();
+builder.Services.AddTransient<ExcelExportService>();
+
 
 // Add session services
 builder.Services.AddDistributedMemoryCache();

@@ -7,6 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="EPPlus" Version="7.2.2" />
 		<PackageReference Include="MailKit" Version="4.6.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
 			<PrivateAssets>all</PrivateAssets>
@@ -19,6 +20,7 @@
 		<ProjectReference Include="..\BLL\BLL.csproj" />
 		<ProjectReference Include="..\DAL\DAL.csproj" />
 		<ProjectReference Include="..\Shared\Shared.csproj" />
+		<ProjectReference Include="..\CPA.API\CPA.API.csproj" />
 	</ItemGroup>
 
 </Project>
