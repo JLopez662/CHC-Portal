@@ -1207,10 +1207,12 @@
                     var nombre = matchingRow.getAttribute("data-nombre");
                     var nombreComercial = matchingRow.getAttribute("data-nombrecomercial");
 
+                    /*
                     alert("Search Term: " + searchTerm);
                     alert("Customer ID: " + customerId);
                     alert("Nombre: " + nombre);
                     alert("Nombre Comercial: " + nombreComercial);
+                    */
 
                     window.location.href = `/api/export/to-excel?customerId=${encodeURIComponent(customerId)}`;
                 } else {
