@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ZEgsqNcoGWVouDn1k6IQXb9DljNo/z+w4k/ej7wZchY=",
+  "Hash": "kbSaGQuhr3JeEE5ObN5180eLK6XeHtl5OqOLQQXw0Ms=",
   "Source": "CPA",
   "BasePath": "_content/CPA",
   "Mode": "Default",
@@ -91,6 +91,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\wwwroot\\images\\logo 4.png",
+      "SourceId": "CPA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\wwwroot\\",
+      "BasePath": "_content/CPA",
+      "RelativePath": "images/logo 4.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\logo 4.png"
     },
     {
       "Identity": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\wwwroot\\images\\logo1.png",
