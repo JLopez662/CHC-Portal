@@ -11,7 +11,7 @@
         "projectName": "BLL",
         "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj",
         "packagesPath": "C:\\Users\\execu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\BLL\\obj\\",
+        "outputPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\execu\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -89,7 +89,7 @@
         "projectName": "CPA.API",
         "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj",
         "packagesPath": "C:\\Users\\execu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA.API\\obj\\",
+        "outputPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\execu\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -170,7 +170,7 @@
         "projectName": "CPA",
         "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\CPA.csproj",
         "packagesPath": "C:\\Users\\execu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA\\obj\\",
+        "outputPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\execu\\AppData\\Roaming\\NuGet\\NuGet.Config",
