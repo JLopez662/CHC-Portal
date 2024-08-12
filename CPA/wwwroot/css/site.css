@@ -319,12 +319,12 @@ a.float-right {
     text-decoration: none;
 }
 
-    .edit-button:hover {
-        background-color: #cc6d1a;
-        background-image: linear-gradient(180deg, #cc6d1a 30%, #e57c23 70%);
-        color: var(--white);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
+.edit-button:hover {
+    background-color: #cc6d1a;
+    background-image: linear-gradient(180deg, #cc6d1a 30%, #e57c23 70%);
+    color: var(--white);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
 .edit-button-profile {
     background-color: var(--persian-orange);
@@ -431,6 +431,39 @@ a.float-right {
     .close-button:hover, .submit-button:hover {
         opacity: 0.8;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow effect */
+    }
+
+.export-button {
+    font-size: 1em;
+    color: var(--white); /* Text color */
+    font-weight: 500;
+    background-color: #28a745; /* Green color */
+    background-image: linear-gradient(180deg, #28a745 30%, #218838 70%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 200%;
+    padding: 0.75em 2.5em; /* Adjust padding */
+    border-radius: 2em;
+    border: none;
+    box-shadow: 0 -0.5em 0.5em transparent, 0 0.5em 0.5em transparent, 0 0.25em 0.3em -0.2em rgba(0, 0, 0, 0.2), 0 0.25em 0.75em rgba(0, 0, 0, 0.3);
+    position: relative;
+    transition: all 0.5s ease;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin: 10px 0 25px;
+}
+
+    .export-button:hover,
+    .export-button:active,
+    .export-button:focus {
+        outline: none;
+        box-shadow: 0 -0.2em 1.5em rgba(40, 167, 69, 0.3), 0 0.5em 2em rgba(40, 167, 69, 0.5), 0 0.25em 0.5em -0.2em hsl(120, 60%, 30%), 0 0.25em 1em rgba(40, 167, 69, 0.2), inset 0 -2px 2px rgba(255, 255, 255, 0.2);
+        background-position: center calc(45% - 0.75em);
+        background-color: #218838; /* Slightly darker green on hover */
+        background-image: linear-gradient(180deg, #218838 30%, #1e7e34 70%);
     }
 
 

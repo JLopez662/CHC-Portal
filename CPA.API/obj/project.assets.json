@@ -4059,9 +4059,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj",
+      "projectUniqueName": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj",
       "projectName": "CPA.API",
-      "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj",
+      "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj",
       "packagesPath": "C:\\Users\\execu\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA.API\\obj\\",
       "projectStyle": "PackageReference",
@@ -4081,11 +4081,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj": {
-              "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj"
+            "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj": {
+              "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj"
             },
-            "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj": {
-              "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj"
+            "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj"
             }
           }
         }

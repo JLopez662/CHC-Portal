@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA\\CPA.csproj": {}
+    "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\CPA.csproj": {}
   },
   "projects": {
-    "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj": {
+    "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj",
+        "projectUniqueName": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj",
         "projectName": "BLL",
-        "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj",
+        "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj",
         "packagesPath": "C:\\Users\\execu\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\BLL\\obj\\",
         "projectStyle": "PackageReference",
@@ -29,11 +29,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj"
+              "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj"
               },
-              "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj"
+              "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj": {
+                "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj"
               }
             }
           }
@@ -82,12 +82,12 @@
         }
       }
     },
-    "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj": {
+    "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj",
+        "projectUniqueName": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj",
         "projectName": "CPA.API",
-        "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj",
+        "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj",
         "packagesPath": "C:\\Users\\execu\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA.API\\obj\\",
         "projectStyle": "PackageReference",
@@ -107,11 +107,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj": {
-                "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj"
+              "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj": {
+                "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj"
               },
-              "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj"
+              "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj"
               }
             }
           }
@@ -163,12 +163,12 @@
         }
       }
     },
-    "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA\\CPA.csproj": {
+    "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\CPA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA\\CPA.csproj",
+        "projectUniqueName": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\CPA.csproj",
         "projectName": "CPA",
-        "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA\\CPA.csproj",
+        "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA\\CPA.csproj",
         "packagesPath": "C:\\Users\\execu\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA\\obj\\",
         "projectStyle": "PackageReference",
@@ -188,17 +188,17 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj": {
-                "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj"
+              "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj": {
+                "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj"
               },
-              "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj": {
-                "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj"
+              "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj": {
+                "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj"
               },
-              "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj"
+              "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj"
               },
-              "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj"
+              "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj": {
+                "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj"
               }
             }
           }
@@ -260,12 +260,12 @@
         }
       }
     },
-    "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj": {
+    "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj",
+        "projectUniqueName": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj",
+        "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\DAL\\DAL.csproj",
         "packagesPath": "C:\\Users\\execu\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\DAL\\obj\\",
         "projectStyle": "PackageReference",
@@ -343,12 +343,12 @@
         }
       }
     },
-    "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj": {
+    "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj",
+        "projectUniqueName": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj",
         "projectName": "Shared",
-        "projectPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj",
+        "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\Shared\\Shared.csproj",
         "packagesPath": "C:\\Users\\execu\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\Shared\\obj\\",
         "projectStyle": "PackageReference",

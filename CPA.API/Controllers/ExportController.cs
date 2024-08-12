@@ -38,8 +38,9 @@ public class ExportController : ControllerBase
 
         var excelFile = _excelExportService.ExportToExcel(demograficos, contributivos, administrativos, identificaciones, pagos, confidenciales);
 
-        // Create the filename using the customer's name
-        var filename = $"{customer.Nombre}Data.xlsx";
+        // Create the filename using the customer's name and the current date (yyyyMMdd format)
+        var currentDate = DateTime.Now.ToString("yyyyMMdd");
+        var filename = $"{customer.Nombre}_Data_{currentDate}.xlsx";
 
         return File(excelFile, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
     }
