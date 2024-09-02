@@ -7,14 +7,27 @@ namespace CPA.Services
 {
     public class ExcelImportService
     {
+        // Existing method to import from the first sheet
         public DataTable ImportExcel(Stream fileStream)
+        {
+            return ImportExcel(fileStream, 0); // Default to the first sheet
+        }
+
+        // Overloaded method to import from a specific sheet by index
+        public DataTable ImportExcel(Stream fileStream, int sheetIndex)
         {
             // Set the license context for EPPlus
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             using (var package = new ExcelPackage(fileStream))
             {
-                var worksheet = package.Workbook.Worksheets[0];
+                // Ensure the sheet index is within the valid range
+                if (sheetIndex < 0 || sheetIndex >= package.Workbook.Worksheets.Count)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(sheetIndex), "Sheet index is out of range.");
+                }
+
+                var worksheet = package.Workbook.Worksheets[sheetIndex];
                 var dataTable = new DataTable();
 
                 // Assuming that the first column (A) contains the headers and the second column (B) contains the values
