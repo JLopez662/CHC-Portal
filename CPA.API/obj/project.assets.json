@@ -4063,7 +4063,7 @@
       "projectName": "CPA.API",
       "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA.API\\CPA.API.csproj",
       "packagesPath": "C:\\Users\\execu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\CPA.API\\obj\\",
+      "outputPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\CPA.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\execu\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -4133,7 +4133,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

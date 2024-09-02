@@ -3020,7 +3020,7 @@
       "projectName": "BLL",
       "projectPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\BLL.csproj",
       "packagesPath": "C:\\Users\\execu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\execu\\source\\repos\\JLopez662\\CHC-Portal\\BLL\\obj\\",
+      "outputPath": "C:\\Users\\execu\\Source\\Repos\\JLopez662\\CHC-Portal\\BLL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\execu\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3087,7 +3087,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   },

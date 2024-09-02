@@ -5,6 +5,7 @@ using DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Shared.Models;
+using CPA.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,8 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IRegistroService, RegistroService>();
 builder.Services.AddTransient<ExcelExportService>();
+builder.Services.AddTransient<ExcelImportService>();
+
 
 
 // Add session services
