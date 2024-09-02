@@ -21,9 +21,10 @@
         <button type="button" class="btn btn-primary newClient" data-bs-toggle="modal" data-bs-target="#newCustomerModal">
             <span>Create New Customer</span>
         </button>
-        <button type="button" class="btn btn-secondary import-button" id="importFromExcelButton" data-bs-toggle="modal" data-bs-target="#importModal">
+        <button type="button" class="btn import-button" id="importFromExcelButton" data-bs-toggle="modal" data-bs-target="#importModal">
             Import from Excel
         </button>
+
     </div>
 
 
@@ -418,7 +419,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary close-button" data-bs-dismiss="modal">Close</button>
-                    <button id="submitAllFormsButton" type="button" class="btn btn-primary submit-button">Submit All Forms</button>
+                    <button id="submitAllFormsButton" type="button" class="btn btn-primary submit-button">Create New Customer</button>
                 </div>
             </div>
         </div>
@@ -428,7 +429,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="importModalLabel">Import from Excel</h5>
+                    <h5 class="modal-title" id="importModalLabel">Import Customer from Excel</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -440,8 +441,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="submitImportButton">Import</button>
+                    <button type="button" class="btn btn-secondary close-button" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary submit-button" id="submitImportButton">Import</button>
                 </div>
             </div>
         </div>
@@ -458,10 +459,6 @@
                     <button type="button" class="btn btn-success export-button" id="exportToExcelButton">
                         Export to Excel
                     </button>
-                    <button type="button" class="btn btn-secondary import-button" id="importFromExcelButton" data-bs-toggle="modal" data-bs-target="#importModal">
-                        Import from Excel
-                    </button>
-
                 </div>
                 @foreach (var item in Model.Demograficos)
                 {
