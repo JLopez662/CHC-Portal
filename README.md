@@ -8,6 +8,22 @@ A comprehensive Software as a Service (SaaS) platform for accountants to manage 
 ClientManager provides accountants with a structured and efficient platform to handle customer information related to demographics, tax matters, administrative details, identification, payment methods, and confidential information. It streamlines the data management process, making it easier for accountants to input, access, and update customer records.
 
 ## Methods
+
+- Insert Customer's Data:
+
+<p align="center">
+  <img src="Images/ManualCreate.png" alt="Manual Insert" width="45%" style="margin-right: 5%;">
+  <img src="Images/ImportCreate.png" alt="Import Insert" width="45%">
+</p>
+<p align="center" style="margin-top: 10px;">
+  <span style="display:inline-block; width: 45%; text-align:center;">Manual Insert</span>
+   <span style="display:inline-block; width: 45%; text-align:center;"></span>
+  <span style="display:inline-block; width: 45%; text-align:center;">Import Insert</span>
+</p>
+
+
+
+
 - User Account Management
 - Role-Based Access Control
   ![User Management Page](Images/User%20Management%20Page%20One.png)
