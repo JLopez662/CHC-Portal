@@ -58,32 +58,66 @@ public class PdfExportService
             table.AddCell(new Cell().Add(new Paragraph(item.ID)).SetBorder(Border.NO_BORDER));
 
             table.AddCell(new Cell().Add(new Paragraph("Name:").SetBold()).SetBorder(Border.NO_BORDER));
-            table.AddCell(new Cell().Add(new Paragraph(item.Nombre)).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.Nombre ?? "N/A")).SetBorder(Border.NO_BORDER));
 
             table.AddCell(new Cell().Add(new Paragraph("Commercial Name:").SetBold()).SetBorder(Border.NO_BORDER));
-            table.AddCell(new Cell().Add(new Paragraph(item.NombreComercial)).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.NombreComercial ?? "N/A")).SetBorder(Border.NO_BORDER));
 
             table.AddCell(new Cell().Add(new Paragraph("Phone Number:").SetBold()).SetBorder(Border.NO_BORDER));
-            table.AddCell(new Cell().Add(new Paragraph(item.Telefono)).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.Telefono ?? "N/A")).SetBorder(Border.NO_BORDER));
 
             table.AddCell(new Cell().Add(new Paragraph("Mobile Number:").SetBold()).SetBorder(Border.NO_BORDER));
-            table.AddCell(new Cell().Add(new Paragraph(item.Celular)).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.Celular ?? "N/A")).SetBorder(Border.NO_BORDER));
 
             table.AddCell(new Cell().Add(new Paragraph("Address:").SetBold()).SetBorder(Border.NO_BORDER));
-            table.AddCell(new Cell().Add(new Paragraph(item.Dir)).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.Dir ?? "N/A")).SetBorder(Border.NO_BORDER));
 
             table.AddCell(new Cell().Add(new Paragraph("Business Type:").SetBold()).SetBorder(Border.NO_BORDER));
-            table.AddCell(new Cell().Add(new Paragraph(item.Tipo)).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.Tipo ?? "N/A")).SetBorder(Border.NO_BORDER));
 
             table.AddCell(new Cell().Add(new Paragraph("Federal Employer Identification Number:").SetBold()).SetBorder(Border.NO_BORDER));
-            table.AddCell(new Cell().Add(new Paragraph(item.Patronal)).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.Patronal ?? "N/A")).SetBorder(Border.NO_BORDER));
 
             table.AddCell(new Cell().Add(new Paragraph("Social Security Number:").SetBold()).SetBorder(Border.NO_BORDER));
-            table.AddCell(new Cell().Add(new Paragraph(item.SSN)).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.SSN ?? "N/A")).SetBorder(Border.NO_BORDER));
 
             table.AddCell(new Cell().Add(new Paragraph("Date of Incorporation:").SetBold()).SetBorder(Border.NO_BORDER));
             string incorporationDate = item.Incorporacion.HasValue ? item.Incorporacion.Value.ToString("yyyy-MM-dd") : "N/A";
             table.AddCell(new Cell().Add(new Paragraph(incorporationDate)).SetBorder(Border.NO_BORDER));
+
+            table.AddCell(new Cell().Add(new Paragraph("Operations Start Date:").SetBold()).SetBorder(Border.NO_BORDER));
+            string operationsDate = item.Operaciones.HasValue ? item.Operaciones.Value.ToString("yyyy-MM-dd") : "N/A";
+            table.AddCell(new Cell().Add(new Paragraph(operationsDate)).SetBorder(Border.NO_BORDER));
+
+            table.AddCell(new Cell().Add(new Paragraph("Industry:").SetBold()).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.Industria ?? "N/A")).SetBorder(Border.NO_BORDER));
+
+            table.AddCell(new Cell().Add(new Paragraph("NAICS Code:").SetBold()).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.NAICS?.ToString() ?? "N/A")).SetBorder(Border.NO_BORDER));
+
+            table.AddCell(new Cell().Add(new Paragraph("Description:").SetBold()).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.Descripcion ?? "N/A")).SetBorder(Border.NO_BORDER));
+
+            table.AddCell(new Cell().Add(new Paragraph("Contact:").SetBold()).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.Contacto ?? "N/A")).SetBorder(Border.NO_BORDER));
+
+            table.AddCell(new Cell().Add(new Paragraph("Physical Address:").SetBold()).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.DirFisica ?? "N/A")).SetBorder(Border.NO_BORDER));
+
+            table.AddCell(new Cell().Add(new Paragraph("Postal Address:").SetBold()).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.DirPostal ?? "N/A")).SetBorder(Border.NO_BORDER));
+
+            table.AddCell(new Cell().Add(new Paragraph("Email:").SetBold()).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.Email ?? "N/A")).SetBorder(Border.NO_BORDER));
+
+            table.AddCell(new Cell().Add(new Paragraph("Secondary Email:").SetBold()).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.Email2 ?? "N/A")).SetBorder(Border.NO_BORDER));
+
+            table.AddCell(new Cell().Add(new Paragraph("CID:").SetBold()).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.CID ?? "N/A")).SetBorder(Border.NO_BORDER));
+
+            table.AddCell(new Cell().Add(new Paragraph("MID:").SetBold()).SetBorder(Border.NO_BORDER));
+            table.AddCell(new Cell().Add(new Paragraph(item.MID ?? "N/A")).SetBorder(Border.NO_BORDER));
 
             // Add a separator line between each record
             Cell separatorCell = new Cell(1, 2).Add(new LineSeparator(new SolidLine())).SetBorder(Border.NO_BORDER);
@@ -93,6 +127,7 @@ public class PdfExportService
         // Add the table to the document
         document.Add(table);
     }
+
 
 
     private void AddContributivosSection(Document document, List<Contributivo> data)
@@ -194,10 +229,6 @@ public class PdfExportService
 
     private void AddIdentificacionesSection(Document document, List<Identificacion> data)
     {
-
-        // Add a page break before the table section
-        document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
-
         document.Add(new Paragraph("Identification Information")
             .SetTextAlignment(TextAlignment.CENTER)
             .SetFontSize(16)
