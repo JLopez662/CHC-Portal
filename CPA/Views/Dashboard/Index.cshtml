@@ -459,6 +459,10 @@
                     <button type="button" class="btn btn-success export-button" id="exportToExcelButton">
                         Export to Excel
                     </button>
+                    <button type="button" class="btn btn-danger export-pdf-button" id="exportToPdfButton">
+                        Export to PDF
+                    </button>
+
                 </div>
                 @foreach (var item in Model.Demograficos)
                 {
@@ -499,6 +503,9 @@
                     <button type="button" class="btn btn-success export-button" id="exportToExcelButton">
                         Export to Excel
                     </button>
+                    <button type="button" class="btn btn-danger export-pdf-button" id="exportToPdfButton">
+                        Export to PDF
+                    </button>
 
                 </div>
                 @foreach (var item in Model.Contributivos)
@@ -528,6 +535,9 @@
                 <div class="d-flex justify-content-start mt-3">
                     <button type="button" class="btn btn-success export-button" id="exportToExcelButton">
                         Export to Excel
+                    </button>
+                    <button type="button" class="btn btn-danger export-pdf-button" id="exportToPdfButton">
+                        Export to PDF
                     </button>
 
                 </div>
@@ -559,6 +569,9 @@
                     <button type="button" class="btn btn-success export-button" id="exportToExcelButton">
                         Export to Excel
                     </button>
+                    <button type="button" class="btn btn-danger export-pdf-button" id="exportToPdfButton">
+                        Export to PDF
+                    </button>
 
                 </div>
                 @foreach (var item in Model.Identificaciones)
@@ -587,6 +600,9 @@
                 <div class="d-flex justify-content-start mt-3">
                     <button type="button" class="btn btn-success export-button" id="exportToExcelButton">
                         Export to Excel
+                    </button>
+                    <button type="button" class="btn btn-danger export-pdf-button" id="exportToPdfButton">
+                        Export to PDF
                     </button>
 
                 </div>
@@ -633,6 +649,9 @@
                 <div class="d-flex justify-content-start mt-3">
                     <button type="button" class="btn btn-success export-button" id="exportToExcelButton">
                         Export to Excel
+                    </button>
+                    <button type="button" class="btn btn-danger export-pdf-button" id="exportToPdfButton">
+                        Export to PDF
                     </button>
 
                 </div>
@@ -1253,6 +1272,31 @@
                     alert("No matching customer found.");
                 }
             });
+
+            $(document).on("click", ".export-pdf-button", function () {
+                var $activeTabPane = $(this).closest(".tab-pane");
+                var searchTerm = $('#externalSearch').val().toLowerCase();
+                var matchingRow = null;
+
+                // Iterate over each row within the active tab to find the matching customer
+                $activeTabPane.find(".tblData").each(function () {
+                    var nombre = $(this).data("nombre").toLowerCase();
+                    var nombreComercial = $(this).data("nombrecomercial").toLowerCase();
+
+                    if (nombre.includes(searchTerm) || nombreComercial.includes(searchTerm)) {
+                        matchingRow = $(this);
+                        return false;  // Break the loop once a match is found
+                    }
+                });
+
+                if (matchingRow) {
+                    var customerId = matchingRow.data("id");
+                    window.location.href = `/api/export/to-pdf?customerId=${encodeURIComponent(customerId)}`;
+                } else {
+                    alert("No matching customer found.");
+                }
+            });
+
 
             document.getElementById('submitImportButton').addEventListener('click', function () {
                 var formData = new FormData();

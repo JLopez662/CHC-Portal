@@ -32,6 +32,8 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IRegistroService, RegistroService>();
 builder.Services.AddTransient<ExcelExportService>();
 builder.Services.AddTransient<ExcelImportService>();
+builder.Services.AddTransient<PdfExportService>();
+
 
 
 

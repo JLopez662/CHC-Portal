@@ -9,7 +9,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ExcelExportService>();
-builder.Services.AddTransient<ExcelImportService>();  
+builder.Services.AddTransient<ExcelImportService>();
+builder.Services.AddTransient<PdfExportService>();
 
 
 var app = builder.Build();

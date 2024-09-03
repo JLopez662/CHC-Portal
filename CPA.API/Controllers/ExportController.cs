@@ -5,7 +5,7 @@ using DAL.Models;
 using BLL.Interfaces;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/export")]
 public class ExportController : ControllerBase
 {
     private readonly ExcelExportService _excelExportService;

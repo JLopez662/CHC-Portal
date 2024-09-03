@@ -433,6 +433,30 @@ a.float-right {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow effect */
     }
 
+.export-pdf-button {
+    background-color: var(--red);
+    background-image: linear-gradient(180deg, #d73a2e 30%, transparent 70%);
+    margin: 10px 20px 20px;
+    padding: 0.75em 2.5em; /* Match the padding of the edit button */
+    border: none;
+    border-radius: 2em; /* Match the border-radius of the edit button */
+    color: white;
+    font-size: 1em; /* Match the font-size of the edit button */
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 -0.5em 0.5em transparent, 0 0.5em 0.5em transparent, 0 0.25em 0.3em -0.2em rgba(0, 0, 0, 0.2), 0 0.25em 0.75em rgba(0, 0, 0, 0.3);
+}
+
+    .export-pdf-button:hover {
+        background-color: #b71c1c; /* Slightly darker red */
+        background-image: linear-gradient(180deg, #c62828 30%, transparent 70%);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow effect */
+    }
+
 .import-button {
     font-size: 1em;
     color: var(--white); /* Text color */
@@ -487,7 +511,7 @@ a.float-right {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    margin: 10px 0 25px;
+    margin: 10px 0 20px;
 }
 
     .export-button:hover,
