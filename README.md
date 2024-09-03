@@ -5,57 +5,73 @@ A comprehensive Software as a Service (SaaS) platform for accountants to manage 
 
 ## Project Objective
 
-ClientManager provides accountants with a structured and efficient platform to handle customer information related to demographics, tax matters, administrative details, identification, payment methods, and confidential information. It streamlines the data management process, making it easier for accountants to input, access, and update customer records.
+ClientManager offers accountants an efficient platform to manage customer information, simplifying the input, access, and updating of records across various categories like demographics, tax, confidential data, and much more.
 
 ## Methods
 
 - Insert Customer's Data:
 
 <p align="center">
-  <img src="Images/ManualCreate.png" alt="Manual Insert" width="45%" style="margin-right: 5%;">
+  <img src="Images/ManualCreate.png" alt="Manual Insert" width="45%">
   <img src="Images/ImportCreate.png" alt="Import Insert" width="45%">
 </p>
-<p align="center" style="margin-top: 10px;">
-  <span style="display:inline-block; width: 45%; text-align:center;">Manual Insert</span>
-   <span style="display:inline-block; width: 45%; text-align:center;"></span>
-  <span style="display:inline-block; width: 45%; text-align:center;">Import Insert</span>
+<p align="center" style="margin-top: 20px;">
+  <span style="display:inline-block; width: 45%;">Manual Insert &nbsp;
+    Import Insert</span>
 </p>
 
+- Update Customer's Data:
 
+<p align="center">
+  <img src="Images/ManualUpdate.png" alt="Manual Update" width="45%">
+  <img src="Images/ImportUpdate.png" alt="Import Update" width="45%">
+</p>
+<p align="center" style="margin-top: 20px;">
+  <span style="display:inline-block; width: 45%;">Manual Update &nbsp;
+    Import Update</span>
+</p>
 
+- Export Customer's Data:
 
-- User Account Management
-- Role-Based Access Control
-  ![User Management Page](Images/User%20Management%20Page%20One.png)
-- Customer Data Management
-  ![Customer Searched Page](Images/Customer%20Searched%20Page%20One.png)
-- Customer Data Creation
-  ![Customer Searched Page](Images/Create%20Customer%20Page%20One.png)
+<p align="center">
+  <img src="Images/ExportPDF.png" alt="Export PDF" width="45%">
+  <img src="Images/ExportExcel.png" alt="Export Excel" width="45%">
+</p>
+<p align="center" style="margin-top: 20px;">
+  <span style="display:inline-block; width: 45%;">Export to PDF &nbsp;
+    Export to Excel</span>
+</p>
 
-   
+- Search Customers and Users:
+
+<p align="center">
+  <img src="Images/Search.png" alt="Search" width="45%">
+  <img src="Images/UserManagement.png" alt="UserManagement" width="45%">
+</p>
+<p align="center" style="margin-top: 20px;">
+  <span style="display:inline-block; width: 45%;">Search Customer &nbsp;
+    Search User</span>
+</p>
 
 ## Technologies
 - `ASP.NET Core 8 MVC`
-- `C#`
-- `cshtml`
+- `C#`, `Javascript`, `Razor`, `SQL`
 - `Entity Framework`
 - `SQL Server Management`
 
-  ### Layers and Components
-   - **Models**: Representing data structures for users and customer details.
-   - **Views**: Razor views for rendering the user interface.
-   - **Controllers**: Handling HTTP requests and responses.
-   - **Business Layer Logic (BLL)**: Implementing business rules and logic with interfaces and services.
-   - **Data Access Layers (DAL)**: Managing database interactions with repositories and migrations.
+## Architecture and Component Overview
 
-## Project Description
-ClientManager is a web application designed for accountants to manage their customers' data efficiently. The platform includes functionalities for user account management, role-based access control, and comprehensive data management through a structured set of tabs covering various information categories.
+- **Models**: Used for defining data structures for users and customer details.
 
-### Key Features:
-- **User Registration and Profile Management**: Users can register, receive confirmation emails, and edit their profiles.
-- **Admin Role**: Admin users can create new accounts, manage existing accounts, send password recovery emails, lock/unlock accounts, and edit profiles.
-- **Customer Data Management**: Accountants can create, update, and delete customer records across six tabs: Demographics, Tax Matters, Administrative, Identification, Payment Method, and Confidential.
-- **Search Functionality**: Easily search for customers by name, commercial name, or ID.
+- **Views**: Razor views are used for rendering the user interface, dynamically presenting data with structured content. The views include dynamic implementations with JavaScript and AJAX, tightly integrated with controllers to ensure responsive and interactive user experiences.
+
+- **Controllers**: The application includes both MVC and API controllers. MVC controllers manage HTTP requests and return views, while API controllers handle RESTful endpoints for external interactions.
+
+- **Business Layer Logic (BLL)**: Implements business rules using interfaces and services. Interfaces ensure loose coupling, and services handle complex operations, providing clean interaction points for controllers.
+
+- **Data Access Layers (DAL)**: Manages database interactions with models, repositories, and migrations. Repositories abstract data access, promoting code reusability and centralized logic.
+
+- **API**: A comprehensive API layer uses controllers and services to expose functionalities to external clients, ensuring scalability and easy integration with other systems.
 
 ## Conclusion
 ClientManager provides an efficient and user-friendly approach for accountants to manage their customers' data. By automating various aspects of data management and providing a comprehensive set of features, it enhances productivity and ensures accurate record-keeping.
