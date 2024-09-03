@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Text.Json;
 
 namespace CPA.Controllers
@@ -44,18 +43,7 @@ namespace CPA.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(User user)
-        {
-            if (ModelState.IsValid)
-            {
-                _userRepository.AddUser(user);
-                return RedirectToAction("Index");
-            }
-            return View(user);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateUser(string email, string firstName, string lastName, string password, string phone, string role)
+        public async Task<IActionResult> CreateUser(string username, string email, string firstName, string lastName, string password, string phone, string role)
         {
             using var sha256 = SHA256.Create();
             var hashedPasswordBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
@@ -63,10 +51,10 @@ namespace CPA.Controllers
 
             var user = new User
             {
+                Username = username,
                 Email = email,
                 FirstName = firstName,
                 LastName = lastName,
-                Username = email,
                 Password = hashedPassword,
                 Phone = phone,
                 Role = role
@@ -75,8 +63,6 @@ namespace CPA.Controllers
             if (ModelState.IsValid)
             {
                 _userRepository.AddUser(user);
-                //await SendWelcomeEmailAsync(user);
-                // Send the welcome email in a background task
                 Task.Run(() => SendWelcomeEmailAsync(user));
                 return Json(new { success = true, message = "User created successfully", data = user });
             }
@@ -92,7 +78,6 @@ namespace CPA.Controllers
             await _emailService.SendEmailAsync(user.Email, subject, message);
         }
 
-
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -105,20 +90,9 @@ namespace CPA.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(User user)
+        public async Task<IActionResult> UpdateUser(int id, string username, string email, string firstName, string lastName, string phone, string password, string role)
         {
-            if (ModelState.IsValid)
-            {
-                _userRepository.UpdateUser(user);
-                return RedirectToAction("Index");
-            }
-            return View(user);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> UpdateUser(int id, string email, string firstName, string lastName, string phone, string password, string role)
-        {
-            _logger.LogInformation("UpdateUser called with ID: {Id}, Email: {Email}, FirstName: {FirstName}, LastName: {LastName}, Phone: {Phone}, Role: {Role}", id, email, firstName, lastName, phone, role);
+            _logger.LogInformation("UpdateUser called with ID: {Id}, Username: {Username}, Email: {Email}, FirstName: {FirstName}, LastName: {LastName}, Phone: {Phone}, Role: {Role}", id, username, email, firstName, lastName, phone, role);
 
             var user = _userRepository.GetUserById(id);
             if (user == null)
@@ -127,6 +101,7 @@ namespace CPA.Controllers
                 return Json(new { success = false, message = "User not found" });
             }
 
+            user.Username = username;
             user.Email = email;
             user.FirstName = firstName;
             user.LastName = lastName;
@@ -173,7 +148,6 @@ namespace CPA.Controllers
             return Json(new { success = true, message = "User updated successfully", data = user });
         }
 
-
         [HttpGet]
         public IActionResult GetUserById(int id)
         {
@@ -185,23 +159,12 @@ namespace CPA.Controllers
             return Json(new { success = true, data = user });
         }
 
-        public IActionResult Delete(int id)
-        {
-            var user = _userRepository.GetUserById(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return View(user);
-        }
-
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
             _userRepository.DeleteUser(id);
             return RedirectToAction("Index");
         }
-
 
         [HttpPost]
         public IActionResult LockUnlock([FromBody] JsonElement payload)

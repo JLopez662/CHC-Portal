@@ -16,19 +16,21 @@
             <table id="customTable" class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                        <th style="width: 15%;">Username</th>
                         <th style="width: 20%;">Email</th>
                         <th style="width: 10%;">FirstName</th>
                         <th style="width: 10%;">LastName</th>
                         <th style="width: 15%;">Phone</th>
                         <th style="width: 10%;">Role</th>
                         <th style="width: 10%;">Active</th>
-                        <th style="width: 25%;">Actions</th>
+                        <th style="width: 20%;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var user in Model)
                     {
                         <tr id="user-@user.Id">
+                            <td class="user-username">@user.Username</td>
                             <td class="user-email">@user.Email</td>
                             <td class="user-firstname">@user.FirstName</td>
                             <td class="user-lastname">@user.LastName</td>
@@ -48,7 +50,7 @@
                                 <div class="dropdown">
                                     <button class="btn btn-secondary dropbtn">...</button>
                                     <div class="dropdown-content">
-                                        <a href="#" onclick="editUser('@user.Id', '@user.Email', '@user.FirstName', '@user.LastName', '@user.Phone')">Update</a>
+                                        <a href="#" onclick="editUser('@user.Id', '@user.Username', '@user.Email', '@user.FirstName', '@user.LastName', '@user.Phone', '@user.Role')">Update</a>
                                         <a href="#" onclick="passwordRecovery('@user.Email')">Password Recovery</a>
                                     </div>
                                 </div>
@@ -64,7 +66,6 @@
     </div>
 </div>
 
-
 <!-- Off-canvas for editing/creating user details -->
 <div class="offcanvas offcanvas-start" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel">
     <div class="offcanvas-header">
@@ -74,22 +75,32 @@
     <div class="offcanvas-body">
         <form id="userForm" autocomplete="on">
             <input type="hidden" id="userId" name="Id" />
+
+            <div class="mb-3">
+                <label for="userUsername" class="form-label">Username</label>
+                <input type="text" class="form-control" id="userUsername" name="Username" required>
+            </div>
+
             <div class="mb-3">
                 <label for="userEmail" class="form-label">Email</label>
                 <input type="email" class="form-control" id="userEmail" name="Email" required>
             </div>
+
             <div class="mb-3">
                 <label for="userFirstName" class="form-label">First Name</label>
                 <input type="text" class="form-control" id="userFirstName" name="FirstName" required>
             </div>
+
             <div class="mb-3">
                 <label for="userLastName" class="form-label">Last Name</label>
                 <input type="text" class="form-control" id="userLastName" name="LastName" required>
             </div>
+
             <div class="mb-3">
                 <label for="userPhone" class="form-label">Phone</label>
                 <input type="text" class="form-control" id="userPhone" name="Phone" required>
             </div>
+
             <div class="mb-3">
                 <label for="userRole" class="form-label">Role</label>
                 <select class="form-control" id="userRole" name="Role" required>
@@ -102,10 +113,12 @@
                 <label for="userPassword" class="form-label">Password</label>
                 <input type="password" class="form-control" id="userPassword" name="Password">
             </div>
+
             <button type="submit" class="btn save-button">Save</button>
         </form>
     </div>
 </div>
+
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -113,7 +126,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <script>
-        function editUser(id, email, firstName, lastName, phone, role) {
+        function editUser(id, username, email, firstName, lastName, phone, role) {
             $.ajax({
                 url: '@Url.Action("GetUserById", "UserManagement")',
                 type: 'GET',
@@ -122,6 +135,7 @@
                     if (response.success) {
                         var user = response.data;
                         $('#userId').val(user.id);
+                        $('#userUsername').val(user.username); // Add username
                         $('#userEmail').val(user.email);
                         $('#userFirstName').val(user.firstName);
                         $('#userLastName').val(user.lastName);
@@ -144,6 +158,7 @@
 
         function createUser() {
             $('#userId').val('');
+            $('#userUsername').val(''); // Clear the username field
             $('#userEmail').val('');
             $('#userFirstName').val('');
             $('#userLastName').val('');
@@ -207,14 +222,6 @@
                 }
             });
         }
-
-
-
-
-
-
-
-
         $('#userForm').on('submit', function (e) {
             e.preventDefault();
             var data = $(this).serializeArray();
@@ -244,6 +251,7 @@
                         toastr.success(response.message);
                         if ($('#userId').val()) {
                             var row = $('#user-' + response.data.id);
+                            row.find('.user-username').text(response.data.username); // Update username in the table
                             row.find('.user-email').text(response.data.email);
                             row.find('.user-firstname').text(response.data.firstName);
                             row.find('.user-lastname').text(response.data.lastName);
