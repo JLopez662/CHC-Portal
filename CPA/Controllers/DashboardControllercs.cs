@@ -123,10 +123,11 @@ namespace CPA.Controllers
 
             if (ModelState.IsValid)
             {
+                // Find the existing demografico record
                 var existingDemografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == model.ID);
                 if (existingDemografico != null)
                 {
-                    // Update properties
+                    // Update the Demografico properties
                     existingDemografico.Nombre = model.Nombre;
                     existingDemografico.NombreComercial = model.NombreComercial;
                     existingDemografico.Telefono = model.Telefono;
@@ -147,6 +148,54 @@ namespace CPA.Controllers
                     existingDemografico.Email2 = model.Email2;
 
                     _customerService.UpdateDemografico(existingDemografico);
+
+                    // Now, propagate the update to other related entities (Administrativo, Contributivo, etc.)
+
+                    // Update related Contributivo records
+                    var relatedContributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == model.ID);
+                    if (relatedContributivo != null)
+                    {
+                        relatedContributivo.Nombre = model.Nombre;
+                        relatedContributivo.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateContributivo(relatedContributivo);
+                    }
+
+                    // Update related Administrativo records
+                    var relatedAdministrativo = _customerService.GetAdministrativos().FirstOrDefault(a => a.ID == model.ID);
+                    if (relatedAdministrativo != null)
+                    {
+                        relatedAdministrativo.Nombre = model.Nombre;
+                        relatedAdministrativo.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateAdministrativo(relatedAdministrativo);
+                    }
+
+                    // Update related Identificacion records
+                    var relatedIdentificacion = _customerService.GetIdentificaciones().FirstOrDefault(i => i.ID == model.ID);
+                    if (relatedIdentificacion != null)
+                    {
+                        relatedIdentificacion.Nombre = model.Nombre;
+                        relatedIdentificacion.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateIdentificacion(relatedIdentificacion);
+                    }
+
+                    // Update related Pago records
+                    var relatedPago = _customerService.GetPagos().FirstOrDefault(p => p.ID == model.ID);
+                    if (relatedPago != null)
+                    {
+                        relatedPago.Nombre = model.Nombre;
+                        relatedPago.NombreComercial = model.NombreComercial;
+                        _customerService.UpdatePago(relatedPago);
+                    }
+
+                    // Update related Confidencial records
+                    var relatedConfidencial = _customerService.GetConfidenciales().FirstOrDefault(o => o.ID == model.ID);
+                    if (relatedConfidencial != null)
+                    {
+                        relatedConfidencial.Nombre = model.Nombre;
+                        relatedConfidencial.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateConfidencial(relatedConfidencial);
+                    }
+
                     return Json(new { success = true });
                 }
 
@@ -198,11 +247,15 @@ namespace CPA.Controllers
 
             if (ModelState.IsValid)
             {
+                // Fetch existing contributivo and demografico by ID
                 var existingContributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == model.ID);
                 var existingDemografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == model.ID);
 
                 if (existingContributivo != null && existingDemografico != null)
                 {
+                    // Update Contributivo properties
+                    existingContributivo.Nombre = model.Nombre;
+                    existingContributivo.NombreComercial = model.NombreComercial;
                     existingContributivo.Estatal = model.Estatal;
                     existingContributivo.Poliza = model.Poliza;
                     existingContributivo.RegComerciante = model.RegComerciante;
@@ -214,9 +267,48 @@ namespace CPA.Controllers
 
                     _customerService.UpdateContributivo(existingContributivo);
 
+                    // Update Demografico properties
                     existingDemografico.Nombre = model.Nombre;
                     existingDemografico.NombreComercial = model.NombreComercial;
                     _customerService.UpdateDemografico(existingDemografico);
+
+                    // Propagate the updates to other related entities (Administrativo, Identificacion, Pago, Confidencial)
+
+                    // Update related Administrativo records
+                    var relatedAdministrativo = _customerService.GetAdministrativos().FirstOrDefault(a => a.ID == model.ID);
+                    if (relatedAdministrativo != null)
+                    {
+                        relatedAdministrativo.Nombre = model.Nombre;
+                        relatedAdministrativo.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateAdministrativo(relatedAdministrativo);
+                    }
+
+                    // Update related Identificacion records
+                    var relatedIdentificacion = _customerService.GetIdentificaciones().FirstOrDefault(i => i.ID == model.ID);
+                    if (relatedIdentificacion != null)
+                    {
+                        relatedIdentificacion.Nombre = model.Nombre;
+                        relatedIdentificacion.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateIdentificacion(relatedIdentificacion);
+                    }
+
+                    // Update related Pago records
+                    var relatedPago = _customerService.GetPagos().FirstOrDefault(p => p.ID == model.ID);
+                    if (relatedPago != null)
+                    {
+                        relatedPago.Nombre = model.Nombre;
+                        relatedPago.NombreComercial = model.NombreComercial;
+                        _customerService.UpdatePago(relatedPago);
+                    }
+
+                    // Update related Confidencial records
+                    var relatedConfidencial = _customerService.GetConfidenciales().FirstOrDefault(o => o.ID == model.ID);
+                    if (relatedConfidencial != null)
+                    {
+                        relatedConfidencial.Nombre = model.Nombre;
+                        relatedConfidencial.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateConfidencial(relatedConfidencial);
+                    }
 
                     return Json(new { success = true });
                 }
@@ -227,6 +319,7 @@ namespace CPA.Controllers
             var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
             return Json(new { success = false, message = "Model validation failed.", errors });
         }
+
 
         [HttpGet]
         public IActionResult GetAdministrativoById(string id)
@@ -274,6 +367,9 @@ namespace CPA.Controllers
 
                 if (existingAdministrativo != null && existingDemografico != null)
                 {
+                    // Update the fields of the Administrativo record
+                    existingAdministrativo.Nombre = model.Nombre;
+                    existingAdministrativo.NombreComercial = model.NombreComercial;
                     existingAdministrativo.Contrato = model.Contrato;
                     existingAdministrativo.Facturacion = model.Facturacion;
                     existingAdministrativo.FacturacionBase = model.FacturacionBase;
@@ -285,19 +381,58 @@ namespace CPA.Controllers
 
                     _customerService.UpdateAdministrativo(existingAdministrativo);
 
+                    // Update the Demografico record
                     existingDemografico.Nombre = model.Nombre;
                     existingDemografico.NombreComercial = model.NombreComercial;
                     _customerService.UpdateDemografico(existingDemografico);
 
+                    // Now update related entities to reflect the updated Nombre and NombreComercial
+                    // Update Contributivo
+                    var relatedContributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == model.ID);
+                    if (relatedContributivo != null)
+                    {
+                        relatedContributivo.Nombre = model.Nombre;
+                        relatedContributivo.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateContributivo(relatedContributivo);
+                    }
+
+                    // Update Identificacion
+                    var relatedIdentificacion = _customerService.GetIdentificaciones().FirstOrDefault(i => i.ID == model.ID);
+                    if (relatedIdentificacion != null)
+                    {
+                        relatedIdentificacion.Nombre = model.Nombre;
+                        relatedIdentificacion.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateIdentificacion(relatedIdentificacion);
+                    }
+
+                    // Update Pago
+                    var relatedPago = _customerService.GetPagos().FirstOrDefault(p => p.ID == model.ID);
+                    if (relatedPago != null)
+                    {
+                        relatedPago.Nombre = model.Nombre;
+                        relatedPago.NombreComercial = model.NombreComercial;
+                        _customerService.UpdatePago(relatedPago);
+                    }
+
+                    // Update Confidencial
+                    var relatedConfidencial = _customerService.GetConfidenciales().FirstOrDefault(o => o.ID == model.ID);
+                    if (relatedConfidencial != null)
+                    {
+                        relatedConfidencial.Nombre = model.Nombre;
+                        relatedConfidencial.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateConfidencial(relatedConfidencial);
+                    }
+
                     return Json(new { success = true });
                 }
 
-                return Json(new { success = false, message = "Administrativo not found." });
+                return Json(new { success = false, message = "Administrativo or Demografico not found." });
             }
 
             var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
             return Json(new { success = false, message = "Model validation failed.", errors });
         }
+
 
         [HttpGet]
         public IActionResult GetIdentificacionById(string id)
@@ -331,6 +466,7 @@ namespace CPA.Controllers
             return Json(identificacionViewModel);
         }
 
+
         [HttpPost]
         public IActionResult UpdateIdentificacion(Identificacion model)
         {
@@ -340,8 +476,12 @@ namespace CPA.Controllers
             {
                 var existingIdentificacion = _customerService.GetIdentificaciones().FirstOrDefault(i => i.ID == model.ID);
                 var existingDemografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == model.ID);
+
                 if (existingIdentificacion != null && existingDemografico != null)
                 {
+                    // Update the Identificacion fields
+                    existingIdentificacion.Nombre = model.Nombre;
+                    existingIdentificacion.NombreComercial = model.NombreComercial;
                     existingIdentificacion.Accionista = model.Accionista;
                     existingIdentificacion.SSNA = model.SSNA;
                     existingIdentificacion.Cargo = model.Cargo;
@@ -352,19 +492,59 @@ namespace CPA.Controllers
 
                     _customerService.UpdateIdentificacion(existingIdentificacion);
 
+                    // Update Demografico fields
                     existingDemografico.Nombre = model.Nombre;
                     existingDemografico.NombreComercial = model.NombreComercial;
                     _customerService.UpdateDemografico(existingDemografico);
 
+                    // Now update related entities to reflect the updated Nombre and NombreComercial
+                    // Update Contributivo
+                    var relatedContributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == model.ID);
+                    if (relatedContributivo != null)
+                    {
+                        relatedContributivo.Nombre = model.Nombre;
+                        relatedContributivo.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateContributivo(relatedContributivo);
+                    }
+
+                    // Update Administrativo
+                    var relatedAdministrativo = _customerService.GetAdministrativos().FirstOrDefault(a => a.ID == model.ID);
+                    if (relatedAdministrativo != null)
+                    {
+                        relatedAdministrativo.Nombre = model.Nombre;
+                        relatedAdministrativo.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateAdministrativo(relatedAdministrativo);
+                    }
+
+                    // Update Pago
+                    var relatedPago = _customerService.GetPagos().FirstOrDefault(p => p.ID == model.ID);
+                    if (relatedPago != null)
+                    {
+                        relatedPago.Nombre = model.Nombre;
+                        relatedPago.NombreComercial = model.NombreComercial;
+                        _customerService.UpdatePago(relatedPago);
+                    }
+
+                    // Update Confidencial
+                    var relatedConfidencial = _customerService.GetConfidenciales().FirstOrDefault(o => o.ID == model.ID);
+                    if (relatedConfidencial != null)
+                    {
+                        relatedConfidencial.Nombre = model.Nombre;
+                        relatedConfidencial.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateConfidencial(relatedConfidencial);
+                    }
+
                     return Json(new { success = true });
                 }
 
-                return Json(new { success = false, message = "Identificacion not found." });
+                return Json(new { success = false, message = "Identificacion or Demografico not found." });
             }
 
             var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
             return Json(new { success = false, message = "Model validation failed.", errors });
         }
+
+
 
         [HttpGet]
         public IActionResult GetPagoById(string id)
@@ -428,6 +608,9 @@ namespace CPA.Controllers
 
                 if (existingPago != null && existingDemografico != null)
                 {
+                    // Update Pago fields
+                    existingPago.Nombre = model.Nombre;
+                    existingPago.NombreComercial = model.NombreComercial;
                     existingPago.BankClient = model.BankClient;
                     existingPago.Banco = model.Banco;
                     existingPago.NumRuta = model.NumRuta;
@@ -455,9 +638,47 @@ namespace CPA.Controllers
 
                     _customerService.UpdatePago(existingPago);
 
+                    // Update Demografico fields
                     existingDemografico.Nombre = model.Nombre;
                     existingDemografico.NombreComercial = model.NombreComercial;
                     _customerService.UpdateDemografico(existingDemografico);
+
+                    // Now update related entities to reflect the updated Nombre and NombreComercial
+                    // Update Contributivo
+                    var relatedContributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == model.ID);
+                    if (relatedContributivo != null)
+                    {
+                        relatedContributivo.Nombre = model.Nombre;
+                        relatedContributivo.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateContributivo(relatedContributivo);
+                    }
+
+                    // Update Administrativo
+                    var relatedAdministrativo = _customerService.GetAdministrativos().FirstOrDefault(a => a.ID == model.ID);
+                    if (relatedAdministrativo != null)
+                    {
+                        relatedAdministrativo.Nombre = model.Nombre;
+                        relatedAdministrativo.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateAdministrativo(relatedAdministrativo);
+                    }
+
+                    // Update Identificacion
+                    var relatedIdentificacion = _customerService.GetIdentificaciones().FirstOrDefault(i => i.ID == model.ID);
+                    if (relatedIdentificacion != null)
+                    {
+                        relatedIdentificacion.Nombre = model.Nombre;
+                        relatedIdentificacion.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateIdentificacion(relatedIdentificacion);
+                    }
+
+                    // Update Confidencial
+                    var relatedConfidencial = _customerService.GetConfidenciales().FirstOrDefault(o => o.ID == model.ID);
+                    if (relatedConfidencial != null)
+                    {
+                        relatedConfidencial.Nombre = model.Nombre;
+                        relatedConfidencial.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateConfidencial(relatedConfidencial);
+                    }
 
                     return Json(new { success = true });
                 }
@@ -469,10 +690,11 @@ namespace CPA.Controllers
             return Json(new { success = false, message = "Model validation failed.", errors });
         }
 
+
         [HttpGet]
         public IActionResult GetConfidencialById(string id)
         {
-            var confidencial = _customerService.GetConfidenciales().FirstOrDefault(c => c.ID == id);
+            var confidencial = _customerService.GetConfidenciales().FirstOrDefault(o => o.ID == id);
             if (confidencial == null)
             {
                 return NotFound();
@@ -516,11 +738,14 @@ namespace CPA.Controllers
 
             if (ModelState.IsValid)
             {
-                var existingConfidencial = _customerService.GetConfidenciales().FirstOrDefault(c => c.ID == model.ID);
+                var existingConfidencial = _customerService.GetConfidenciales().FirstOrDefault(o => o.ID == model.ID);
                 var existingDemografico = _customerService.GetDemograficos().FirstOrDefault(d => d.ID == model.ID);
 
                 if (existingConfidencial != null && existingDemografico != null)
                 {
+                    // Update Confidencial fields
+                    existingConfidencial.Nombre = model.Nombre;
+                    existingConfidencial.NombreComercial = model.NombreComercial;
                     existingConfidencial.UserSuri = model.UserSuri;
                     existingConfidencial.PassSuri = model.PassSuri;
                     existingConfidencial.UserEftps = model.UserEftps;
@@ -538,9 +763,47 @@ namespace CPA.Controllers
                     existingConfidencial.MID = model.MID;
                     _customerService.UpdateConfidencial(existingConfidencial);
 
+                    // Update Demografico fields
                     existingDemografico.Nombre = model.Nombre;
                     existingDemografico.NombreComercial = model.NombreComercial;
                     _customerService.UpdateDemografico(existingDemografico);
+
+                    // Update related entities to reflect the updated Nombre and NombreComercial
+                    // Update Contributivo
+                    var relatedContributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == model.ID);
+                    if (relatedContributivo != null)
+                    {
+                        relatedContributivo.Nombre = model.Nombre;
+                        relatedContributivo.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateContributivo(relatedContributivo);
+                    }
+
+                    // Update Administrativo
+                    var relatedAdministrativo = _customerService.GetAdministrativos().FirstOrDefault(a => a.ID == model.ID);
+                    if (relatedAdministrativo != null)
+                    {
+                        relatedAdministrativo.Nombre = model.Nombre;
+                        relatedAdministrativo.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateAdministrativo(relatedAdministrativo);
+                    }
+
+                    // Update Identificacion
+                    var relatedIdentificacion = _customerService.GetIdentificaciones().FirstOrDefault(i => i.ID == model.ID);
+                    if (relatedIdentificacion != null)
+                    {
+                        relatedIdentificacion.Nombre = model.Nombre;
+                        relatedIdentificacion.NombreComercial = model.NombreComercial;
+                        _customerService.UpdateIdentificacion(relatedIdentificacion);
+                    }
+
+                    // Update Pago
+                    var relatedPago = _customerService.GetPagos().FirstOrDefault(p => p.ID == model.ID);
+                    if (relatedPago != null)
+                    {
+                        relatedPago.Nombre = model.Nombre;
+                        relatedPago.NombreComercial = model.NombreComercial;
+                        _customerService.UpdatePago(relatedPago);
+                    }
 
                     return Json(new { success = true });
                 }
@@ -551,6 +814,7 @@ namespace CPA.Controllers
             var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
             return Json(new { success = false, message = "Model validation failed.", errors });
         }
+
 
         [HttpGet]
         public IActionResult Create()

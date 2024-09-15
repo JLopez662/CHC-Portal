@@ -34,7 +34,7 @@ public class PdfExportController : ControllerBase
         var administrativos = _customerService.GetAdministrativos().Where(a => a.ID == customerId).ToList();
         var identificaciones = _customerService.GetIdentificaciones().Where(i => i.ID == customerId).ToList();
         var pagos = _customerService.GetPagos().Where(p => p.ID == customerId).ToList();
-        var confidenciales = _customerService.GetConfidenciales().Where(c => c.ID == customerId).ToList();
+        var confidenciales = _customerService.GetConfidenciales().Where(o => o.ID == customerId).ToList();
 
         var pdfFile = _pdfExportService.ExportToPdf(demograficos, contributivos, administrativos, identificaciones, pagos, confidenciales);
 
