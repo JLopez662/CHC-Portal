@@ -55,7 +55,7 @@ ClientManager offers accountants an efficient platform to manage customer inform
 
 ## Technologies
 - `ASP.NET Core 8 MVC`
-- `C#`, `Javascript`, `Razor`, `SQL`
+- `C#`, `Javascript`, `Razor`, `SQL` , `HTML` , `CSS` 
 - `Entity Framework`
 - `SQL Server Management`
 
