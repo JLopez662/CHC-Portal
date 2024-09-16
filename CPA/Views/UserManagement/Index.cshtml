@@ -174,21 +174,26 @@
         function passwordRecovery(email) {
             toastr.info('Starting Password Recovery');
             $.ajax({
-                url: '@Url.Action("PasswordRecovery", "Account")',
+                url: '/UserManagement/PasswordRecovery',  // Ensure this URL is correct
                 type: 'POST',
                 data: { email: email },
                 success: function (response) {
+                    console.log("Response: ", response);  // Log the response for debugging
                     if (response.success) {
-                        toastr.success('Password recovery email sent successfully.');
+                        toastr.success(response.message || 'Password recovery email sent successfully.');
                     } else {
-                        toastr.error('Failed to send password recovery email.');
+                        toastr.error(response.message || 'Failed to send password recovery email.');
                     }
                 },
-                error: function () {
+                error: function (xhr, status, error) {
+                    console.error("Error:", xhr, status, error);  // Log the error for debugging
                     toastr.error('An error occurred while sending password recovery email.');
                 }
             });
         }
+
+
+
 
         function LockUnlock(userId) {
             var parsedUserId = parseInt(userId, 10); // Parse the userId to an integer

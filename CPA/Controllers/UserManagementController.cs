@@ -219,18 +219,35 @@ namespace CPA.Controllers
         [HttpPost]
         public async Task<IActionResult> PasswordRecovery(string email)
         {
+            _logger.LogInformation($"Password recovery requested for email: {email}");
+
             var user = _userRepository.GetUserByEmail(email);
             if (user == null)
             {
+                _logger.LogWarning($"User not found for email: {email}");
                 return Json(new { success = false, message = "User not found" });
             }
 
-            await SendPasswordRecoveryEmailAsync(user);
-            return Json(new { success = true, message = "Password recovery email sent successfully" });
+            try
+            {
+                await SendPasswordRecoveryEmailAsync(user);
+                _logger.LogInformation($"Password recovery email sent successfully to {email}");
+                return Json(new { success = true, message = "Password recovery email sent successfully" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error occurred while sending password recovery email to {email}: {ex.Message}");
+                return Json(new { success = false, message = "Error sending password recovery email" });
+            }
         }
+
+
+
 
         private async Task SendPasswordRecoveryEmailAsync(User user)
         {
+            _logger.LogInformation($"Generating password reset token for user: {user.Email}");
+
             user.PasswordResetToken = Guid.NewGuid().ToString();
             user.PasswordResetTokenExpiration = DateTime.Now.AddHours(1);
             _userRepository.UpdateUser(user);
@@ -239,7 +256,11 @@ namespace CPA.Controllers
             var subject = "Password Reset Request";
             var message = $"Hello {user.FirstName},<br><br>You requested a password reset. Click the link below to reset your password:<br><a href='{resetLink}'>Reset Password</a><br><br>Best Regards,<br>CPA Portal Team";
 
+            _logger.LogInformation($"Sending password recovery email to {user.Email} with reset link: {resetLink}");
+
             await _emailService.SendEmailAsync(user.Email, subject, message);
+
+            _logger.LogInformation($"Password recovery email sent to {user.Email}");
         }
     }
 }
