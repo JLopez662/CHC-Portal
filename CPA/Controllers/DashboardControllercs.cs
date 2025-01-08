@@ -149,7 +149,7 @@ namespace CPA.Controllers
 
                     _customerService.UpdateDemografico(existingDemografico);
 
-                    // Now, propagate the update to other related entities (Administrativo, Contributivo, etc.)
+                    // Propagate the update to other related entities (Administrativo, Contributivo, etc.)
 
                     // Update related Contributivo records
                     var relatedContributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == model.ID);
@@ -497,7 +497,7 @@ namespace CPA.Controllers
                     existingDemografico.NombreComercial = model.NombreComercial;
                     _customerService.UpdateDemografico(existingDemografico);
 
-                    // Now update related entities to reflect the updated Nombre and NombreComercial
+                    // Update related entities to reflect the updated Nombre and NombreComercial
                     // Update Contributivo
                     var relatedContributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == model.ID);
                     if (relatedContributivo != null)
@@ -643,7 +643,7 @@ namespace CPA.Controllers
                     existingDemografico.NombreComercial = model.NombreComercial;
                     _customerService.UpdateDemografico(existingDemografico);
 
-                    // Now update related entities to reflect the updated Nombre and NombreComercial
+                    // Update related entities to reflect the updated Nombre and NombreComercial
                     // Update Contributivo
                     var relatedContributivo = _customerService.GetContributivos().FirstOrDefault(c => c.ID == model.ID);
                     if (relatedContributivo != null)
