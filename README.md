@@ -1,11 +1,10 @@
 # Client Manager for Accounting
-![Project Status: Active](https://img.shields.io/badge/Project%20Status-Active-brightgreen)
 
-A comprehensive Software as a Service (SaaS) platform for accountants to manage their customers' accounting and tax information efficiently.
+A platform for accountants to manage their clients' accounting and tax records.
 
 ## Project Objective
 
-ClientManager offers accountants an efficient platform to manage customer information, simplifying the input, access, and updating of records across various categories like demographics, tax, confidential data, and much more.
+Client Manager offers accountants an efficient platform to manage customer information, simplifying the input, access, and updating of records across various categories like demographics, tax, confidential data, and much more.
 
 ## Methods
 
@@ -56,8 +55,8 @@ ClientManager offers accountants an efficient platform to manage customer inform
 ## Technologies
 - `ASP.NET Core 8 MVC`
 - `C#`, `Javascript`, `Razor`, `SQL` , `HTML` , `CSS` 
-- `Entity Framework`
-- `SQL Server Management`
+- `Entity Framework Core 8`
+- `SQL Server`
 
 ## Architecture and Component Overview
 
@@ -74,7 +73,7 @@ ClientManager offers accountants an efficient platform to manage customer inform
 - **API**: A comprehensive API layer uses controllers and services to expose functionalities to external clients, ensuring scalability and easy integration with other systems.
 
 ## Conclusion
-ClientManager provides an efficient and user-friendly approach for accountants to manage their customers' data. By automating various aspects of data management and providing a comprehensive set of features, it enhances productivity and ensures accurate record-keeping.
+Client Manager provides an efficient and user-friendly approach for accountants to manage their customers' data. By automating various aspects of data management and providing a comprehensive set of features, it enhances productivity and ensures accurate record-keeping.
 
 ## Contact
 
